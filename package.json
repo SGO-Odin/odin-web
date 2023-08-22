@@ -1,0 +1,36 @@
+{
+  "name": "osgo",
+  "version": "1.0.0",
+  "description": "Odin Sistema de Gerencimento de optico",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SGO-Odin/odin-web.git"
+  },
+  "author": "Denerson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SGO-Odin/odin-web/issues"
+  },
+  "homepage": "https://github.com/SGO-Odin/odin-web#readme",
+  "dependencies": {
+    "next": "^13.4.19",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.5.1",
+    "@types/react": "18.2.20",
+    "eslint": "8.47.0",
+    "eslint-config-next": "13.4.19",
+    "sass": "^1.66.1",
+    "typescript": "5.1.6"
+  }
+}

@@ -1,5 +1,13 @@
+import HomeTemplate from "../template"
+import { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title: 'Home | ODIN',
+}
+
 export default function Page() {
+    const title = "Hello World, You'r Home!"
     return (
-        <h1>Hello World</h1>
+        <HomeTemplate text={title}/>
     )
 }

@@ -1,0 +1,41 @@
+$colors: (
+  'indigo-500': #162333,
+  'indigo-300': #1B2C40,
+  'indigo-50': #E8EAEC,
+  'blue-900': #1E3147,
+  'blue-800': #273F5C,
+  'blue-700': #34557A,
+  'blue-500': #4571A3,
+  'blue-50': #EEF4FA,
+  'black-800': #464646,
+  'black-400': #A4A4A4,
+  'black-300': #BBBBBB,
+  'black-200': #D2D2D2,
+  'black-100': #E8E8E8,
+  'black-50': #F4F4F4,
+  'black-0': #FFFFFF,
+  'red': #FF4848,
+  'green': #33B84B,
+  'yellow': #FFB050) !default;
+
+///
+@if not variable-exists(no_print_color_root) {
+  :root {
+
+    @each $color,
+    $hex in $colors {
+      --color-#{$color}: #{$hex};
+    }
+  }
+}
+
+@function color($name) {
+  @if (map-get($map: $colors, $key: $name)) {
+    @return var(--color-#{$name}, map-get($map: $colors, $key: $name)
+  );
+}
+
+@else {
+  @error '-> "'+#{$name}+'" not defined at globals/colors.scss';
+}
+}

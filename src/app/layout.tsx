@@ -1,11 +1,13 @@
+import '@/style/global.scss'
+
 export default function RootLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode
+  children: React.ReactNode
 }) {
-    return (
-        <html lang="pt-br">
-            <body>{children}</body>
-        </html>
-    )
+  return (
+    <html lang="pt-br">
+        <body>{children}</body>
+    </html>
+  )
 }

@@ -1,0 +1,29 @@
+$fonttitle: 'Josefin Sans', sans-serif;
+$fontbody: 'Noto Sans', sans-serif;
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+// html[data-status='menu'] {
+//     @include media-break-down(l) {
+//         overflow: hidden;
+//     }
+
+//     body {
+//         pointer-events: none;
+//     }
+// }
+
+body {
+    width: 100%;
+    background-color: color('black-0');
+    color: color('black-800');
+    box-sizing: border-box;
+    font-family: $fonttitle;
+    // @include fontSize(20);
+    line-height: 1.7;
+}

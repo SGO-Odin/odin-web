@@ -1,13 +1,13 @@
-import HomeTemplate from "../template"
-import { Metadata } from 'next'
- 
+import { Metadata } from "next"
+import Dashboard from "./dashboard/page"
+
 export const metadata: Metadata = {
-  title: 'Home | ODIN',
+    title: 'Dashboard | ODIN',
 }
 
-export default function Page() {
+export default function Home() {
     const title = "Hello World, You'r Home!"
     return (
-        <HomeTemplate text={title}/>
+        <Dashboard text={title} />
     )
 }

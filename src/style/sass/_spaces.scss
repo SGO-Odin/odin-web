@@ -1,0 +1,18 @@
+$spaces: (
+  'zero': 0,
+  'p': 8px,
+  'm': 16px,
+  'g': 24px,
+  'xg': 32px,
+  '2xg': 40px) !default;
+
+@function space($name) {
+  @if (map-has-key($map: $spaces, $key: $name)) {
+    @return map-get($map: $spaces, $key: $name
+  );
+}
+
+@else {
+  @error '-> "'+#{$name}+'" not defined in $spaces';
+}
+}

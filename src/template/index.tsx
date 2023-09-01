@@ -5,7 +5,7 @@ interface IDashboard {
   text: string
 }
 
-export default function Dashboard({text} : IDashboard) {
+export function Dashboard({text} : IDashboard) {
   return (
     <div>
       <h1 className="title">{text}</h1>

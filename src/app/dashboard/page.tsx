@@ -1,7 +1,11 @@
 import ButtonsPrimary from '@/src/components/buttons/primary'
 import './dashboard.scss'
 
-export default function Dashboard({text}) {
+interface IDashboard {
+  text: string
+}
+
+export default function Dashboard({text} : IDashboard) {
   return (
     <div>
       <h1 className="title">{text}</h1>

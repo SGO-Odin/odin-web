@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import Dashboard from "./dashboard/page"
+import { Dashboard } from "../template"
 
 export const metadata: Metadata = {
     title: 'Dashboard | ODIN',

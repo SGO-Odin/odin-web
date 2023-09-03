@@ -59,11 +59,11 @@ export function Select({
     const customSelects = document.getElementsByClassName("selects__select");
 
     for (let i = 0; i < customSelects.length; i++) {
-      const x = customSelects[i];
-      const selElmnt = x.getElementsByTagName("select")[0];
+      const x = customSelects[i]
+      const selElmnt = x.querySelector("select")
 
       // Use uma assertiva de tipo para dizer ao TypeScript que é um HTMLSelectElement
-      const selectElement = selElmnt as HTMLSelectElement | null;
+      const selectElement = selElmnt as HTMLSelectElement | null
       // Verifica se selElmnt é do tipo HTMLSelectElement antes de usar getElementsByTagName
       if (selectElement) {
         const ll = selectElement.length;
@@ -84,8 +84,7 @@ export function Select({
           c.innerHTML = selElmnt.options[j].innerHTML;
           c.addEventListener("click", function (e) {
             /* Quando um item é clicado, atualize a caixa de seleção original e o item selecionado: */
-            const y =
-              this.parentNode?.parentNode?.getElementsByTagName("select")[0];
+            const y = this.parentNode?.parentNode?.getElementsByTagName("select")[0];
             const sl = y?.length;
             const h = this.parentNode?.previousSibling;
 
@@ -96,8 +95,7 @@ export function Select({
                 y.selectedIndex = i;
                 h.innerHTML = this.innerHTML;
 
-                const sameAsSelected =
-                  this.parentNode?.getElementsByClassName("same-as-selected");
+                const sameAsSelected = this.parentNode?.getElementsByClassName("same-as-selected");
                 const yl = sameAsSelected?.length;
 
                 if (yl) {

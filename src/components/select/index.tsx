@@ -129,7 +129,13 @@ export function Select({
           /* Quando a caixa de seleção é clicada, feche todas as outras caixas de seleção e abra/feche a caixa de seleção atual: */
           e.stopPropagation();
           closeAllSelect(this);
-          this.nextSibling?.classList.toggle("select-hide");
+
+          // Verifica se o próximo irmão é um elemento HTML antes de acessar a classe
+          const nextSibling = this.nextSibling;
+          if (nextSibling instanceof HTMLElement) {
+            nextSibling.classList.toggle("select-hide");
+          }
+
           this.classList.toggle("select-arrow-active");
         });
       }

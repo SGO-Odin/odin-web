@@ -61,9 +61,12 @@ export function Select({
     for (let i = 0; i < customSelects.length; i++) {
       const x = customSelects[i];
       const selElmnt = x.getElementsByTagName("select")[0];
+
+      // Use uma assertiva de tipo para dizer ao TypeScript que é um HTMLSelectElement
+      const selectElement = selElmnt as HTMLSelectElement | null;
       // Verifica se selElmnt é do tipo HTMLSelectElement antes de usar getElementsByTagName
-      if (selElmnt instanceof HTMLSelectElement) {
-        const ll = selElmnt.length;
+      if (selectElement) {
+        const ll = selectElement.length;
 
         /* Para cada elemento, crie um novo DIV que atuará como o item selecionado: */
         const a = document.createElement("DIV");

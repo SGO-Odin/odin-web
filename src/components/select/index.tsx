@@ -84,19 +84,23 @@ export function Select({
           c.innerHTML = selElmnt.options[j].innerHTML;
           c.addEventListener("click", function (e) {
             /* Quando um item é clicado, atualize a caixa de seleção original e o item selecionado: */
-            const y = this.parentNode?.parentNode?.querySelector("select");
-            const sl = y?.length;
-            const h = this.parentNode?.previousSibling;
+            const y =
+              this.parentElement?.parentElement?.querySelector("select");
+            const h = this.parentElement?.previousElementSibling;
 
-            if (!y || !sl || !h) return;
+            if (!y || !h) return;
+
+            const sl = y.options.length;
 
             for (let i = 0; i < sl; i++) {
               if (y.options[i].innerHTML === this.innerHTML) {
                 y.selectedIndex = i;
-                h.innerHTML = this.innerHTML;
+                h.textContent = this.textContent; // Use textContent em vez de innerHTML
 
                 const sameAsSelected =
-                  this.parentNode?.getElementsByClassName("same-as-selected");
+                  this.parentElement?.getElementsByClassName(
+                    "same-as-selected"
+                  );
                 const yl = sameAsSelected?.length;
 
                 if (yl) {
@@ -110,7 +114,9 @@ export function Select({
               }
             }
 
-            h.click();
+            if (h) {
+              h.dispatchEvent(new Event("click"));
+            }
           });
 
           b.appendChild(c);

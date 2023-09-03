@@ -95,21 +95,17 @@ export function Select({
             for (let i = 0; i < sl; i++) {
               if (y.options[i].innerHTML === this.innerHTML) {
                 y.selectedIndex = i;
-                h.textContent = this.textContent; // Use textContent em vez de innerHTML
+                h.textContent = this.textContent;
 
                 const sameAsSelected =
-                  this.parentElement?.getElementsByClassName(
-                    "same-as-selected"
-                  );
-                const yl = sameAsSelected?.length;
-
-                if (yl) {
-                  for (let k = 0; k < yl; k++) {
-                    sameAsSelected[k].removeAttribute("class");
-                  }
+                  this.parentElement?.querySelectorAll(".same-as-selected");
+                if (sameAsSelected) {
+                  sameAsSelected.forEach((item) => {
+                    item.classList.remove("same-as-selected");
+                  });
                 }
 
-                this.setAttribute("class", "same-as-selected");
+                this.classList.add("same-as-selected");
                 break;
               }
             }

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { ChangeEvent, useEffect, useState } from "react";
 import "./select.scss";
@@ -61,66 +61,69 @@ export function Select({
     for (let i = 0; i < customSelects.length; i++) {
       const x = customSelects[i];
       const selElmnt = x.getElementsByTagName("select")[0];
-      const ll = selElmnt.length;
+      // Verifica se selElmnt é do tipo HTMLSelectElement antes de usar getElementsByTagName
+      if (selElmnt instanceof HTMLSelectElement) {
+        const ll = selElmnt.length;
 
-      /* Para cada elemento, crie um novo DIV que atuará como o item selecionado: */
-      const a = document.createElement("DIV");
-      a.setAttribute("class", "select-selected");
-      a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-      x.appendChild(a);
+        /* Para cada elemento, crie um novo DIV que atuará como o item selecionado: */
+        const a = document.createElement("DIV");
+        a.setAttribute("class", "select-selected");
+        a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+        x.appendChild(a);
 
-      /* Para cada elemento, crie um novo DIV que conterá a lista de opções: */
-      const b = document.createElement("DIV");
-      b.setAttribute("class", "select-items select-hide");
+        /* Para cada elemento, crie um novo DIV que conterá a lista de opções: */
+        const b = document.createElement("DIV");
+        b.setAttribute("class", "select-items select-hide");
 
-      for (let j = 1; j < ll; j++) {
-        /* Para cada opção no elemento select original, crie um novo DIV que atuará como um item de opção: */
-        const c = document.createElement("DIV");
-        c.innerHTML = selElmnt.options[j].innerHTML;
-        c.addEventListener("click", function (e) {
-          /* Quando um item é clicado, atualize a caixa de seleção original e o item selecionado: */
-          const y =
-            this.parentNode?.parentNode?.getElementsByTagName("select")[0];
-          const sl = y?.length;
-          const h = this.parentNode?.previousSibling;
+        for (let j = 1; j < ll; j++) {
+          /* Para cada opção no elemento select original, crie um novo DIV que atuará como um item de opção: */
+          const c = document.createElement("DIV");
+          c.innerHTML = selElmnt.options[j].innerHTML;
+          c.addEventListener("click", function (e) {
+            /* Quando um item é clicado, atualize a caixa de seleção original e o item selecionado: */
+            const y =
+              this.parentNode?.parentNode?.getElementsByTagName("select")[0];
+            const sl = y?.length;
+            const h = this.parentNode?.previousSibling;
 
-          if (!y || !sl || !h) return;
+            if (!y || !sl || !h) return;
 
-          for (let i = 0; i < sl; i++) {
-            if (y.options[i].innerHTML === this.innerHTML) {
-              y.selectedIndex = i;
-              h.innerHTML = this.innerHTML;
+            for (let i = 0; i < sl; i++) {
+              if (y.options[i].innerHTML === this.innerHTML) {
+                y.selectedIndex = i;
+                h.innerHTML = this.innerHTML;
 
-              const sameAsSelected =
-                this.parentNode?.getElementsByClassName("same-as-selected");
-              const yl = sameAsSelected?.length;
+                const sameAsSelected =
+                  this.parentNode?.getElementsByClassName("same-as-selected");
+                const yl = sameAsSelected?.length;
 
-              if (yl) {
-                for (let k = 0; k < yl; k++) {
-                  sameAsSelected[k].removeAttribute("class");
+                if (yl) {
+                  for (let k = 0; k < yl; k++) {
+                    sameAsSelected[k].removeAttribute("class");
+                  }
                 }
+
+                this.setAttribute("class", "same-as-selected");
+                break;
               }
-
-              this.setAttribute("class", "same-as-selected");
-              break;
             }
-          }
 
-          h.click();
+            h.click();
+          });
+
+          b.appendChild(c);
+        }
+
+        x.appendChild(b);
+
+        a.addEventListener("click", function (e) {
+          /* Quando a caixa de seleção é clicada, feche todas as outras caixas de seleção e abra/feche a caixa de seleção atual: */
+          e.stopPropagation();
+          closeAllSelect(this);
+          this.nextSibling?.classList.toggle("select-hide");
+          this.classList.toggle("select-arrow-active");
         });
-
-        b.appendChild(c);
       }
-
-      x.appendChild(b);
-
-      a.addEventListener("click", function (e) {
-        /* Quando a caixa de seleção é clicada, feche todas as outras caixas de seleção e abra/feche a caixa de seleção atual: */
-        e.stopPropagation();
-        closeAllSelect(this);
-        this.nextSibling?.classList.toggle("select-hide");
-        this.classList.toggle("select-arrow-active");
-      });
     }
 
     /* Se o usuário clicar em qualquer lugar fora da caixa de seleção, feche todas as caixas de seleção: */

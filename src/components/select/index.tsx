@@ -99,13 +99,18 @@ export function Select({
 
                 const sameAsSelected =
                   this.parentElement?.querySelectorAll(".same-as-selected");
+
                 if (sameAsSelected) {
                   sameAsSelected.forEach((item) => {
-                    item.classList.remove("same-as-selected");
+                    if (item instanceof HTMLElement) {
+                      item.classList.remove("same-as-selected");
+                    }
                   });
                 }
 
-                this.classList.add("same-as-selected");
+                if (this instanceof HTMLElement) {
+                  this.classList.add("same-as-selected");
+                }
                 break;
               }
             }

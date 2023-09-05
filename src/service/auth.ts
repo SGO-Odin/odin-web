@@ -19,7 +19,7 @@ export async function signInRequest(data: ISignInData) {
   };
 }
 
-export async function recoverUserInformation({ token }: String) {
+export async function recoverUserInformation(token : string) {
   await delay();
 
   return {

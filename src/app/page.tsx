@@ -1,12 +1,13 @@
+import { Dashboard } from "@/src/template/Dashboard"
 import { Metadata } from "next"
-import { Dashboard } from "../template"
 
 export const metadata: Metadata = {
     title: 'Dashboard | ODIN',
 }
 
-export default function Home() {
+export default async function Home() {
     const title = "Hello World, You'r Home!"
+
     return (
         <Dashboard text={title} />
     )

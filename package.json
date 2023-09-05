@@ -22,16 +22,22 @@
   "homepage": "https://github.com/SGO-Odin/odin-web#readme",
   "dependencies": {
     "next": "^13.4.19",
+    "nookies": "^2.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.10.1"
+    "react-icons": "^4.10.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
+    "@types/cookie": "^0.5.2",
     "@types/node": "20.5.1",
     "@types/react": "18.2.20",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
+    "file-loader": "^6.2.0",
     "sass": "^1.66.1",
-    "typescript": "5.1.6"
+    "typescript": "5.1.6",
+    "url-loader": "^4.1.1"
   }
 }

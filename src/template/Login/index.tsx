@@ -70,6 +70,12 @@ export default function LoginTemplate() {
             <MdLogin size={24} />
             Entrar
           </ButtonsPrimary>
+          <div className="login__form__footer">
+            <span className="login__form__footer__content">
+              Ainda não tem uma conta? <br />
+              <Link href={'/cadastrar'}><strong>Crie uma conta agora</strong></Link>
+            </span>
+          </div>
         </form>
       </div>
     </LayoutAuthenticated>

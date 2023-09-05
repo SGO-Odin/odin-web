@@ -1,10 +1,10 @@
 'use client'
 
 import "./dashboard.scss";
-import { TextField } from "../components/textField";
-import { ButtonsPrimary } from "../components/buttons/primary";
-import { Search } from "../components/search";
-import { Select } from "../components/select";
+import { TextField } from "../../components/textField";
+import { ButtonsPrimary } from "../../components/buttons/primary";
+import { Search } from "../../components/search";
+import { Select } from "../../components/select";
 
 interface IDashboard {
   text: string;

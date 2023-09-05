@@ -1,3 +1,4 @@
+import LoginTemplate from '@/src/template/Login'
 import { Metadata } from 'next'
  
 export const metadata: Metadata = {
@@ -6,6 +7,6 @@ export const metadata: Metadata = {
 
 export default function Login() {
   return (
-    <h1>Login</h1>
+    <LoginTemplate/>
   )
 }

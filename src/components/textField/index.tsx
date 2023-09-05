@@ -12,6 +12,8 @@ export function TextField({
   label,
   id,
   erro = false,
+  type = "text",
+  onChange
 }: ITextField) {
   return (
     <div className="textfield">
@@ -20,7 +22,7 @@ export function TextField({
       ) : null}
       <input
         className={"textfield__input" + (erro ? "--erro" : '')}
-        type="text"
+        type={type}
         id={id}
         disabled={disabled}
         minLength={minlength}
@@ -29,6 +31,7 @@ export function TextField({
         value={value}
         required={required}
         placeholder={placeholder}
+        onChange={onChange}
       />
       <label className="textfield__label" htmlFor={id}>
         {label}

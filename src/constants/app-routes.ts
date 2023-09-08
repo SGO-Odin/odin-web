@@ -3,6 +3,9 @@ export const APP_ROUTES = {
     dashboard: {
       name: "/",
     },
+    grifes: {
+      name: "/grifes",
+    },
   },
   public: {
     login: "/login",

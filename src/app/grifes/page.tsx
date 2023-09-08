@@ -1,3 +1,4 @@
+import { BrandsTemplate } from '@/src/template/Grifes'
 import { Metadata } from 'next'
  
 export const metadata: Metadata = {
@@ -6,6 +7,6 @@ export const metadata: Metadata = {
 
 export default function Brands() {
   return (
-    <h1>Grifes</h1>
+    <BrandsTemplate/>
   )
 }

@@ -10,7 +10,7 @@
 
   @media (min-width: 1200px) {
     width: 440px;
-    margin-top: 140px;
+    margin-top: space("2xg");
     padding: var(--borda-g, 12px) space("m");
     border-radius: var(--borda-g, 12px);
     background: color("indigo-50");

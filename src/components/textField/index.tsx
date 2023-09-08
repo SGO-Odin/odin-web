@@ -13,12 +13,13 @@ export function TextField({
   id,
   erro = false,
   type = "text",
-  onChange
+  onChange,
+  messageErro = ""
 }: ITextField) {
   return (
     <div className="textfield">
       {erro ? (
-        <span className="textfield__message">Mensagem de erro!</span>
+        <span className="textfield__message">{messageErro}</span>
       ) : null}
       <input
         className={"textfield__input" + (erro ? "--erro" : '')}

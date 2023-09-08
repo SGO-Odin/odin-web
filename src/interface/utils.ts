@@ -29,6 +29,7 @@ export interface ITextField {
   id?: string;
   erro?: boolean;
   type?: string;
+  messageErro?: string
   onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
 }
 

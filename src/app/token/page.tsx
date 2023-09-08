@@ -1,3 +1,4 @@
+import TokenTemplate from '@/src/template/Token'
 import { Metadata } from 'next'
  
 export const metadata: Metadata = {
@@ -6,6 +7,6 @@ export const metadata: Metadata = {
 
 export default function Token() {
   return (
-    <h1>Token</h1>
+    <TokenTemplate/>
   )
 }

@@ -10,7 +10,7 @@ interface IDashboard {
   text: string;
 }
 
-export function Dashboard({ text }: IDashboard) {
+export function DashboardTemplate({ text }: IDashboard) {
   function teste(event: string) {
     console.log(event);
   }

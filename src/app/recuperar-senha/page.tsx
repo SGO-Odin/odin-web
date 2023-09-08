@@ -1,3 +1,4 @@
+import { RecoverPasswordTemplate } from '@/src/template/RecuperarSenha'
 import { Metadata } from 'next'
  
 export const metadata: Metadata = {
@@ -6,6 +7,6 @@ export const metadata: Metadata = {
 
 export default function RecoverPassword() {
   return (
-    <h1>Recuperar Senha</h1>
+    <RecoverPasswordTemplate/>
   )
 }

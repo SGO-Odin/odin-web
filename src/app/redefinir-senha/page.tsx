@@ -1,3 +1,4 @@
+import ResetPasswordTemplate from '@/src/template/RedefinirSenha'
 import { Metadata } from 'next'
  
 export const metadata: Metadata = {
@@ -6,6 +7,6 @@ export const metadata: Metadata = {
 
 export default function ResetPassword() {
   return (
-    <h1>Redefinir Senha</h1>
+    <ResetPasswordTemplate/>
   )
 }

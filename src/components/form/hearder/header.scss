@@ -1,0 +1,27 @@
+@import "@/style/sass/config";
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: space("p");
+
+  &__title {
+    color: color("black-800");
+    /* font/titulo/1 */
+    font-family: $fonttitle;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 48px; /* 150% */
+  }
+
+  &__paragraph {
+    color: color("black-800");
+    /* font/corpo/paragrafo/1 */
+    font-family: $fontbody;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 2rem; /* 200% */
+  }
+}

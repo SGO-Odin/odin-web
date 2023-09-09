@@ -1,0 +1,47 @@
+@import "@/style/sass/config";
+
+.button-tertiary {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: space("m");
+  padding: space("m") space("m");
+
+  border: none;
+  outline: none;
+  border: 2px solid color("indigo-500");
+  border-radius: space("p");
+  background: transparent;
+  cursor: pointer;
+
+  color: color("indigo-500");
+  /* font/button/1 */
+  font-family: $fontbody;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 171.429% */
+  transition: all ease-out 300ms;
+
+  &:hover {
+    color: color("black-0");
+    background: color("blue-900");
+    box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.06);
+  }
+
+  &:active {
+    background: color("blue-800");
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.06);
+  }
+
+  &:focus {
+    background: color("blue-700");
+    box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 0.06);
+  }
+
+  &:disabled {
+    color: color("black-200");
+    background: color("black-100");
+  }
+}

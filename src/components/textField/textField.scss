@@ -1,105 +1,117 @@
-@import '@/style/sass/config';
+@import "@/style/sass/config";
 
 .textfield {
-    width: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  gap: 8px;
+
+  &__label {
+    color: color("black-800");
+
+    /* font/corpo/paragrafo/1 */
+    font-family: $fontbody;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 2rem; /* 200% */
+    transition: all ease-out 300ms;
+
+    @media (min-width: 1200px) {
+      font-size: 1rem;
+    }
+  }
+
+  &__input {
+    padding: space("m") 0px space("m") 1rem;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
+    justify-content: center;
     align-items: flex-start;
-    gap: 8px;
+    align-self: stretch;
+    gap: 10px;
+    outline: none;
+    border-radius: var(--borda-g, 12px);
+    border: 2px solid color("black-300");
+    background: color("black-0");
 
-    &__label {
-        color: color('black-800');
+    color: color("black-300");
+    font-family: $fontbody;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 171.429% */
 
-        /* font/corpo/paragrafo/1 */
-        font-family: $fontbody;
-        font-size: 1rem;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 2rem; /* 200% */
-        transition: all ease-out 300ms;
+    transition: all ease-out 300ms;
+
+    &::placeholder {
+      transition: all ease-out 300ms;
+      color: color("black-300");
     }
 
-    &__input {
-        padding: space('m') 0px space('m') 1rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        align-self: stretch;
-        gap: 10px;
-        outline: none;
-        border-radius: var(--borda-g, 12px);
-        border: 2px solid color('black-300');
-        background: color('black-0');
-
-        color: color('black-300');
-        font-family: $fontbody;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 24px; /* 171.429% */
-
-        transition: all ease-out 300ms;
-
-        &::placeholder {
-            transition: all ease-out 300ms;
-            color: color('black-300');
-        }
-
-        &:hover + label, &:hover, &:hover::placeholder {
-            color: color('black-400');
-            border-color: color('black-400');
-        }
-
-        &:focus + label, &:focus, &:focus::placeholder {
-            color: color('indigo-500');
-            border-color: color('indigo-500');
-        }
-
-        &:disabled + label, &:disabled, &:disabled::placeholder {
-            color: color('black-300');
-            border-color: color('black-100');
-        }
-
-        &:disabled {
-            background-color: color('black-100');
-        }
+    &:hover + label,
+    &:hover,
+    &:hover::placeholder {
+      color: color("black-400");
+      border-color: color("black-400");
     }
 
-    &__input--erro {
-        padding: space('m') 0px space('m') 1rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        align-self: stretch;
-        gap: 10px;
-        outline: none;
-        border-radius: var(--borda-g, 12px);
-        border: 2px solid color('black-300');
-        background: color('black-0');
-
-        font-family: $fontbody;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 24px;
-
-        transition: all ease-out 300ms;
-        & + label, &, &::placeholder {
-            color: color('red');
-            border-color: color('red');
-        }
+    &:focus + label,
+    &:focus,
+    &:focus::placeholder {
+      color: color("indigo-500");
+      border-color: color("indigo-500");
     }
 
-    &__message {
-        color: color('red');
-
-        /* font/corpo/paragrafo/2 */
-        font-family: $fontbody;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 24px; /* 171.429% */
+    &:disabled + label,
+    &:disabled,
+    &:disabled::placeholder {
+      color: color("black-300");
+      border-color: color("black-100");
     }
+
+    &:disabled {
+      background-color: color("black-100");
+    }
+  }
+
+  &__input--erro {
+    padding: space("m") 0px space("m") 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    align-self: stretch;
+    gap: 10px;
+    outline: none;
+    border-radius: var(--borda-g, 12px);
+    border: 2px solid color("black-300");
+    background: color("black-0");
+
+    font-family: $fontbody;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+
+    transition: all ease-out 300ms;
+    & + label,
+    &,
+    &::placeholder {
+      color: color("red-400");
+      border-color: color("red-400");
+    }
+  }
+
+  &__message {
+    color: color("red-400");
+
+    /* font/corpo/paragrafo/2 */
+    font-family: $fontbody;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 171.429% */
+  }
 }

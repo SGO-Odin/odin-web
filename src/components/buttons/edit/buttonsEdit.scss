@@ -1,0 +1,45 @@
+@import "@/style/sass/config";
+
+.button-edit {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: space("m");
+  padding: space("p") space("m");
+
+  border: none;
+  outline: none;
+  border-radius: space("p");
+  background: color("yellow-300");
+  cursor: pointer;
+
+  color: color("black-0");
+  /* font/button/1 */
+  font-family: $fontbody;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 171.429% */
+  transition: all ease-out 300ms;
+
+  &:hover {
+    background: color("yellow-400");
+    box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.06);
+  }
+
+  &:active {
+    background: color("yellow-500");
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.06);
+  }
+
+  &:focus {
+    background: color("yellow-600");
+    box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 0.06);
+  }
+
+  &:disabled {
+    color: color("black-200");
+    background: color("black-100");
+  }
+}

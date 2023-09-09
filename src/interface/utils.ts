@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler } from "react";
+import { ChangeEventHandler, MouseEventHandler } from "react";
 
 export interface IButton {
   autofocus?: boolean;
@@ -9,7 +9,7 @@ export interface IButton {
   type?: "button" | "submit" | "reset";
   value?: string;
   children?: React.ReactNode | string;
-  onClick?: () => {};
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export interface ITextField {

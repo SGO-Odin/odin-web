@@ -1,29 +1,35 @@
 $colors: (
-  'indigo-500': #162333,
-  'indigo-300': #1B2C40,
-  'indigo-50': #E8EAEC,
-  'blue-900': #1E3147,
-  'blue-800': #273F5C,
-  'blue-700': #34557A,
-  'blue-500': #4571A3,
-  'blue-50': #EEF4FA,
-  'black-800': #464646,
-  'black-400': #A4A4A4,
-  'black-300': #BBBBBB,
-  'black-200': #D2D2D2,
-  'black-100': #E8E8E8,
-  'black-50': #F4F4F4,
-  'black-0': #FFFFFF,
-  'red': #FF4848,
-  'green': #33B84B,
-  'yellow': #FFB050) !default;
+  "indigo-500": #162333,
+  "indigo-300": #1b2c40,
+  "indigo-50": #e8eaec,
+  "blue-900": #1e3147,
+  "blue-800": #273f5c,
+  "blue-700": #34557a,
+  "blue-500": #4571a3,
+  "blue-50": #eef4fa,
+  "black-800": #464646,
+  "black-400": #a4a4a4,
+  "black-300": #bbbbbb,
+  "black-200": #d2d2d2,
+  "black-100": #e8e8e8,
+  "black-50": #f4f4f4,
+  "black-0": #ffffff,
+  "red-400": #ff4848,
+  "red-500": #ff3129,
+  "red-600": #f6242a,
+  "red-700": #e41324,
+  "red-50": #ffebee,
+  "green": #33b84b,
+  "yellow-300": #ffb050,
+  "yellow-400": #e69e48,
+  "yellow-500": #cc8d40,
+  "yellow-600": #bf843c,
+) !default;
 
 ///
 @if not variable-exists(no_print_color_root) {
   :root {
-
-    @each $color,
-    $hex in $colors {
+    @each $color, $hex in $colors {
       --color-#{$color}: #{$hex};
     }
   }
@@ -31,11 +37,8 @@ $colors: (
 
 @function color($name) {
   @if (map-get($map: $colors, $key: $name)) {
-    @return var(--color-#{$name}, map-get($map: $colors, $key: $name)
-  );
-}
-
-@else {
-  @error '-> "'+#{$name}+'" not defined at globals/colors.scss';
-}
+    @return var(--color-#{$name}, map-get($map: $colors, $key: $name));
+  } @else {
+    @error '-> "'+#{$name}+'" not defined at globals/colors.scss';
+  }
 }

@@ -1,9 +1,24 @@
-import { DashboardTemplate } from "../template/Dashboard"
+import { GetServerSideProps } from "next";
+import { DashboardTemplate } from "../template/Dashboard";
+import { parseCookies } from "nookies";
 
 export default function Dashboard() {
-    const title = "Hello World, You'r Home!"
-
-    return (
-        <DashboardTemplate text={title}/>
-    )
+  return <DashboardTemplate />;
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { "odinauth.token": token } = parseCookies(context);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

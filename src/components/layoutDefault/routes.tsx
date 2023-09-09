@@ -18,7 +18,7 @@ interface IRouter {
 export const routes: IRouter[] = [
   {
     name: "Dashboard",
-    route: "/dashboard",
+    route: "/",
     icon: <MdOutlineDashboard size={24} />,
     subItem: null,
   },

@@ -30,8 +30,6 @@ export function Menu({ isOpenMenuPrimary, setIsOpenMenuPrimary } : IMenu) {
   const [isOpenSubItem, setIsOpenSubItem] = useState<boolean>(false);
   const [isOpenMenuDesk, setIsOpenMenuDesk] = useState<boolean>(false)
 
-  console.log(user)
-
   const handleOpenClose = () => {
     setIsOpenMenu(!isOpenMenu);
   };

@@ -3,7 +3,6 @@ import { IUser, ISignInData } from "../interface/utils";
 import { recoverUserInformation, signInRequest } from "../service/auth";
 import { parseCookies, setCookie } from "nookies";
 import { useRouter } from "next/navigation";
-import { APP_ROUTES } from "../constants/app-routes";
 
 interface IAUthContextType {
   isAuthenticated: boolean
@@ -42,7 +41,7 @@ export default function AuthProvider({
     })
 
     setUser(user)
-    push(APP_ROUTES.private.dashboard.name)
+    push("/")
   }
 
   return (
@@ -51,7 +50,3 @@ export default function AuthProvider({
     </AuthContext.Provider>
   );
 }
-function permanentRedirect(arg0: string) {
-  throw new Error("Function not implemented.");
-}
-

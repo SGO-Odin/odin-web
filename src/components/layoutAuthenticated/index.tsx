@@ -1,13 +1,14 @@
 import Image from "next/image";
 import "./layoutAuthenticated.scss";
 import slogan from "@/src/images/logo.png";
-import logo from "@/src/images/logo-2.svg";
+import logo from "@/src/images/logo-indigo.png";
 
 export function LayoutAuthenticated({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
   return (
     <section className="container">
       <div className="container__image">

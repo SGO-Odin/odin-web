@@ -7,7 +7,7 @@ export function Search({
   minlength = 0,
   maxlength = 150,
   name,
-  placeholder,
+  placeholder = "Buscar",
   required = false,
   value,
   id,
@@ -17,7 +17,7 @@ export function Search({
     <label className={disabled ? "search-disabled" : "search"} htmlFor={id}>
       <input
         className={"search__input"}
-        type="text"
+        type="search"
         id={id}
         disabled={disabled}
         minLength={minlength}

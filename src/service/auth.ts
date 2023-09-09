@@ -14,7 +14,7 @@ export async function signInRequest(data: ISignInData) {
       sobrenome: "Pinas",
       email: "denersonpinas19@gmail.com",
       photo:
-        "https://lh3.googleusercontent.com/a/AGNmyxZG59-MK5e7V8SNzcavliTOHAQZajRb1gr65OhsOw=s96-c",
+        "https://github.com/denersonpinas.png",
     },
   };
 }
@@ -28,7 +28,7 @@ export async function recoverUserInformation(token : string) {
       sobrenome: "Pinas",
       email: "denersonpinas19@gmail.com",
       photo:
-        "https://lh3.googleusercontent.com/a/AGNmyxZG59-MK5e7V8SNzcavliTOHAQZajRb1gr65OhsOw=s96-c",
+        "https://github.com/denersonpinas.png",
     },
   };
 }

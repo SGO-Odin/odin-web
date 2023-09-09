@@ -1,1 +1,227 @@
 @import "@/style/sass/config";
+
+.aside {
+  display: none;
+
+  @media (min-width: 1200px) {
+    width: 256px;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: space("xg") 0px space("xg") 3px;
+
+    border-left: 3px solid color("black-0");
+    background: color("indigo-500");
+
+    &__links {
+      width: 100%;
+      padding-top: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: space("m");
+
+      &__title {
+        color: color("black-0");
+        text-align: center;
+
+        /* font/titulo/5 */
+        font-family: $fonttitle;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px; /* 150% */
+      }
+
+      &__nav {
+        width: 100%;
+
+        &__itens {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+
+          &__item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            cursor: pointer;
+            transition: all ease-out 300ms;
+
+            &:hover {
+              background: rgba(232, 234, 236, 0.25);
+            }
+
+            &:focus-within &__icon {
+              border-radius: 100px;
+              background: color("indigo-50");
+              color: color("indigo-500");
+              z-index: 9999;
+            }
+
+            &:focus-within &__name {
+              margin-left: -20px;
+              padding-left: 30px;
+              background: rgba(232, 234, 236, 0.25);
+              color: color("indigo-500");
+            }
+
+            // Estilização de Itens com Sub Itens
+            &__header {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+
+              padding: 0;
+              outline: none;
+              border: none;
+              background-color: transparent;
+
+              &__icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: space("p");
+                color: color("black-0");
+              }
+
+              &__name {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: space("p");
+
+                /* font/corpo/paragrafo/2 */
+                color: color("black-0");
+                font-family: $fontbody;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 24px; /* 171.429% */
+              }
+            }
+
+            &__subNav {
+              width: 100%;
+            }
+
+            &__nav {
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+
+              &__item {
+                width: 100%;
+                display: flex;
+                padding: space("p") space("p") space("p") space("2xg");
+                align-items: center;
+                background: rgba(232, 234, 236, 0.25);
+                color: color("indigo-500");
+
+                /* font/corpo/paragrafo/2 */
+                font-family: $fontbody;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 24px; /* 171.429% */
+
+                &:hover {
+                  background: rgba(232, 234, 236, 0.5);
+                }
+
+                &--active {
+                  width: 100%;
+                  display: flex;
+                  padding: space("p") space("p") space("p") space("2xg");
+                  align-items: center;
+                  background: rgba(232, 234, 236, 0.85);
+                  color: color("indigo-500");
+
+                  /* font/corpo/paragrafo/2 */
+                  font-family: $fontbody;
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 400;
+                  line-height: 24px; /* 171.429% */
+                }
+              }
+            }
+
+            // Estilização de Itens Padrões
+            &__icon {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: space("p");
+              color: color("black-0");
+
+              &--active {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: space("p");
+
+                border-radius: 100px;
+                background: color("indigo-50");
+                color: color("indigo-500");
+                z-index: 9999;
+              }
+            }
+
+            &__name {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              padding: space("p");
+
+              /* font/corpo/paragrafo/2 */
+              color: color("black-0");
+              font-family: $fontbody;
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: 24px; /* 171.429% */
+
+              &--active {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                padding: space("p");
+
+                /* font/corpo/paragrafo/2 */
+                font-family: $fontbody;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 24px; /* 171.429% */
+
+                margin-left: -20px;
+                padding-left: 30px;
+                background: rgba(232, 234, 236, 0.85);
+                color: color("indigo-500");
+              }
+
+              a {
+                outline: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.off {
+  width: 72px;
+}

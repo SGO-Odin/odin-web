@@ -8,7 +8,7 @@ import {
 } from "react-icons/md";
 import { ButtonsPrimary } from "../../buttons/primary";
 import { AiFillHeart } from "react-icons/ai";
-import { useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { AuthContext } from "@/src/context/AuthContext";
 import Image from "next/image";
 import avatar from "@/src/images/avatar.jpeg";
@@ -18,12 +18,19 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { routes } from "../routes";
 
-export function Menu() {
+interface IMenu {
+  isOpenMenuPrimary: boolean
+  setIsOpenMenuPrimary: Dispatch<SetStateAction<boolean>>
+}
+
+export function Menu({ isOpenMenuPrimary, setIsOpenMenuPrimary } : IMenu) {
   const { user } = useContext(AuthContext);
   const pathname = usePathname();
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const [isOpenSubItem, setIsOpenSubItem] = useState<boolean>(false);
   const [isOpenMenuDesk, setIsOpenMenuDesk] = useState<boolean>(false)
+
+  console.log(user)
 
   const handleOpenClose = () => {
     setIsOpenMenu(!isOpenMenu);
@@ -34,7 +41,7 @@ export function Menu() {
       <div className="menu__desktop">
         <div className="menu__desktop__hero">
           <div className="menu__desktop__hero__button">
-            <ButtonsPrimary>
+            <ButtonsPrimary onClick={() => setIsOpenMenuPrimary(!isOpenMenuPrimary)}>
               <MdOutlineMenu size={24} />
             </ButtonsPrimary>
           </div>

@@ -1,8 +1,9 @@
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
+import ProductTemplate from "../template/Produtos";
 
 export default function Products() {
-  return <h1>Produtos</h1>;
+  return <ProductTemplate/>;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

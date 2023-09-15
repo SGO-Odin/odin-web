@@ -1,6 +1,6 @@
 @import "@/style/sass/config";
 
-.brands {
+.product {
   width: 100%;
   height: 100%;
   max-height: calc(80vh - 32px);
@@ -72,13 +72,6 @@
 
     &:hover::-webkit-scrollbar-thumb {
       visibility: visible;
-    }
-
-    table,
-    th,
-    td {
-      text-align: left;
-      border-collapse: collapse;
     }
   }
 }

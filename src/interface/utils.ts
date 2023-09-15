@@ -1,4 +1,4 @@
-import { ChangeEventHandler, MouseEventHandler } from "react";
+import { ChangeEventHandler, MouseEventHandler, ReactNode } from "react";
 
 export interface IButton {
   autofocus?: boolean;
@@ -56,4 +56,12 @@ export interface IUser {
   sobrenome: string;
   email: string;
   photo: string;
+}
+
+export interface ITable {
+  data: Array<any>
+  columns: Array<string>
+  isButton: boolean
+  typeButton?: "two" | "one"
+  to?: Array<string>
 }

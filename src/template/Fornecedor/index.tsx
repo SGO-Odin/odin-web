@@ -4,10 +4,12 @@ import { ButtonsPrimary } from "@/src/components/buttons/primary";
 import { BsEmojiSunglassesFill } from "react-icons/bs";
 import { Search } from "@/src/components/search";
 import { ButtonsEdit } from "@/src/components/buttons/edit";
-import { MdDelete, MdLocalShipping, MdOutlineEdit } from "react-icons/md";
+import { MdDelete, MdLocalShipping, MdOutlineEdit, MdSearch } from "react-icons/md";
 import { ButtonsDelete } from "@/src/components/buttons/delete";
 import { useRouter } from "next/navigation";
 import { TablesCustom } from "@/src/components/tablesCustom";
+import { Hero } from "@/src/components/hero";
+import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 
 const data = [
   { Id: 1, Fornecedor: "Laboratorio X", Nome: "João" },
@@ -25,28 +27,27 @@ export function SupplierTemplete() {
 
   return (
     <LayoutDefault>
+      <Hero
+        isButtonPrymary={true}
+        title="Consultar Fornecedor"
+        paragraph={`Nossa página de consulta de fornecedores simplifica a busca de informações vitais. Encontre seus fornecedores confiáveis em um só lugar!`}
+        buttonIcon={<MdLocalShipping size={24} />}
+        buttonLabel="Cadastrar Fornecedor"
+        onClick={handlePushNewSupplier}>
+        <div className="supplier__filters">
+          <div>
+            <Search placeholder="ex: João" />
+          </div>
+          <div>
+            <ButtonsTertiary>
+              Buscar
+              <MdSearch size={24} />
+            </ButtonsTertiary>
+          </div>
+        </div>
+      </Hero>
       <div className="supplier">
-        <div className="supplier__hero">
-          <div>
-            <ButtonsPrimary onClick={() => handlePushNewSupplier()}>
-              <MdLocalShipping size={24} />
-              Cadastrar Fornecedor
-            </ButtonsPrimary>
-          </div>
-          <div>
-            <Search />
-          </div>
-        </div>
-        <hr className="menu__mobile__line" />
-        <p className="supplier__paragraph">
-          Fornecedor desativado não podera ser mais usado no cadastro de
-          produto. <br />
-          Você também pode editar ou excluir um Fornecedor usando os botões
-          abaixo.
-        </p>
-        <div className="supplier__content">
-          <TablesCustom data={data} columns={columns} isButton={true} typeButton={"two"} />
-        </div>
+        <TablesCustom data={data} columns={columns} isButton={true} typeButton={"two"} />
       </div>
     </LayoutDefault>
   );

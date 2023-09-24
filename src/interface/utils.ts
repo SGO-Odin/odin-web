@@ -1,4 +1,5 @@
-import { ChangeEventHandler, MouseEventHandler, ReactNode } from "react";
+import { ChangeEventHandler, MouseEventHandler, ReactElement, ReactNode } from "react";
+import { IconType } from "react-icons";
 
 export interface IButton {
   autofocus?: boolean;
@@ -64,4 +65,16 @@ export interface ITable {
   isButton: boolean
   typeButton?: "two" | "one"
   to?: Array<string>
+}
+
+export interface IRouter {
+  name?: string;
+  route?: string;
+  icon?: ReactElement<IconType>;
+  subItem?:
+    | {
+        name?: string;
+        route?: string;
+      }[]
+    | null;
 }

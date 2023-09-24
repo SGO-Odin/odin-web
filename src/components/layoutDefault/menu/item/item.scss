@@ -1,0 +1,64 @@
+@import "@/style/sass/config";
+
+.item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: space("m");
+    padding: space("p") space("p") space("p") space("2xg");
+    border-radius: 3px;
+
+    color: color("indigo-500");
+
+    /* font/corpo/paragrafo/2 */
+    font-family: $fontbody;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    /* 171.429% */
+
+    &:hover {
+        color: color("black-800");
+        background: color("blue-50");
+    }
+
+    &:focus-within {
+        color: color("black-800");
+        background: color("blue-50");
+    }
+
+    &.active {
+        color: color("black-0");
+        background: color("indigo-500");
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        background-color: transparent;
+        border: none;
+        outline: none;
+        padding: 0;
+        cursor: pointer;
+
+        color: color("indigo-500");
+
+        /* font/corpo/paragrafo/2 */
+        font-family: $fontbody;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        /* 171.429% */
+    }
+
+    .list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+}

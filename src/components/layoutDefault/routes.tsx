@@ -1,19 +1,6 @@
-import { ReactElement } from "react";
-import { IconType } from "react-icons";
 import { MdAttachMoney, MdBuild, MdInventory, MdOutlineAppRegistration, MdOutlineDashboard, MdPerson } from "react-icons/md";
 import { BsEyeglasses } from 'react-icons/bs'
-
-interface IRouter {
-  name: string;
-  route: string;
-  icon: ReactElement<IconType>;
-  subItem:
-    | {
-        name: string;
-        route: string;
-      }[]
-    | null;
-}
+import { IRouter } from "@/src/interface/utils";
 
 export const routes: IRouter[] = [
   {

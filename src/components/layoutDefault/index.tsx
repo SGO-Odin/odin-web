@@ -12,7 +12,7 @@ export default function LayoutDefault({
 
   return (
     <section className="layoutDefault">
-      <Aside isOpenMenu={isOpenMenu}/>
+      <Aside isOpenMenu={isOpenMenu} />
       <div className="layoutDefault__content">
         <Menu isOpenMenuPrimary={isOpenMenu} setIsOpenMenuPrimary={setIsOpenMenu} />
         <section className="layoutDefault__content__hero">{children}</section>

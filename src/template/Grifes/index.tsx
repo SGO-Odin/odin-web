@@ -5,6 +5,9 @@ import { BsEmojiSunglassesFill } from "react-icons/bs";
 import { Search } from "@/src/components/search";
 import { useRouter } from "next/navigation";
 import { TablesCustom } from "@/src/components/tablesCustom";
+import { Hero } from "@/src/components/hero";
+import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
+import { MdSearch } from "react-icons/md";
 
 const data = [
   {
@@ -32,32 +35,26 @@ export function BrandsTemplate() {
 
   return (
     <LayoutDefault>
+      <Hero isButtonPrymary={true} title="Consultar Grifes" paragraph={`Esta página de foi criada para facilitar o acesso às informações sobre grifes disponíveis. Encontre rapidamente o que você precisa aqui!.`} buttonIcon={<BsEmojiSunglassesFill size={24} />} buttonLabel="Cadastrar Grifes" onClick={handlePushNewBrands}>
+        <div className="brands__filters">
+          <div>
+            <Search placeholder="ex: Diesel" />
+          </div>
+          <div>
+            <ButtonsTertiary>
+              Buscar
+              <MdSearch size={24} />
+            </ButtonsTertiary>
+          </div>
+        </div>
+      </Hero>
       <div className="brands">
-        <div className="brands__hero">
-          <div>
-            <ButtonsPrimary onClick={() => handlePushNewBrands()}>
-              <BsEmojiSunglassesFill size={24} />
-              Cadastrar Grifes
-            </ButtonsPrimary>
-          </div>
-          <div>
-            <Search />
-          </div>
-        </div>
-        <hr className="menu__mobile__line" />
-        <p className="brands__paragraph">
-          Grifes desativadas não poderão ser mais usadas no cadastro de produto.{" "}
-          <br />
-          Você também pode editar ou excluir uma Grife usando os botões abaixo.
-        </p>
-        <div className="brands__content">
-          <TablesCustom
-            data={data}
-            columns={columns}
-            isButton={true}
-            typeButton={"two"}
-          />
-        </div>
+        <TablesCustom
+          data={data}
+          columns={columns}
+          isButton={true}
+          typeButton={"two"}
+        />
       </div>
     </LayoutDefault>
   );

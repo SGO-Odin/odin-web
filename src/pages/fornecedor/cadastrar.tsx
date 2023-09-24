@@ -1,5 +1,5 @@
 import LayoutDefault from "@/src/components/layoutDefault";
-import "./newBrands.scss";
+import "./newSupplier.scss";
 import { TextField } from "@/src/components/textField";
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { ButtonsPrimary } from "@/src/components/buttons/primary";
@@ -10,6 +10,7 @@ import { parseCookies } from "nookies";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { Hero } from "@/src/components/hero";
 
 export default function NewSupplier() {
   const { push } = useRouter();
@@ -31,7 +32,15 @@ export default function NewSupplier() {
 
   const handleNewSupplier = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // console.log(supplier)
+    console.log(companyName)
+    console.log(businessName)
+    console.log(isLaboratory)
+    console.log(zipCode)
+    console.log(address)
+    console.log(district)
+    console.log(numberAddress)
+    console.log(complement)
+    console.log(city)
     // console.log(isActive)
 
     // const data = { supplier, isActive }
@@ -47,20 +56,17 @@ export default function NewSupplier() {
 
   const goBack = () => {
     push('/fornecedor')
-}
+  }
 
   return (
     <LayoutDefault>
-      <div className="newBrands">
-        <form onSubmit={handleNewSupplier} className="newBrands__form">
-          <div className="newBrands__form__content">
-            <header className="newBrands__form__content__header">
-              <h2 className="newBrands__form__content__header__title">
-                Cadastrar Fornecedor
-              </h2>
-              <hr className="menu__mobile__line" />
-            </header>
-            <div className="newBrands__form__content__inputs">
+      <div className="newSupplier">
+        <form onSubmit={handleNewSupplier} className="newSupplier__form">
+          <Hero
+            isButtonPrymary={false}
+            title="Cadastrar Fornecedor"
+            paragraph={`Cadastre um novo fornecedor`}>
+            <div className="newSupplier__form__content__inputs">
               <div>
                 <TextField
                   name="companyName"
@@ -83,8 +89,8 @@ export default function NewSupplier() {
                   required={true}
                 />
               </div>
-              <div className="newBrands__form__content__inputs__check">
-                <label htmlFor="brandsActive">LABORATÓRIO</label>
+              <div className="newSupplier__form__content__inputs__check">
+                <label htmlFor="SupplierActive">LABORATÓRIO</label>
                 <input
                   type="checkbox"
                   name="isLaboratory"
@@ -94,15 +100,15 @@ export default function NewSupplier() {
                 />
               </div>
             </div>
-          </div>
-          <div className="newBrands__form__content">
-            <header className="newBrands__form__content__header">
-              <h2 className="newBrands__form__content__header__title">
+          </Hero>
+          <div className="newSupplier__form__content">
+            <header className="newSupplier__form__content__header">
+              <h2 className="newSupplier__form__content__header__title">
                 Endereço
               </h2>
               <hr className="menu__mobile__line" />
             </header>
-            <div className="newBrands__form__content__inputs">
+            <div className="newSupplier__form__content__inputs">
               <div>
                 <TextField
                   name="zipCode"
@@ -137,7 +143,7 @@ export default function NewSupplier() {
                 />
               </div>
             </div>
-            <div className="newBrands__form__content__inputs">
+            <div className="newSupplier__form__content__inputs">
               <div>
                 <TextField
                   name="numberAddress"
@@ -173,7 +179,7 @@ export default function NewSupplier() {
               </div>
             </div>
           </div>
-          <div className="newBrands__form__buttons">
+          <div className="newSupplier__form__buttons">
             <div>
               <ButtonsTertiary onClick={() => goBack()}>
                 <MdCancel size={24} />

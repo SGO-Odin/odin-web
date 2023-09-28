@@ -18,7 +18,7 @@
       flex-direction: column;
       gap: space("m");
 
-      &__check {
+      & .check {
         display: flex;
         gap: space("p");
 
@@ -37,11 +37,11 @@
       @media (min-width: 1200px) {
         flex-direction: row;
 
-        & div {
+        & .input {
           width: 100%;
         }
 
-        &__check {
+        & .check {
           flex-direction: column;
           align-items: center;
           justify-content: center;

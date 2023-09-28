@@ -47,35 +47,35 @@ module.exports = {
     });
     return config;
   },
-  async headers() {
-    return [
-      {
-        // Aplica o header X-Content-Type-Options para todas as rotas do site
-        source: "/(.*)",
-        headers: [
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "X-XSS-Protection",
-            value: "1; mode=block",
-          },
-          {
-            key: "X-Frame-Options",
-            value: "SAMEORIGIN",
-          },
-          {
-            key: "Referrer-Policy",
-            value: "same-origin",
-          },
-          {
-            key: "Permissions-Policy",
-            value:
-              'microphone=(), camera=(), geolocation=(self "https://blog-nubank-com-br-develop.go-vip.net/"), payment=*',
-          },
-        ],
-      },
-    ];
-  },
+  // async headers() {
+  //   return [
+  //     {
+  //       // Aplica o header X-Content-Type-Options para todas as rotas do site
+  //       source: "/(.*)",
+  //       headers: [
+  //         {
+  //           key: "X-Content-Type-Options",
+  //           value: "nosniff",
+  //         },
+  //         {
+  //           key: "X-XSS-Protection",
+  //           value: "1; mode=block",
+  //         },
+  //         {
+  //           key: "X-Frame-Options",
+  //           value: "SAMEORIGIN",
+  //         },
+  //         {
+  //           key: "Referrer-Policy",
+  //           value: "same-origin",
+  //         },
+  //         {
+  //           key: "Permissions-Policy",
+  //           value:
+  //             'microphone=(), camera=(), geolocation=(self "https://blog-nubank-com-br-develop.go-vip.net/"), payment=*',
+  //         },
+  //       ],
+  //     },
+  //   ];
+  // },
 };

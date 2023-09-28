@@ -34,6 +34,18 @@ export interface ITextField {
   onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
 }
 
+export interface IToggle {
+  disabled?: boolean;
+  name?: string;
+  required?: boolean;
+  isActive?: boolean;
+  label?: string;
+  id?: string;
+  erro?: boolean;
+  messageErro?: string
+  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
+}
+
 export interface ISelect {
   disabled?: boolean;
   form?: string;

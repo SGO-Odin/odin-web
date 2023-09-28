@@ -11,6 +11,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Hero } from "@/src/components/hero";
+import { Toggle } from "@/src/components/toggle";
 
 export default function NewSupplier() {
   const { push } = useRouter();
@@ -67,7 +68,7 @@ export default function NewSupplier() {
             title="Cadastrar Fornecedor"
             paragraph={`Cadastre um novo fornecedor`}>
             <div className="newSupplier__form__content__inputs">
-              <div>
+              <div className="input">
                 <TextField
                   name="companyName"
                   placeholder=""
@@ -78,7 +79,7 @@ export default function NewSupplier() {
                   required={true}
                 />
               </div>
-              <div>
+              <div className="input">
                 <TextField
                   name="businessName"
                   placeholder=""
@@ -89,15 +90,13 @@ export default function NewSupplier() {
                   required={true}
                 />
               </div>
-              <div className="newSupplier__form__content__inputs__check">
-                <label htmlFor="SupplierActive">LABORATÓRIO</label>
-                <input
-                  type="checkbox"
-                  name="isLaboratory"
-                  id="isLaboratory"
-                  checked={isLaboratory}
-                  onChange={(ev) => setIsLaboratory(ev.target.checked)}
-                />
+              <div className="newSupplier__form__content__inputs">
+                <Toggle
+                  label="LABORATÓRIO"
+                  name="toggle-supplier"
+                  id="toggle-supplier"
+                  isActive={isLaboratory}
+                  onChange={(ev) => setIsLaboratory(ev.target.checked)} />
               </div>
             </div>
           </Hero>
@@ -109,7 +108,7 @@ export default function NewSupplier() {
               <hr className="menu__mobile__line" />
             </header>
             <div className="newSupplier__form__content__inputs">
-              <div>
+              <div className="input">
                 <TextField
                   name="zipCode"
                   placeholder=""
@@ -120,7 +119,7 @@ export default function NewSupplier() {
                   required={true}
                 />
               </div>
-              <div>
+              <div className="input">
                 <TextField
                   name="address"
                   placeholder=""
@@ -131,7 +130,7 @@ export default function NewSupplier() {
                   required={true}
                 />
               </div>
-              <div>
+              <div className="input">
                 <TextField
                   name="district"
                   placeholder=""
@@ -144,7 +143,7 @@ export default function NewSupplier() {
               </div>
             </div>
             <div className="newSupplier__form__content__inputs">
-              <div>
+              <div className="input">
                 <TextField
                   name="numberAddress"
                   placeholder=""
@@ -155,7 +154,7 @@ export default function NewSupplier() {
                   required={true}
                 />
               </div>
-              <div>
+              <div className="input">
                 <TextField
                   name="complement"
                   placeholder=""
@@ -166,7 +165,7 @@ export default function NewSupplier() {
                   required={true}
                 />
               </div>
-              <div>
+              <div className="input">
                 <TextField
                   name="city"
                   placeholder=""

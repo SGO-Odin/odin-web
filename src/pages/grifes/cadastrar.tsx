@@ -11,6 +11,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Hero } from "@/src/components/hero";
+import { Toggle } from "@/src/components/toggle";
 
 export default function NewBrands() {
   const { push } = useRouter();
@@ -46,7 +47,7 @@ export default function NewBrands() {
             title="Cadastrar Grife"
             paragraph={`Esta página de foi criada para facilitar o acesso às informações sobre grifes disponíveis. Encontre rapidamente o que você precisa aqui!.`}>
             <div className="newBrands__form__inputs">
-              <div>
+              <div className="input">
                 <TextField
                   name="newBrands"
                   placeholder="Ex: Diesel"
@@ -57,15 +58,14 @@ export default function NewBrands() {
                   required={true}
                 />
               </div>
-              <div className="newBrands__form__inputs__check">
-                <label htmlFor="brandsActive">ATIVO</label>
-                <input
-                  type="checkbox"
-                  name="brandsActive"
-                  id="brandsActive"
-                  checked={isActive}
+              <div className="newBrands__form__inputs">
+                <Toggle
+                  name="toggle-brand"
+                  isActive={isActive}
                   onChange={(ev) => setIsActive(ev.target.checked)}
-                />
+                  label="ATIVO"
+                  id="toggle-brand" />
+
               </div>
             </div>
           </Hero>

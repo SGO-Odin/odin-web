@@ -28,8 +28,6 @@ export default function NewSupplier() {
   const [complement, setComplement] = useState<string>("")
   const [city, setCity] = useState<string>("")
 
-  const [isActive, setIsActive] = useState<boolean>(false)
-
   const handleNewSupplier = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(companyName)
@@ -41,7 +39,6 @@ export default function NewSupplier() {
     console.log(numberAddress)
     console.log(complement)
     console.log(city)
-    // console.log(isActive)
 
     // const data = { supplier, isActive }
     // create
@@ -49,7 +46,7 @@ export default function NewSupplier() {
 
     // reset
     // setSupplier("")
-    setIsActive(false)
+    // setIsActive(false)
 
     goBack()
   }

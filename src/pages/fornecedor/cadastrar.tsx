@@ -3,7 +3,6 @@ import "./newSupplier.scss";
 import { TextField } from "@/src/components/textField";
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { ButtonsPrimary } from "@/src/components/buttons/primary";
-import { BsEmojiSunglassesFill } from "react-icons/bs";
 import { MdCancel, MdLocalShipping } from "react-icons/md";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";

@@ -1,6 +1,4 @@
-"use client";
-
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./select.scss";
 import { ISelect } from "@/src/interface/utils";
 
@@ -28,134 +26,19 @@ export function Select({
   label,
   id,
   erro = false,
-  onChange = null,
+  onChange,
 }: ISelect) {
-  const [select, setSelect] = useState(value);
+  const [select, setSelect] = useState<string>(value ?? "");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    function closeAllSelect(elmnt: HTMLElement | null) {
-      /* Função para fechar todas as caixas de seleção, exceto a atual: */
-      const x = document.getElementsByClassName("select-items");
-      const y = document.getElementsByClassName("select-selected");
-      const xl = x.length;
-      const yl = y.length;
-      const arrNo: number[] = [];
+  const handleButton = () => {
+    setIsOpen(!isOpen);
+  };
 
-      for (let i = 0; i < yl; i++) {
-        if (elmnt === y[i]) {
-          arrNo.push(i);
-        } else {
-          y[i].classList.remove("select-arrow-active");
-        }
-      }
-
-      for (let i = 0; i < xl; i++) {
-        if (!arrNo.includes(i)) {
-          x[i].classList.add("select-hide");
-        }
-      }
-    }
-
-    const customSelects = document.getElementsByClassName("selects__select");
-
-    for (let i = 0; i < customSelects.length; i++) {
-      const x = customSelects[i];
-      const selElmnt = x.querySelector("select");
-
-      // Use uma assertiva de tipo para dizer ao TypeScript que é um HTMLSelectElement
-      const selectElement = selElmnt as HTMLSelectElement | null;
-      // Verifica se selElmnt é do tipo HTMLSelectElement antes de usar getElementsByTagName
-      if (selectElement) {
-        const ll = selectElement.length;
-
-        /* Para cada elemento, crie um novo DIV que atuará como o item selecionado: */
-        const a = document.createElement("DIV");
-        a.setAttribute("class", "select-selected");
-        a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-        x.appendChild(a);
-
-        /* Para cada elemento, crie um novo DIV que conterá a lista de opções: */
-        const b = document.createElement("DIV");
-        b.setAttribute("class", "select-items select-hide");
-
-        for (let j = 1; j < ll; j++) {
-          /* Para cada opção no elemento select original, crie um novo DIV que atuará como um item de opção: */
-          const c = document.createElement("DIV");
-          c.innerHTML = selElmnt.options[j].innerHTML;
-          c.addEventListener("click", function (e) {
-            /* Quando um item é clicado, atualize a caixa de seleção original e o item selecionado: */
-            const y =
-              this.parentElement?.parentElement?.querySelector("select");
-            const h = this.parentElement?.previousElementSibling;
-
-            if (!y || !h) return;
-
-            const sl = y.options.length;
-
-            for (let i = 0; i < sl; i++) {
-              if (y.options[i].innerHTML === this.innerHTML) {
-                y.selectedIndex = i;
-                h.textContent = this.textContent;
-
-                const sameAsSelected =
-                  this.parentElement?.querySelectorAll(".same-as-selected");
-
-                if (sameAsSelected) {
-                  sameAsSelected.forEach((item) => {
-                    if (item instanceof HTMLElement) {
-                      item.classList.remove("same-as-selected");
-                    }
-                  });
-                }
-
-                if (this instanceof HTMLElement) {
-                  this.classList.add("same-as-selected");
-                }
-                break;
-              }
-            }
-
-            if (h) {
-              h.dispatchEvent(new Event("click"));
-            }
-          });
-
-          b.appendChild(c);
-        }
-
-        x.appendChild(b);
-
-        a.addEventListener("click", function (e) {
-          /* Quando a caixa de seleção é clicada, feche todas as outras caixas de seleção e abra/feche a caixa de seleção atual: */
-          e.stopPropagation();
-          closeAllSelect(this);
-
-          // Verifica se o próximo irmão é um elemento HTML antes de acessar a classe
-          const nextSibling = this.nextSibling;
-          if (nextSibling instanceof HTMLElement) {
-            nextSibling.classList.toggle("select-hide");
-          }
-
-          this.classList.toggle("select-arrow-active");
-        });
-      }
-    }
-
-    /* Se o usuário clicar em qualquer lugar fora da caixa de seleção, feche todas as caixas de seleção: */
-    document.addEventListener("click", () => closeAllSelect(null));
-
-    // Limpar efeitos colaterais quando o componente é desmontado
-    return () => {
-      document.removeEventListener("click", () => closeAllSelect(null));
-    };
-  }, []);
-
-  const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const newValue = event.target.value;
-    setSelect(newValue);
-    if (onChange) {
-      onChange(newValue);
-    }
+  const handleSelected = (item: string) => {
+    onChange(item)
+    setSelect(item);
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -168,8 +51,8 @@ export function Select({
           disabled
             ? "selects__select--disabled"
             : erro
-            ? "selects__select--erro"
-            : "selects__select"
+              ? "selects__select--erro"
+              : "selects__select"
         }
       >
         <select
@@ -178,14 +61,31 @@ export function Select({
           required={required}
           multiple={multiple}
           value={select}
-          onChange={(event) => handleSelectChange(event)}
+          className="select-selected"
+          onClick={handleButton}
         >
+          <option className="select-selected__item">Selecione uma opção</option>
           {selection.map((item, index) => (
-            <option key={index} value={item.value}>
+            <option key={index} className="select-selected__item" value={item.value}>
               {item.item}
             </option>
           ))}
         </select>
+        {isOpen && (
+          <div className="select-items">
+            <ul className="select-items__list">
+              {selection.map((item, index) => (
+                <li
+                  key={index}
+                  onClick={() => handleSelected(item.value)}
+                  className="select-items__list__item"
+                >
+                  {item.item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
       {erro ? (
         <span className="selects__message">Mensagem de erro!</span>

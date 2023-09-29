@@ -1,8 +1,9 @@
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
+import { ClientTemplate } from "../template/Cliente";
 
 export default function Clients() {
-  return <h1>Clientes</h1>;
+  return <ClientTemplate />;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

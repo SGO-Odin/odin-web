@@ -1,11 +1,13 @@
-import { ButtonsPrimary } from "@/src/components/buttons/primary";
 import LayoutDefault from "@/src/components/layoutDefault";
 import { Search } from "@/src/components/search";
 import { TablesCustom } from "@/src/components/tablesCustom";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { MdLocalShipping } from "react-icons/md";
+import { MdSearch } from "react-icons/md";
 import "./productTemplate.scss"
+import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
+import { Hero } from "@/src/components/hero";
+import { BsEyeglasses } from "react-icons/bs";
 
 const data = [
   { Id: 1, Nome: "Laboratorio X", Marca: "João", Referencia: "Laboratorio X", Valor: "João", Qtd: "João" },
@@ -18,38 +20,37 @@ export default function ProductTemplate() {
   const { push } = useRouter();
 
   const handlePushNewProduct = () => {
-    push("/produto/cadastrar");
+    push("/produtos/cadastrar");
   };
-  
+
   return (
     <LayoutDefault>
+      <Hero
+        isButtonPrymary={true}
+        title="Cadastrar Produtos"
+        paragraph={`A página de consulta de produtos permite buscar e visualizar informações detalhadas sobre os produtos disponíveis em nosso estoque. Encontre facilmente o que precisa.`}
+        buttonIcon={<BsEyeglasses size={24} />}
+        buttonLabel="Cadastrar Produto"
+        onClick={handlePushNewProduct}>
+        <div className="product__filters">
+          <div>
+            <Search placeholder="ex: Ray Ban" />
+          </div>
+          <div>
+            <ButtonsTertiary>
+              Buscar
+              <MdSearch size={24} />
+            </ButtonsTertiary>
+          </div>
+        </div>
+      </Hero>
       <div className="product">
-        <div className="product__hero">
-          <div>
-            <ButtonsPrimary onClick={() => handlePushNewProduct()}>
-              <MdLocalShipping size={24} />
-              Cadastrar Fornecedor
-            </ButtonsPrimary>
-          </div>
-          <div>
-            <Search />
-          </div>
-        </div>
-        <hr className="menu__mobile__line" />
-        <p className="product__paragraph">
-          Fornecedor desativado não podera ser mais usado no cadastro de
-          produto. <br />
-          Você também pode editar ou excluir um Fornecedor usando os botões
-          abaixo.
-        </p>
-        <div className="product__content">
-          <TablesCustom
-            data={data}
-            columns={columns}
-            isButton={true}
-            typeButton={"two"}
-          />
-        </div>
+        <TablesCustom
+          data={data}
+          columns={columns}
+          isButton={true}
+          typeButton={"two"}
+        />
       </div>
     </LayoutDefault>
   );

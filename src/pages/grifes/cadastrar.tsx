@@ -45,7 +45,7 @@ export default function NewBrands() {
           <Hero
             isButtonPrymary={false}
             title="Cadastrar Grife"
-            paragraph={`Esta página de foi criada para facilitar o acesso às informações sobre grifes disponíveis. Encontre rapidamente o que você precisa aqui!.`}>
+            paragraph={`Esta página de foi criada para facilitar o acesso às informações sobre grifes disponíveis. Encontre rapidamente o que você precisa aqui.`}>
             <div className="newBrands__form__inputs">
               <div className="input">
                 <TextField

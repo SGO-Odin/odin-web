@@ -56,7 +56,7 @@ export interface ISelect {
   label?: string;
   id?: string;
   erro?: boolean;
-  onChange?: (event: string) => void;
+  onChange?: (value: string) => void;
 }
 
 export interface ISignInData {

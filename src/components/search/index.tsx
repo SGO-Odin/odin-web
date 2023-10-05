@@ -12,23 +12,32 @@ export function Search({
   value,
   id,
   onChange = null,
+  label,
+  isLabel = false
 }: ITextField) {
   return (
-    <label className={disabled ? "search-disabled" : "search"} htmlFor={id}>
-      <input
-        className={"search__input"}
-        type="search"
-        id={id}
-        disabled={disabled}
-        minLength={minlength}
-        maxLength={maxlength}
-        name={name}
-        value={value}
-        required={required}
-        placeholder={placeholder}
-        onChange={onChange}
-      />
-      <AiOutlineSearch size={24} className="search__label" />
-    </label>
+    <div className="search-container">
+      {isLabel && (
+        <label className="search__label" htmlFor={id}>
+          {label}
+        </label>
+      )}
+      <label className={disabled ? "search-disabled" : "search"} htmlFor={id}>
+        <input
+          className={"search__input"}
+          type="search"
+          id={id}
+          disabled={disabled}
+          minLength={minlength}
+          maxLength={maxlength}
+          name={name}
+          value={value}
+          required={required}
+          placeholder={placeholder}
+          onChange={onChange}
+        />
+        <AiOutlineSearch size={24} className="search__label" />
+      </label>
+    </div>
   );
 }

@@ -1,79 +1,106 @@
 @import "@/style/sass/config";
 
-.search {
+.search-container {
   width: 100%;
   display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  justify-content: left;
-  gap: space("m");
-  padding: space("p") space("m");
-  border-radius: var(--borda-g, 8px);
-  border: 2px solid color("black-300");
-  background-color: color("black-0");
-  cursor: pointer;
-  transition: all ease-out 300ms;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
 
-  &:hover,
-  &:hover input,
-  &:hover &__label,
-  &:hover input::placeholder {
-    border-color: color("blue-500");
-    color: color("blue-500");
-  }
-
-  &:focus-within,
-  &:focus-within input,
-  &:focus-within &__label,
-  &:focus-within input::placeholder {
-    border-color: color("indigo-500");
-    color: color("indigo-500");
-  }
-
-  &__label {
-    transition: all ease-out 300ms;
-    cursor: pointer;
+  .search__label {
     color: color("black-800");
-  }
 
-  &__input {
-    width: 100%;
-    height: 100%;
-    outline: none;
-    border: none;
-
-    color: color("black-800");
+    /* font/corpo/paragrafo/1 */
     font-family: $fontbody;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px; /* 171.429% */
+    line-height: 2rem;
+    /* 200% */
     transition: all ease-out 300ms;
 
-    &::placeholder {
-      transition: all ease-out 300ms;
-      color: color("black-800");
+    @media (min-width: 1200px) {
+      font-size: 1rem;
     }
   }
-}
 
-.search-disabled {
-  width: 100%;
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  justify-content: left;
-  gap: space("m");
-  padding: space("m");
-  border-radius: var(--borda-g, 12px);
-  border: 2px solid color("black-100");
-  background-color: color("black-100");
-  cursor: pointer;
-  transition: all ease-out 300ms;
+  .search {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: left;
+    gap: space("m");
+    padding: space("p") space("m");
+    border-radius: var(--borda-g, 8px);
+    border: 2px solid color("black-300");
+    background-color: color("black-0");
+    cursor: pointer;
+    transition: all ease-out 300ms;
 
-  input:disabled,
-  input:disabled::placeholder,
-  input:disabled + .search__label {
-    color: color("black-300");
+    &:hover,
+    &:hover input,
+    &:hover &__label,
+    &:hover input::placeholder {
+      border-color: color("blue-500");
+      color: color("blue-500");
+    }
+
+    &:focus-within,
+    &:focus-within input,
+    &:focus-within &__label,
+    &:focus-within input::placeholder {
+      border-color: color("indigo-500");
+      color: color("indigo-500");
+    }
+
+    &__label {
+      transition: all ease-out 300ms;
+      cursor: pointer;
+      color: color("black-800");
+    }
+
+    &__input {
+      width: 100%;
+      height: 100%;
+      outline: none;
+      border: none;
+
+      color: color("black-800");
+      font-family: $fontbody;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      /* 171.429% */
+      transition: all ease-out 300ms;
+
+      &::placeholder {
+        transition: all ease-out 300ms;
+        color: color("black-800");
+      }
+    }
   }
+
+  .search-disabled {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: left;
+    gap: space("m");
+    padding: space("m");
+    border-radius: var(--borda-g, 12px);
+    border: 2px solid color("black-100");
+    background-color: color("black-100");
+    cursor: pointer;
+    transition: all ease-out 300ms;
+
+    input:disabled,
+    input:disabled::placeholder,
+    input:disabled+.search__label {
+      color: color("black-300");
+    }
+  }
+
 }

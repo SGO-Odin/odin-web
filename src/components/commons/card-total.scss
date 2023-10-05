@@ -1,0 +1,76 @@
+@import "@/style/sass/config";
+
+.card-total {
+    width: 100%;
+    display: flex;
+    padding: space("m");
+    flex-direction: column;
+    align-items: flex-start;
+    gap: space("xg");
+    border-radius: var(--borda-g, 12px);
+    border: 1px solid color("black-300");
+    background: color("black-0");
+
+    @media (min-width: 1200px) {
+        width: 50%;
+        gap: space("p");
+    }
+
+    &__container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+
+        &:has(label) {
+            justify-content: flex-start;
+            gap: space("m");
+        }
+
+        @media (min-width: 1200px) {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        &__text {
+            color: color("black-800");
+            text-transform: uppercase;
+            /* font/corpo/paragrafo/1 */
+            font-family: $fontbody;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 32px;
+            /* 200% */
+        }
+
+        &__input {
+            width: 100%;
+            display: flex;
+            padding: space("p") space("m");
+            justify-content: flex-start;
+            align-items: center;
+            gap: space("p");
+
+            border-radius: var(--borda-m, 8px);
+            border: 1px solid color("black-400");
+            color: color("black-300");
+
+            &__text {
+                width: 100%;
+                border: none;
+                outline: none;
+
+                /* font/corpo/paragrafo/2 */
+                font-family: $fontbody;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 24px;
+                /* 171.429% */
+            }
+        }
+    }
+}

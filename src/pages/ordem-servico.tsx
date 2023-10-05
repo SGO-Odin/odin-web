@@ -1,8 +1,9 @@
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
+import ServiceOrderTemplate from "../template/OrdemServico";
 
 export default function ServiceOrder() {
-  return <h1>Ordem de Serviço</h1>;
+  return <ServiceOrderTemplate />;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

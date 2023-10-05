@@ -1,0 +1,91 @@
+@import "@/style/sass/config";
+
+.table-payment {
+    width: 100%;
+    min-height: fit-content;
+    max-height: calc(80vh - 32px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    overflow: auto;
+    overflow: overlay;
+
+    &::-webkit-scrollbar {
+        width: 0.25rem;
+        height: 0.25rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: color("indigo-50");
+        border-radius: 12px;
+        visibility: hidden;
+    }
+
+    &:hover::-webkit-scrollbar-thumb {
+        visibility: visible;
+    }
+
+    table,
+    th,
+    td {
+        text-align: left;
+        border-collapse: collapse;
+    }
+
+    &__table {
+        width: 100%;
+
+        &__body {
+            &__row {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-radius: 7px;
+                border: 1px solid color("black-300");
+
+                &__item {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: space("p") space("m");
+
+                    color: color("black-800");
+                    /* body */
+                    font-family: $fontbody;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 24px;
+                    /* 171.429% */
+
+                    & button {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border: none;
+                        background-color: transparent;
+
+                        &:hover {
+                            color: color("red-400");
+                        }
+                    }
+
+                    @media (min-width: 1200px) {
+                        font-size: 16px;
+                        line-height: 32px;
+                        /* 200% */
+                    }
+                }
+            }
+        }
+
+        @media (max-width: 1000px) {
+            td {
+                min-width: 12rem;
+            }
+        }
+    }
+}

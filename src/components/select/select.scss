@@ -172,7 +172,7 @@
       align-self: stretch;
       gap: 10px;
       overflow: hidden;
-      padding: space("m");
+      padding: 12px;
       cursor: pointer;
       outline: none;
 
@@ -239,7 +239,7 @@
           width: 100%;
           display: flex;
           align-items: flex-start;
-          padding: space("m");
+          padding: space("p");
           border-radius: var(--borda-p, 4px);
           background: color("black-0");
 

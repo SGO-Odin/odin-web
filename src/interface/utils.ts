@@ -1,74 +1,75 @@
-import { ChangeEventHandler, MouseEventHandler, ReactElement, ReactNode } from "react";
-import { IconType } from "react-icons";
+import { ChangeEventHandler, MouseEventHandler, ReactElement, ReactNode } from "react"
+import { IconType } from "react-icons"
 
 export interface IButton {
-  autofocus?: boolean;
-  disabled?: boolean;
-  form?: string;
-  formaction?: string;
-  name?: string;
-  type?: "button" | "submit" | "reset";
-  value?: string;
-  children?: React.ReactNode | string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  autofocus?: boolean
+  disabled?: boolean
+  form?: string
+  formaction?: string
+  name?: string
+  type?: "button" | "submit" | "reset"
+  value?: string
+  children?: React.ReactNode | string
+  onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
 export interface ITextField {
-  autocomplete?: string;
-  autofocus?: boolean;
-  disabled?: boolean;
-  form?: string;
-  formaction?: string;
-  inputmode?: string;
-  minlength?: number;
-  maxlength?: number;
-  name?: string;
-  placeholder?: string;
-  required?: boolean;
-  value?: string;
-  label?: string;
-  id?: string;
-  erro?: boolean;
-  type?: string;
+  autocomplete?: string
+  autofocus?: boolean
+  disabled?: boolean
+  form?: string
+  formaction?: string
+  inputmode?: string
+  minlength?: number
+  maxlength?: number
+  name?: string
+  placeholder?: string
+  required?: boolean
+  value?: string
+  label?: string
+  id?: string
+  erro?: boolean
+  type?: string
   messageErro?: string
-  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
+  onChange?: ChangeEventHandler<HTMLInputElement> | undefined
+  isLabel?: boolean
 }
 
 export interface IToggle {
-  disabled?: boolean;
-  name?: string;
-  required?: boolean;
-  isActive?: boolean;
-  label?: string;
-  id?: string;
-  erro?: boolean;
+  disabled?: boolean
+  name?: string
+  required?: boolean
+  isActive?: boolean
+  label?: string
+  id?: string
+  erro?: boolean
   messageErro?: string
-  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
+  onChange?: ChangeEventHandler<HTMLInputElement> | undefined
 }
 
 export interface ISelect {
-  disabled?: boolean;
-  form?: string;
-  multiple?: boolean;
-  name?: string;
-  required?: boolean;
-  value?: string;
-  label?: string;
-  id?: string;
-  erro?: boolean;
-  onChange?: (value: string) => void;
+  disabled?: boolean
+  form?: string
+  multiple?: boolean
+  name?: string
+  required?: boolean
+  value?: string
+  label?: string
+  id?: string
+  erro?: boolean
+  onChange?: (value: string) => void
 }
 
 export interface ISignInData {
-  login: string;
-  password: string;
+  login: string
+  password: string
 }
 
 export interface IUser {
-  name: string;
-  sobrenome: string;
-  email: string;
-  photo: string;
+  name: string
+  sobrenome: string
+  email: string
+  photo: string
 }
 
 export interface ITable {
@@ -80,13 +81,13 @@ export interface ITable {
 }
 
 export interface IRouter {
-  name?: string;
-  route?: string;
-  icon?: ReactElement<IconType>;
+  name?: string
+  route?: string
+  icon?: ReactElement<IconType>
   subItem?:
-    | {
-        name?: string;
-        route?: string;
-      }[]
-    | null;
+  | {
+    name?: string
+    route?: string
+  }[]
+  | null
 }

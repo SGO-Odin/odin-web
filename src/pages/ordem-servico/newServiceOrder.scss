@@ -1,0 +1,115 @@
+@import "@/style/sass/config";
+
+.service-order-template {
+    width: 100%;
+    display: flex;
+
+    &__form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: space("xg");
+
+        &__content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: space("m");
+            padding: space("m");
+            border-radius: 7px;
+            background: color("black-0");
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+            &__inputs {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                gap: space("m");
+
+                & .input {
+                    width: 100%;
+                }
+
+                @media (min-width: 1200px) {
+                    flex-direction: row;
+
+                    & .input-toggle {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: space-between;
+                    }
+                }
+            }
+
+            &__data {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                gap: space("m");
+
+                @media (min-width: 1200px) {
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+
+                &__hero {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: center;
+                    gap: space("m");
+
+                    color: color("black-800");
+
+                    /* font/corpo/paragrafo/1 */
+                    font-family: $fontbody;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 32px;
+                    /* 200% */
+
+                    @media (min-width: 1200px) {
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: flex-start;
+                    }
+
+                    & span:last-of-type {
+                        color: color("black-400");
+                    }
+                }
+            }
+        }
+
+        &__buttons {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: space("m");
+
+            & div {
+                width: 100%;
+            }
+
+            @media (min-width: 1200px) {
+                flex-direction: row;
+                justify-content: center;
+
+                & div {
+                    width: 30%;
+                }
+            }
+        }
+    }
+}

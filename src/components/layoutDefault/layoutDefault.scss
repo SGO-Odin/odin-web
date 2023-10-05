@@ -2,9 +2,8 @@
 
 .layoutDefault {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   max-height: 100vh;
-  overflow: hidden;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -16,15 +15,32 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 0.25rem;
+      height: 0.25rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: color("indigo-50");
+      border-radius: 12px;
+      visibility: hidden;
+    }
+
+    &:hover::-webkit-scrollbar-thumb {
+      visibility: visible;
+    }
 
     &__hero {
       width: 100%;
-      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
       padding: 64px space("m");
+      gap: space("xg");
+      background-color: color("indigo-50");
 
       @media (min-width: 1200px) {
         padding: 64px space("xg");

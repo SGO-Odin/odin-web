@@ -2,193 +2,129 @@ import {
   MdExpandLess,
   MdExpandMore,
   MdNotifications,
-  MdNotificationsActive,
-  MdOutlineClose,
   MdOutlineMenu,
 } from "react-icons/md";
 import { ButtonsPrimary } from "../../buttons/primary";
 import { AiFillHeart } from "react-icons/ai";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import { AuthContext } from "@/src/context/AuthContext";
 import Image from "next/image";
 import avatar from "@/src/images/avatar.jpeg";
 import "./menu.scss";
 import slogan from "@/src/images/slogan-indigo.png";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { routes } from "../routes";
+import { Item } from "./item";
+import { usePathname } from 'next/navigation'
 
 interface IMenu {
   isOpenMenuPrimary: boolean
   setIsOpenMenuPrimary: Dispatch<SetStateAction<boolean>>
 }
 
-export function Menu({ isOpenMenuPrimary, setIsOpenMenuPrimary } : IMenu) {
+export const Menu = ({ isOpenMenuPrimary, setIsOpenMenuPrimary }: IMenu) => {
   const { user } = useContext(AuthContext);
-  const pathname = usePathname();
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const [isOpenSubItem, setIsOpenSubItem] = useState<boolean>(false);
-  const [isOpenMenuDesk, setIsOpenMenuDesk] = useState<boolean>(false)
+  const pathname = `/${usePathname().split("/")[1]}`
 
-  const handleOpenClose = () => {
-    setIsOpenMenu(!isOpenMenu);
-  };
+  let currentDataRoute = routes.find(item => item.route === pathname);
+  let nameCurrentPage = null
+
+  if (!currentDataRoute) {
+    currentDataRoute = routes.find(item => {
+      if (item.subItem) {
+        return item.subItem.find(subItem => subItem.route === pathname)
+      }
+    })
+
+    nameCurrentPage = currentDataRoute.subItem.find(subItem => subItem.route === pathname)
+  }
+
+  const subMenu = [
+    {
+      name: "Configuração",
+      route: "/configuracao",
+    },
+    {
+      name: "Sair",
+      route: "/sair",
+    },
+  ]
 
   return (
     <header className="menu">
-      <div className="menu__desktop">
-        <div className="menu__desktop__hero">
-          <div className="menu__desktop__hero__button">
-            <ButtonsPrimary onClick={() => setIsOpenMenuPrimary(!isOpenMenuPrimary)}>
-              <MdOutlineMenu size={24} />
-            </ButtonsPrimary>
-          </div>
-          <div className="menu__desktop__hero__title">
-            <div className="menu__desktop__hero__title__icon">
-              <AiFillHeart size={24} />
-            </div>
-            <h1 className="menu__desktop__hero__title__label">Grifes</h1>
-          </div>
+      <div className="hero">
+        <Image
+          src={slogan}
+          width={50}
+          height={50}
+          alt="Slogan Odin Sitema de Gerenciamento Optico"
+          className="hero__slogan"
+        />
+        <div className="hero__button ">
+          <ButtonsPrimary onClick={() => setIsOpenMenuPrimary(!isOpenMenuPrimary)}>
+            <MdOutlineMenu size={24} />
+          </ButtonsPrimary>
         </div>
-        <div className="menu__desktop__avatar">
-          <MdNotifications size={24} className="menu__desktop__avatar__icon" />
-          {!!user && (
-            <Image
-              src={user?.photo || avatar}
-              width={50}
-              height={50}
-              alt={`${user?.name} Avatar Photo`}
-              className="menu__desktop__avatar__photo"
-            />
-          )}
-          <button className="menu__desktop__avatar__button" onClick={() => setIsOpenMenuDesk(!isOpenMenuDesk)}>
-            {isOpenMenuDesk && <MdExpandLess size={24}/>}
-            {!isOpenMenuDesk && <MdExpandMore size={24} />}
-          </button>
-          {isOpenMenuDesk && (
-            <nav className="menu__desktop__avatar__nav">
-            <ul className="menu__desktop__avatar__nav__list">
-                <Link className="menu__desktop__avatar__nav__list__item" href={"/configuracao"}>
-                    Configuração
-                </Link>
-                <hr className="menu__mobile__line"/>
-                <Link className="menu__desktop__avatar__nav__list__item" href={"/sair"}>
-                    Sair
-                </Link>
-            </ul>
-          </nav>
-          )}
+        <div className="hero__button subMenu">
+          <ButtonsPrimary onClick={() => setIsOpenMenu(!isOpenMenu)}>
+            <MdOutlineMenu size={24} />
+          </ButtonsPrimary>
+        </div>
+        <div className="hero__title">
+          <div className="hero__title__icon">
+            {currentDataRoute.icon}
+          </div>
+          <h1 className="hero__title__label">
+            {nameCurrentPage ? nameCurrentPage.name : currentDataRoute.name}
+          </h1>
         </div>
       </div>
-      <div className="menu__mobile">
-        <div className="menu__mobile__hero">
-          <Image
-            src={slogan}
-            width={50}
-            height={50}
-            alt="Slogan Odin Sitema de Gerenciamento Optico"
-          />
-          <div className="menu__mobile__hero__button">
-            <ButtonsPrimary onClick={() => handleOpenClose()}>
-              {isOpenMenu && <MdOutlineClose size={24} />}
-              {!isOpenMenu && <MdOutlineMenu size={24} />}
-            </ButtonsPrimary>
-          </div>
-        </div>
+      <div className={`content ${isOpenMenu ? 'show' : 'hide'}`}>
         {isOpenMenu && (
-          <nav className="menu__mobile__nav">
-            <ul className="menu__mobile__nav__list">
+          <nav className="nav sidebar">
+            <ul className="nav__list">
               {routes.map((item, index) => (
-                <li
-                  key={index}
-                  className={
-                    pathname == item.route
-                      ? "menu__mobile__nav__subList__item--active"
-                      : "menu__mobile__nav__subList__item"
-                  }
-                >
-                  {!!item.subItem ? (
-                    <>
-                      <button
-                        className="menu__mobile__nav__list__item__header"
-                        onClick={() => setIsOpenSubItem(!isOpenSubItem)}
-                      >
-                        Cadatros
-                        {!isOpenSubItem && <MdExpandMore size={24} />}
-                        {isOpenSubItem && <MdExpandLess size={24} />}
-                      </button>
-                      <ul className="menu__mobile__nav__subList">
-                        {isOpenSubItem &&
-                          item.subItem.map((subItem, index) => (
-                            <li
-                              key={index}
-                              className={
-                                pathname == subItem.route
-                                  ? "menu__mobile__nav__subList__item--active"
-                                  : "menu__mobile__nav__subList__item"
-                              }
-                            >
-                              <Link href={subItem.route}>{subItem.name}</Link>
-                            </li>
-                          ))}
-                      </ul>
-                    </>
-                  ) : (
-                    <Link href={item.route}>{item.name}</Link>
-                  )}
-                </li>
+                <Item key={index} router={item} setIsOpenSubItem={setIsOpenSubItem} isOpenSubItem={isOpenSubItem} />
               ))}
             </ul>
           </nav>
         )}
-        {isOpenMenu && <hr className="menu__mobile__line" />}
-        {isOpenMenu && (
-          <div className="menu__mobile__avatar">
-            <MdNotifications size={24} className="menu__avatar__icon" />
-            <div className="menu__mobile__avatar__user">
-              {!!user && (
-                <Image
-                  src={user?.photo || avatar}
-                  width={50}
-                  height={50}
-                  alt={`${user?.name} Avatar Photo`}
-                  className="menu__mobile__avatar__user__photo"
-                />
-              )}
-              <div className="menu__mobile__avatar__user__content">
-                <h5 className="menu__mobile__avatar__user__content__name">{`${user?.name} ${user?.sobrenome}`}</h5>
-                <span className="menu__mobile__avatar__user__email">
-                  {user?.email}
-                </span>
-              </div>
+        {isOpenMenu && <hr className="line" />}
+        <div className={`avatar ${isOpenMenu ? 'open' : ''}`}>
+          <MdNotifications size={24} className="avatar__icon" />
+          <div className="avatar__user">
+            {!!user && (
+              <Image
+                src={user?.photo || avatar}
+                width={50}
+                height={50}
+                alt={`${user?.name} Avatar Photo`}
+                className="photo"
+              />
+            )}
+            <div className="content">
+              <h5 className="content__name">{`${user?.name} ${user?.sobrenome}`}</h5>
+              <span className="email">
+                {user?.email}
+              </span>
             </div>
           </div>
-        )}
+          <button className="avatar__button" onClick={() => setIsOpenMenu(!isOpenMenu)}>
+            {isOpenMenu && <MdExpandLess size={24} />}
+            {!isOpenMenu && <MdExpandMore size={24} />}
+          </button>
+        </div>
         {isOpenMenu && (
-          <nav className="menu__mobile__nav">
-            <ul className="menu__mobile__nav__list">
-              <li
-                className={
-                  pathname == "/configuracao"
-                    ? "menu__mobile__nav__subList__item--active"
-                    : "menu__mobile__nav__subList__item"
-                }
-              >
-                <Link href={"/configuracao"}>Configuração</Link>
-              </li>
-              <li
-                className={
-                  pathname == "/sair"
-                    ? "menu__mobile__nav__subList__item--active"
-                    : "menu__mobile__nav__subList__item"
-                }
-              >
-                <Link href={"/sair"}>Sair</Link>
-              </li>
+          <nav className="nav">
+            <ul className="nav__list">
+              {subMenu.map((item, index) => (
+                <Item key={index} router={item} />
+              ))}
             </ul>
           </nav>
         )}
       </div>
     </header>
   );
-}
+};

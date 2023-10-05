@@ -1,0 +1,40 @@
+@import "@/style/sass/config";
+
+.card {
+    display: flex;
+    width: 100%;
+    padding: space("xg");
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: var(--borda-xg, 16px);
+    background: color("blue-500");
+
+    /* elevacao/3 */
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.06);
+    color: color("black-0");
+
+    @media (min-width: 1200px) {
+        width: 344px;
+    }
+
+    &__paragraph {
+        /* font/corpo/mini */
+        font-family: $fontbody;
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 16px;
+        /* 160% */
+    }
+
+    &__title {
+        /* H3 */
+        font-family: $fonttitle;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 175%;
+        /* 42px */
+    }
+}

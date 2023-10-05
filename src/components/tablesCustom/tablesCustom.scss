@@ -1,0 +1,129 @@
+@import "@/style/sass/config";
+
+.table__container {
+  width: 100%;
+  min-height: fit-content;
+  max-height: calc(80vh - 32px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  overflow: auto;
+  overflow: overlay;
+
+  &::-webkit-scrollbar {
+    width: 0.25rem;
+    height: 0.25rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: color("indigo-50");
+    border-radius: 12px;
+    visibility: hidden;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+  }
+
+  table,
+  th,
+  td {
+    text-align: left;
+    border-collapse: collapse;
+  }
+
+  .table {
+    width: 100%;
+
+    &__head {
+      border-radius: 3px;
+
+      &__col {
+        &__item {
+          padding: space("p") space("m");
+          position: sticky;
+          top: 0;
+          left: 0;
+          background-color: color("indigo-500");
+          color: color("black-0");
+          cursor: pointer;
+
+          /* font/corpo/paragrafo/2 */
+          font-family: $fontbody;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 24px;
+          /* 171.429% */
+
+          @media (min-width: 1200px) {
+            font-size: 16px;
+            line-height: 32px;
+            /* 200% */
+          }
+        }
+      }
+    }
+
+    &__body {
+      &__row {
+        --delay: 0.1s;
+        transition: 0.5s ease-in-out var(--delay), background-color 0s;
+
+        &:nth-child(even) {
+          background: rgba(36, 62, 85, 0.25);
+        }
+
+        &:hover {
+          background-color: color("black-100");
+        }
+
+        &__item {
+          padding: space("p") space("m");
+
+          color: color("black-800");
+          /* body */
+          font-family: $fontbody;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 24px;
+          /* 171.429% */
+
+          @media (min-width: 1200px) {
+            font-size: 16px;
+            line-height: 32px;
+            /* 200% */
+          }
+
+          &+.inactive {
+            font-size: 14px;
+            color: color("red-400");
+            font-weight: 600;
+          }
+
+          &+.active {
+            font-size: 14px;
+            color: color("green");
+            font-weight: 600;
+          }
+
+          &+.buttons {
+            display: flex;
+            gap: space("p");
+          }
+        }
+      }
+    }
+
+    @media (max-width: 1000px) {
+      td {
+        min-width: 12rem;
+      }
+    }
+  }
+}

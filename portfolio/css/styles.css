@@ -1,0 +1,117 @@
+.body {
+  width: 100%;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.body__section-color,
+.section-color__color-primary,
+.palettes {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.title-secundary {
+  color: var(--cor-black-800, #464646);
+
+  /* font/titulo/2 */
+  font-family: "Josefin Sans";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px; /* 133.333% */
+}
+
+.paragraph-2 {
+  color: var(--cor-black-800, #464646);
+
+  /* font/corpo/paragrafo/1 */
+  font-family: "Noto Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px; /* 200% */
+}
+
+.title-terciary {
+  color: var(--cor-black-800, #464646);
+
+  /* font/titulo/4 */
+  font-family: "Josefin Sans";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 109.091% */
+}
+
+.palettes__colors {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  overflow-x: auto;
+}
+
+.colors__color {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.color__item {
+  width: 61px;
+  height: 61px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color__item span {
+  display: none;
+}
+
+.color__weigth {
+  padding-left: 8px;
+  color: var(--cor-black-800, #464646);
+
+  /* font/titulo/5 */
+  font-family: "Josefin Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 150% */
+}
+
+.color__hexadecimal {
+  padding-left: 8px;
+  color: var(--cor-black-800, #464646);
+
+  /* font/corpo/legenda */
+  font-family: Noto Sans;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 200% */
+}
+
+.indigo-900 {
+  background-color: #090f16;
+}
+
+.section-color-division {
+  width: 100%;
+  display: block;
+  border: 1px solid #bbb;
+}
+
+@media (min-width: 1200px) {
+  .body {
+    padding: 0 18%;
+  }
+}

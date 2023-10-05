@@ -1,0 +1,81 @@
+@import "@/style/sass/config";
+
+.newSupplier {
+  width: 100%;
+  display: flex;
+
+  &__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: space("xg");
+
+    &__content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: space("m");
+      padding: space("m");
+      border-radius: 7px;
+      background: color("black-0");
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+      &__header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: space("p");
+
+        &__title {
+          color: color("indigo-500");
+          /* font/titulo/4 */
+          font-family: $fonttitle;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 24px;
+          /* 150% */
+        }
+      }
+
+      &__inputs {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: space("m");
+
+        @media (min-width: 1200px) {
+          flex-direction: row;
+
+          & .input {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    &__buttons {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: space("m");
+
+      & div {
+        width: 100%;
+      }
+
+      @media (min-width: 1200px) {
+        flex-direction: row;
+        justify-content: center;
+
+        & div {
+          width: 30%;
+        }
+      }
+    }
+  }
+}

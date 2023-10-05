@@ -1,0 +1,89 @@
+@import "@/style/sass/config";
+
+.hero-header {
+    width: 100%;
+    display: flex;
+    padding: space("m");
+    flex-direction: column;
+    align-items: flex-start;
+    gap: space("g");
+    align-self: stretch;
+
+    border-radius: var(--borda-g, 12px);
+    background: color("black-0");
+
+    /* elevacao/4 */
+    box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 0.06);
+
+    &__container {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        gap: space("m");
+
+        & div:nth-child(2) {
+            @media (max-width: 1200px) {
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            flex-direction: row;
+            justify-content: center;
+            gap: space("zero");
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: space("p");
+            flex: 1 0 0;
+
+            .title {
+                color: color("indigo-500");
+
+                /* font/titulo/1 */
+                font-family: $fonttitle;
+                font-size: 2rem;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 48px;
+                /* 150% */
+            }
+
+            .paragraph {
+                width: 100%;
+                color: color("black-800");
+
+                /* font/corpo/paragrafo/1 */
+                font-family: $fontbody;
+                font-size: 1rem;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 2rem;
+                /* 200% */
+
+                @media (min-width: 1200px) {
+                    width: 50%;
+                }
+            }
+        }
+    }
+
+    &__line {
+        width: 100%;
+        border: 1px solid color("black-300");
+    }
+
+    &__content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: space("m");
+    }
+}

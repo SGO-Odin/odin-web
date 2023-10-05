@@ -1,0 +1,131 @@
+@import "@/style/sass/config";
+
+.toggle {
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 8px;
+
+    &__label {
+        color: color("black-800");
+
+        /* font/corpo/paragrafo/1 */
+        font-family: $fontbody;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 2rem;
+        text-align: center;
+        /* 200% */
+        transition: all ease-out 300ms;
+
+        @media (min-width: 1200px) {
+            font-size: 1rem;
+        }
+    }
+
+    &__message {
+        color: color("red-400");
+
+        /* font/corpo/paragrafo/2 */
+        font-family: $fontbody;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        /* 171.429% */
+    }
+
+    &__checkbox {
+        width: space("xg");
+        height: space("g");
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 1px;
+        position: relative;
+        cursor: pointer;
+
+        flex-shrink: 0;
+        border-radius: 800px;
+        border: 2px solid color("black-400");
+        transition: all ease-out 300ms;
+
+        &:has(:checked) {
+            justify-content: flex-end;
+            border-color: color("indigo-500");
+            background-color: color("indigo-500");
+        }
+
+        &:has(:checked) &__button {
+            background-color: color("black-0");
+        }
+
+        &__input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        &__button {
+            width: space("m");
+            height: space("m");
+            border-radius: 800px;
+            background: color("black-400");
+            transition: all ease-out 300ms;
+
+            &::before {
+                content: "";
+                width: space("2xg");
+                height: space("2xg");
+                position: absolute;
+                top: -50%;
+                right: 0;
+                border-radius: 999px;
+                background: rgba(69, 113, 163, 0.04);
+                z-index: 9999;
+                opacity: 0;
+                transition: all ease-out 300ms;
+            }
+        }
+
+        &:hover &__button::before {
+            opacity: 100%;
+        }
+
+        &:has(:active) &__button::before {
+            opacity: 100%;
+            background: rgba(69, 113, 163, 0.16);
+        }
+
+        &:has(:focus) &__button::before {
+            opacity: 100%;
+            background: rgba(69, 113, 163, 0.08);
+        }
+
+        &:hover:has(:checked) &__button::before {
+            opacity: 100%;
+            right: -50%;
+            background: rgba(69, 113, 163, 0.04);
+        }
+
+        &:hover:has(:checked:active) &__button::before {
+            opacity: 100%;
+            right: -50%;
+            background: rgba(69, 113, 163, 0.16);
+        }
+
+        &:has(:checked:focus) &__button::before {
+            opacity: 100%;
+            right: -50%;
+            background: rgba(69, 113, 163, 0.08);
+        }
+    }
+}

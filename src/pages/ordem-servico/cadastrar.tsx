@@ -18,7 +18,6 @@ import { TablesCustom } from "@/src/components/tablesCustom";
 import CardTotal from "@/src/components/commons/card-total";
 import TablePayment from "@/src/components/commons/table-payment";
 import Revenue from "@/src/components/commons/revenue";
-import { useFormatNumberReais } from "@/src/hook/format-number-reais";
 
 const rows = [
     { "Ref": "rb20712", Unidade: "PC", "Produto / Serviço": "Armação Acetato Preto", Quantidade: "1", "Val. Unit.": "350.00", "Val. Total": "350.00" },
@@ -32,7 +31,7 @@ const sumTotal = rows.reduce((total, item) => {
     return total + sumValueTotal
 }, 0)
 
-export default function newServiceOrder() {
+export default function NewServiceOrder() {
     const { push } = useRouter();
     const [isButton, setIsButton] = useState<"1" | "2" | "3">("1")
 

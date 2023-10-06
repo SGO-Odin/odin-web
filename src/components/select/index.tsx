@@ -27,6 +27,7 @@ export function Select({
   id,
   erro = false,
   onChange,
+  placeholder = "Selecione uma opção",
 }: ISelect) {
   const [select, setSelect] = useState<string>(value ?? "");
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -64,7 +65,7 @@ export function Select({
           className="select-selected"
           onClick={handleButton}
         >
-          <option className="select-selected__item">Selecione uma opção</option>
+          <option className="select-selected__item">{placeholder}</option>
           {selection.map((item, index) => (
             <option key={index} className="select-selected__item" value={item.value}>
               {item.item}

@@ -57,6 +57,7 @@ export interface ISelect {
   label?: string
   id?: string
   erro?: boolean
+  placeholder?: string
   onChange?: (value: string) => void
 }
 

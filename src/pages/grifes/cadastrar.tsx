@@ -1,5 +1,5 @@
 import LayoutDefault from "@/src/components/layoutDefault";
-import "./newBrands.scss";
+// import "./newBrands.scss";
 import { TextField } from "@/src/components/textField";
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { ButtonsPrimary } from "@/src/components/buttons/primary";
@@ -12,6 +12,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Hero } from "@/src/components/hero";
 import { Toggle } from "@/src/components/toggle";
+import BrandsFormTemplate from "./template";
 
 export default function NewBrands() {
   const { push } = useRouter();
@@ -20,12 +21,10 @@ export default function NewBrands() {
 
   const handleNewbrands = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(brands)
-    console.log(isActive)
 
     const data = { brands, isActive }
     // create
-    // await axios.post('#', data)
+    await axios.post('/api/brands', data)
 
     // reset
     setBrands("")
@@ -39,53 +38,15 @@ export default function NewBrands() {
   }
 
   return (
-    <LayoutDefault>
-      <div className="newBrands">
-        <form onSubmit={handleNewbrands} className="newBrands__form">
-          <Hero
-            isButtonPrymary={false}
-            title="Cadastrar Grife"
-            paragraph={`Esta página de foi criada para facilitar o acesso às informações sobre grifes disponíveis. Encontre rapidamente o que você precisa aqui.`}>
-            <div className="newBrands__form__inputs">
-              <div className="input">
-                <TextField
-                  name="newBrands"
-                  placeholder="Ex: Diesel"
-                  value={brands}
-                  onChange={(ev) => setBrands(ev.target.value)}
-                  label="NOME DA GRIFE"
-                  id="newBrands"
-                  required={true}
-                />
-              </div>
-              <div className="newBrands__form__inputs">
-                <Toggle
-                  name="toggle-brand"
-                  isActive={isActive}
-                  onChange={(ev) => setIsActive(ev.target.checked)}
-                  label="ATIVO"
-                  id="toggle-brand" />
-
-              </div>
-            </div>
-          </Hero>
-          <div className="newBrands__form__buttons">
-            <div>
-              <ButtonsTertiary onClick={() => goBack()}>
-                <MdCancel size={24} />
-                Cancelar
-              </ButtonsTertiary>
-            </div>
-            <div>
-              <ButtonsPrimary>
-                <BsEmojiSunglassesFill size={24} />
-                Salvar Grife
-              </ButtonsPrimary>
-            </div>
-          </div>
-        </form>
-      </div>
-    </LayoutDefault>
+    <BrandsFormTemplate
+      handleBrands={handleNewbrands}
+      brands={brands}
+      setBrands={setBrands}
+      isActive={isActive}
+      setIsActive={setIsActive}
+      goBack={goBack}
+      title="Cadastrar Grife"
+      paragraph="Esta página de foi criada para facilitar o acesso às informações sobre grifes disponíveis. Encontre rapidamente o que você precisa aqui." />
   );
 }
 

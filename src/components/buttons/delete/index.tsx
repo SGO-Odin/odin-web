@@ -1,16 +1,13 @@
+import Link from 'next/link'
 import './buttonsDelete.scss'
-import { IButton } from '@/src/interface/utils'
+import { ILink } from '@/src/interface/utils'
 
-export function ButtonsDelete({children, disabled = false, name, type, value = null, onClick = null } : IButton) {
-  return (
-        <button 
+export function ButtonsDelete({ children, href = '' }: ILink) {
+    return (
+        <Link
             className="button-delete"
-            disabled={disabled}
-            name={name}
-            type={type}
-            value={value}
-            onClick={onClick}>
+            href={href}>
             {children}
-        </button>
+        </Link>
     )
 }

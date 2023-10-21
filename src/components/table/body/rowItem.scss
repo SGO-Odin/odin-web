@@ -1,0 +1,32 @@
+@import "@/style/sass/config";
+
+.row {
+    padding: space("p") space("m");
+
+    color: color("black-800");
+    /* body */
+    font-family: $fontbody;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    /* 171.429% */
+
+    &.inactive {
+        font-size: 14px;
+        color: color("red-400");
+        font-weight: 600;
+    }
+
+    &.active {
+        font-size: 14px;
+        color: color("green");
+        font-weight: 600;
+    }
+
+    &.buttons {
+        display: flex;
+        padding: space("p") space("m");
+        gap: space("p");
+    }
+}

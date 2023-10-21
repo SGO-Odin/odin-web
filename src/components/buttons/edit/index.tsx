@@ -1,16 +1,13 @@
+import Link from 'next/link'
 import './buttonsEdit.scss'
-import { IButton } from '@/src/interface/utils'
+import { ILink } from '@/src/interface/utils'
 
-export function ButtonsEdit({children, disabled = false, name, type, value = null, onClick = null } : IButton) {
-  return (
-        <button 
+export function ButtonsEdit({ children, href = '' }: ILink) {
+    return (
+        <Link
             className="button-edit"
-            disabled={disabled}
-            name={name}
-            type={type}
-            value={value}
-            onClick={onClick}>
+            href={href}>
             {children}
-        </button>
+        </Link>
     )
 }

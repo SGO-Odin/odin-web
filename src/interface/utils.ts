@@ -13,6 +13,12 @@ export interface IButton {
   onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
+export interface ILink {
+  name?: string
+  children?: React.ReactNode | string
+  href?: string
+}
+
 export interface ITextField {
   autocomplete?: string
   autofocus?: boolean

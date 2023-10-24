@@ -1,16 +1,9 @@
-import LayoutDefault from "@/src/components/layoutDefault";
-import "./newSupplier.scss";
-import { TextField } from "@/src/components/textField";
-import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
-import { ButtonsPrimary } from "@/src/components/buttons/primary";
-import { MdCancel, MdLocalShipping } from "react-icons/md";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 import { useState } from "react";
-import axios from "axios";
 import { useRouter } from "next/navigation";
-import { Hero } from "@/src/components/hero";
-import { Toggle } from "@/src/components/toggle";
+import SupplierFormTemplate from "./template";
+import axios from "axios";
 
 export default function NewSupplier() {
   const { push } = useRouter();
@@ -30,19 +23,9 @@ export default function NewSupplier() {
 
   const handleNewSupplier = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(companyName)
-    console.log(businessName)
-    console.log(isLaboratory)
-    console.log(zipCode)
-    console.log(address)
-    console.log(district)
-    console.log(numberAddress)
-    console.log(complement)
-    console.log(city)
 
-    // const data = { supplier, isActive }
-    // create
-    // await axios.post('#', data)
+    const data = { companyName, businessName, isLaboratory, zipCode, address, district, numberAddress, complement, city }
+    await axios.post('/api/supplier', data)
 
     // reset
     // setSupplier("")
@@ -56,141 +39,30 @@ export default function NewSupplier() {
   }
 
   return (
-    <LayoutDefault>
-      <div className="newSupplier">
-        <form onSubmit={handleNewSupplier} className="newSupplier__form">
-          <Hero
-            isButtonPrymary={false}
-            title="Cadastrar Fornecedor"
-            paragraph={`Cadastre um novo fornecedor`}>
-            <div className="newSupplier__form__content__inputs">
-              <div className="input">
-                <TextField
-                  name="companyName"
-                  placeholder=""
-                  value={companyName}
-                  onChange={(ev) => setCompanyName(ev.target.value)}
-                  label="NOME FANTASIA"
-                  id="companyName"
-                  required={true}
-                />
-              </div>
-              <div className="input">
-                <TextField
-                  name="businessName"
-                  placeholder=""
-                  value={businessName}
-                  onChange={(ev) => setBusinessName(ev.target.value)}
-                  label="RAZÃO SOCIAL"
-                  id="businessName"
-                  required={true}
-                />
-              </div>
-              <div className="newSupplier__form__content__inputs">
-                <Toggle
-                  label="LABORATÓRIO"
-                  name="toggle-supplier"
-                  id="toggle-supplier"
-                  isActive={isLaboratory}
-                  onChange={(ev) => setIsLaboratory(ev.target.checked)} />
-              </div>
-            </div>
-          </Hero>
-          <div className="newSupplier__form__content">
-            <header className="newSupplier__form__content__header">
-              <h2 className="newSupplier__form__content__header__title">
-                Endereço
-              </h2>
-              <hr className="menu__mobile__line" />
-            </header>
-            <div className="newSupplier__form__content__inputs">
-              <div className="input">
-                <TextField
-                  name="zipCode"
-                  placeholder=""
-                  value={zipCode}
-                  onChange={(ev) => setzipCode(ev.target.value)}
-                  label="CEP"
-                  id="zipCode"
-                  required={true}
-                />
-              </div>
-              <div className="input">
-                <TextField
-                  name="address"
-                  placeholder=""
-                  value={address}
-                  onChange={(ev) => setAddress(ev.target.value)}
-                  label="ENDEREÇO"
-                  id="address"
-                  required={true}
-                />
-              </div>
-              <div className="input">
-                <TextField
-                  name="district"
-                  placeholder=""
-                  value={district}
-                  onChange={(ev) => setDistrict(ev.target.value)}
-                  label="BAIRRO"
-                  id="district"
-                  required={true}
-                />
-              </div>
-            </div>
-            <div className="newSupplier__form__content__inputs">
-              <div className="input">
-                <TextField
-                  name="numberAddress"
-                  placeholder=""
-                  value={numberAddress}
-                  onChange={(ev) => setnumberAddress(ev.target.value)}
-                  label="NÚMERO"
-                  id="numberAddress"
-                  required={true}
-                />
-              </div>
-              <div className="input">
-                <TextField
-                  name="complement"
-                  placeholder=""
-                  value={complement}
-                  onChange={(ev) => setComplement(ev.target.value)}
-                  label="COMPLEMENTO"
-                  id="complement"
-                  required={true}
-                />
-              </div>
-              <div className="input">
-                <TextField
-                  name="city"
-                  placeholder=""
-                  value={city}
-                  onChange={(ev) => setCity(ev.target.value)}
-                  label="CIDADE"
-                  id="city"
-                  required={true}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="newSupplier__form__buttons">
-            <div>
-              <ButtonsTertiary onClick={() => goBack()}>
-                <MdCancel size={24} />
-                Cancelar
-              </ButtonsTertiary>
-            </div>
-            <div>
-              <ButtonsPrimary>
-                <MdLocalShipping size={24} />
-                Salvar Fornecedor
-              </ButtonsPrimary>
-            </div>
-          </div>
-        </form>
-      </div>
-    </LayoutDefault>
+    <SupplierFormTemplate
+      companyName={companyName}
+      setCompanyName={setCompanyName}
+      businessName={businessName}
+      setBusinessName={setBusinessName}
+      isLaboratory={isLaboratory}
+      setIsLaboratory={setIsLaboratory}
+      zipCode={zipCode}
+      setzipCode={setzipCode}
+      address={address}
+      setAddress={setAddress}
+      district={district}
+      setDistrict={setDistrict}
+      numberAddress={numberAddress}
+      setnumberAddress={setnumberAddress}
+      complement={complement}
+      setComplement={setComplement}
+      city={city}
+      setCity={setCity}
+      handleSupplier={handleNewSupplier}
+      goBack={goBack}
+      title="Cadastrar Fornecedor"
+      paragraph="Cadastre um novo fornecedor"
+    />
   );
 }
 

@@ -31,10 +31,6 @@ export function BrandsTemplate() {
     push("/grifes/cadastrar");
   };
 
-  const handlePushEditBrands = () => {
-
-  }
-
   return (
     <LayoutDefault>
       <Hero isButtonPrymary={true} title="Consultar Grifes" paragraph={`Esta página de foi criada para facilitar o acesso às informações sobre grifes disponíveis. Encontre rapidamente o que você precisa aqui!.`} buttonIcon={<BsEmojiSunglassesFill size={24} />} buttonLabel="Cadastrar Grifes" onClick={handlePushNewBrands}>

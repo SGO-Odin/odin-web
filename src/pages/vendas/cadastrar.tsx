@@ -127,7 +127,7 @@ export default function NewSale() {
                                     name="orderService"
                                     value={orderService}
                                     placeholder={"Pesquisar Ordem de Serviçoa"}
-                                    onChange={(value) => setOrderService(value)}
+                                    onChange={(ev) => setOrderService(ev.target.value)}
                                     label="IMPORTAR O.S."
                                     id="orderService" />
                             </div>
@@ -197,7 +197,7 @@ export default function NewSale() {
                                 <Select
                                     name="client"
                                     value={client}
-                                    onChange={(value) => setClient(value)}
+                                    onChange={(ev) => setClient(ev.target.value)}
                                     label="CLIENTE"
                                     id="client" />
                             </div>
@@ -208,7 +208,7 @@ export default function NewSale() {
                                 <Select
                                     name="methodPayment"
                                     value={methodPayment}
-                                    onChange={(value) => setMethodPayment(value)}
+                                    onChange={(ev) => setMethodPayment(ev.target.value)}
                                     label="FORMA DE PAGAMENTO"
                                     id="methodPayment" />
                             </div>

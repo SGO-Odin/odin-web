@@ -1,12 +1,10 @@
-import { useRouter } from "next/navigation";
-import { GetServerSideProps } from 'next';
-import { parseCookies } from 'nookies';
-import { useState } from "react";
-import ProductFormTemplate from "./template";
 import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import ProductFormTemplate from "../template";
 
-export default function NewProduct() {
-    const { push } = useRouter();
+export default function EditProductPage() {
+
     const [cost, setCost] = useState<string>("")
     const [percentProfit, setPercentProfit] = useState<string>("")
     const [profit, setProfit] = useState<string>("")
@@ -24,20 +22,47 @@ export default function NewProduct() {
     const [isStockControl, setIsStockControl] = useState<boolean>(false)
     const [isService, setIsService] = useState<boolean>(false)
 
-    const handleNewProduct = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = { cost, selling, stockMin, stockCurrent, location, reference, nameProduct, unit, brands, supplier, isActive, isStockControl, isService }
-        // create
-        await axios.post('/api/product', data)
+    const router = useRouter()
+    const { id } = router.query
 
-        // reset
+    useEffect(() => {
+        if (!id) { return }
+        axios.get('/api/product?id=' + id)
+            .then(response => {
+                setCost(response.data.cost)
+                setPercentProfit(response.data.percentProfit)
+                setProfit(response.data.profit)
+                setSelling(response.data.selling)
+                setStockMin(response.data.stockMin)
+                setStockCurrent(response.data.stockCurrent)
+                setLocation(response.data.location)
+                setReference(response.data.reference)
+                setNameProduct(response.data.nameProduct)
+                setUnit(response.data.unit)
+                setBrands(response.data.brands)
+                setSupplier(response.data.supplier)
+                setIsActive(response.data.isActive)
+                setIsStockControl(response.data.isStockControl)
+                setIsService(response.data.isService)
+
+            })
+    }, [id])
+
+    const handleUpdateProduct = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+
+        const data = { cost, selling, stockMin, stockCurrent, location, reference, nameProduct, unit, brands, supplier, isActive, isStockControl, isService }
+        // update
+        await axios.put('/api/product', { ...data, id })
 
         goBack()
     }
 
     const goBack = () => {
-        push('/produtos')
+        router.back()
     }
+
     return (
         <ProductFormTemplate
             cost={cost}
@@ -70,28 +95,9 @@ export default function NewProduct() {
             setIsStockControl={setIsStockControl}
             isService={isService}
             setIsService={setIsService}
-            handleProduct={handleNewProduct}
+            handleProduct={handleUpdateProduct}
             goBack={goBack}
-            title="Cadastrar Produto"
+            title={`Editar o Produto ${nameProduct}`}
             paragraph={`A página de cadastro de produtos permite adicionar novos produtos ao estoque da ótica. Insira detalhes, como nome, preço e descrição, para atualizar nosso catálogo.`} />
-    );
-}
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const { "odinauth.token": token } = parseCookies(ctx);
-
-    if (!token) {
-        return {
-            redirect: {
-                destination: "/login",
-                permanent: false,
-            },
-        };
-    }
-
-    return {
-        props: {
-
-        }
-    }
+    )
 }

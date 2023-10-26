@@ -2,12 +2,18 @@ import LayoutDefault from "@/src/components/layoutDefault";
 import { Search } from "@/src/components/search";
 import { TablesCustom } from "@/src/components/tablesCustom";
 import { useRouter } from "next/navigation";
-import React from "react";
-import { MdSearch } from "react-icons/md";
+import React, { useEffect, useState } from "react";
+import { MdDelete, MdOutlineEdit, MdSearch } from "react-icons/md";
 import "./productTemplate.scss"
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { Hero } from "@/src/components/hero";
 import { BsEyeglasses } from "react-icons/bs";
+import Head from "@/src/components/table/head";
+import RowItem from "@/src/components/table/body/rowItem";
+import { ButtonsEdit } from "@/src/components/buttons/edit";
+import { ButtonsDelete } from "@/src/components/buttons/delete";
+import { IBrands, IProduct } from "@/src/interface/datas";
+import axios from "axios";
 
 const data = [
   { Id: 1, Nome: "Laboratorio X", Marca: "João", Referencia: "Laboratorio X", Valor: "João", Qtd: "João" },
@@ -18,6 +24,23 @@ const columns = ["Nome", "Marca", "Referencia", "Valor", "Qtd"];
 
 export default function ProductTemplate() {
   const { push } = useRouter();
+
+  const [product, setProduct] = useState<IProduct[]>([])
+  const [listBrands, setListBrands] = useState<IBrands[]>([])
+
+  useEffect(() => {
+    axios.get('/api/brands').then(response => {
+      setListBrands(response.data)
+    })
+
+    axios.get('/api/product').then(response => {
+      setProduct(response.data)
+    })
+  }, [])
+
+  const handlePushNameBrand = (id: number) => {
+    return listBrands.map((item) => item._id === id ? item.brands : null)
+  }
 
   const handlePushNewProduct = () => {
     push("/produtos/cadastrar");
@@ -44,13 +67,35 @@ export default function ProductTemplate() {
           </div>
         </div>
       </Hero>
-      <div className="product">
-        <TablesCustom
-          data={data}
-          columns={columns}
-          isButton={true}
-          typeButton={"two"}
-        />
+      <div className="container-table">
+        <div className="container-table__content">
+          <table className="table">
+            <Head columns={columns} isButton={true} />
+            <tbody className="body">
+              {product.map((item) => (
+                <tr key={item._id} className='body__row'>
+                  <RowItem label={item.nameProduct} isActive={null} />
+                  <RowItem label={handlePushNameBrand(item.brands)[0]} isActive={null} />
+                  <RowItem label={item.reference} isActive={null} />
+                  <RowItem label={`R$ ${Number(item.selling).toPrecision(4)}`} isActive={null} />
+                  <RowItem label={item.isActive ? 'Ativo' : 'Inativo'} isActive={item.isActive} />
+                  <td className={'row buttons'}>
+                    <div>
+                      <ButtonsEdit href={`/produtos/editar?id=${item._id}`}>
+                        <MdOutlineEdit size={24} />
+                      </ButtonsEdit>
+                    </div>
+                    <div>
+                      <ButtonsDelete href={`/produtos/deletar?id=${item._id}`}>
+                        <MdDelete size={24} />
+                      </ButtonsDelete>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </LayoutDefault>
   );

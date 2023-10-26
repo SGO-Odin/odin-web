@@ -54,17 +54,25 @@ export interface IToggle {
 }
 
 export interface ISelect {
-  disabled?: boolean
-  form?: string
-  multiple?: boolean
-  name?: string
-  required?: boolean
-  value?: string
-  label?: string
-  id?: string
-  erro?: boolean
-  placeholder?: string
-  onChange?: (value: string) => void
+  autocomplete?: string;
+  autofocus?: boolean;
+  disabled?: boolean;
+  form?: string;
+  formaction?: string;
+  inputmode?: string;
+  minlength?: number;
+  maxlength?: number;
+  name?: string;
+  placeholder?: string;
+  required?: boolean;
+  value?: string;
+  label?: string;
+  id?: string;
+  erro?: boolean;
+  type?: string;
+  messageErro?: string;
+  options?: string[]
+  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
 }
 
 export interface ISignInData {

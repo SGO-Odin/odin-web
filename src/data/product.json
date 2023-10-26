@@ -1,0 +1,18 @@
+[
+  {
+    "_id": 2,
+    "cost": "560",
+    "selling": "1250",
+    "stockMin": "5",
+    "stockCurrent": "50",
+    "location": "Gaveta A",
+    "reference": "1232",
+    "nameProduct": "Lente",
+    "unit": "Par",
+    "brands": 4,
+    "supplier": 1,
+    "isActive": true,
+    "isStockControl": true,
+    "isService": true
+  }
+]

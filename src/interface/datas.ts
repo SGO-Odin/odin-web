@@ -16,3 +16,20 @@ export interface ISupplier {
     complement: string
     city: string
 }
+
+export interface IProduct {
+    _id: number
+    cost: string
+    selling: string
+    stockMin: string
+    stockCurrent: string
+    location: string
+    reference: string
+    nameProduct: string
+    unit: string
+    brands: number
+    supplier: number
+    isActive: boolean
+    isStockControl: boolean
+    isService: boolean
+}

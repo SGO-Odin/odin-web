@@ -211,7 +211,7 @@ export default function NewServiceOrder() {
                                 <Select
                                     name="client"
                                     value={client}
-                                    onChange={(value) => setClient(value)}
+                                    onChange={(ev) => setClient(ev.target.value)}
                                     label="CLIENTE"
                                     id="client" />
                             </div>
@@ -296,7 +296,7 @@ export default function NewServiceOrder() {
                                 <Select
                                     name="methodPayment"
                                     value={methodPayment}
-                                    onChange={(value) => setMethodPayment(value)}
+                                    onChange={(ev) => setMethodPayment(ev.target.value)}
                                     label="FORMA DE PAGAMENTO"
                                     id="methodPayment" />
                             </div>

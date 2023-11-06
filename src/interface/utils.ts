@@ -54,25 +54,18 @@ export interface IToggle {
 }
 
 export interface ISelect {
-  autocomplete?: string;
-  autofocus?: boolean;
-  disabled?: boolean;
-  form?: string;
-  formaction?: string;
-  inputmode?: string;
-  minlength?: number;
-  maxlength?: number;
-  name?: string;
   placeholder?: string;
-  required?: boolean;
-  value?: string;
   label?: string;
-  id?: string;
-  erro?: boolean;
-  type?: string;
   messageErro?: string;
-  options?: string[]
-  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
+  item: number | string;
+  setItem: React.Dispatch<React.SetStateAction<number | string>>
+  options: IItemSelect[]
+}
+
+export interface IItemSelect {
+  _id: number
+  name: string,
+  value?: string
 }
 
 export interface ISignInData {
@@ -105,4 +98,11 @@ export interface IRouter {
     route?: string
   }[]
   | null
+}
+
+export interface IPaymentFormTemplate {
+  _id: number
+  type: string
+  value: string
+  date: string
 }

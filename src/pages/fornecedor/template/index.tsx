@@ -4,29 +4,42 @@ import { TextField } from "@/src/components/textField";
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { ButtonsPrimary } from "@/src/components/buttons/primary";
 import { MdCancel, MdLocalShipping } from "react-icons/md";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Hero } from "@/src/components/hero";
 import { Toggle } from "@/src/components/toggle";
+import Address from "@/src/components/commons/address";
 
 interface ISupplierFormTemplate {
     companyName: string
     setCompanyName: Dispatch<SetStateAction<string>>
-    businessName: string
-    setBusinessName: Dispatch<SetStateAction<string>>
+    tradingName: string
+    setTradingName: Dispatch<SetStateAction<string>>
     isLaboratory: boolean
     setIsLaboratory: Dispatch<SetStateAction<boolean>>
+
     zipCode: string
-    setzipCode: Dispatch<SetStateAction<string>>
-    address: string
-    setAddress: Dispatch<SetStateAction<string>>
+    setZipCode: Dispatch<SetStateAction<string>>
+    acronym: string
+    setAcronym: Dispatch<SetStateAction<string>>
+    stateName: string
+    setStateName: Dispatch<SetStateAction<string>>
+    isFederalDistrict: boolean
+    setIsFederalDistrict: Dispatch<SetStateAction<boolean>>
+    publicPlaceName: string
+    setPublicPlaceName: Dispatch<SetStateAction<string>>
+    publicPlaceType: string
+    setPublicPlaceType: Dispatch<SetStateAction<string>>
     district: string
     setDistrict: Dispatch<SetStateAction<string>>
-    numberAddress: string
-    setnumberAddress: Dispatch<SetStateAction<string>>
+    number: string
+    setNumber: Dispatch<SetStateAction<string>>
     complement: string
     setComplement: Dispatch<SetStateAction<string>>
+    reference: string
+    setReference: Dispatch<SetStateAction<string>>
     city: string
     setCity: Dispatch<SetStateAction<string>>
+
     handleSupplier: (event: React.FormEvent<HTMLFormElement>) => Promise<void>
     goBack: () => void
     title: string
@@ -36,28 +49,39 @@ interface ISupplierFormTemplate {
 export default function SupplierFormTemplate({
     companyName,
     setCompanyName,
-    businessName,
-    setBusinessName,
+    tradingName,
+    setTradingName,
     isLaboratory,
     setIsLaboratory,
+
     zipCode,
-    setzipCode,
-    address,
-    setAddress,
+    setZipCode,
+    acronym,
+    setAcronym,
+    stateName,
+    setStateName,
+    isFederalDistrict,
+    setIsFederalDistrict,
+    publicPlaceName,
+    setPublicPlaceName,
+    publicPlaceType,
+    setPublicPlaceType,
     district,
     setDistrict,
-    numberAddress,
-    setnumberAddress,
+    number,
+    setNumber,
     complement,
     setComplement,
+    reference,
+    setReference,
     city,
     setCity,
+
     handleSupplier,
     goBack,
     title,
     paragraph
 }: ISupplierFormTemplate) {
-
     return (
         <LayoutDefault>
             <div className="newSupplier">
@@ -69,23 +93,23 @@ export default function SupplierFormTemplate({
                         <div className="newSupplier__form__content__inputs">
                             <div className="input">
                                 <TextField
-                                    name="companyName"
+                                    name="tradingName"
                                     placeholder=""
-                                    value={companyName}
-                                    onChange={(ev) => setCompanyName(ev.target.value)}
+                                    value={tradingName}
+                                    onChange={(ev) => setTradingName(ev.target.value)}
                                     label="NOME FANTASIA"
-                                    id="companyName"
+                                    id="tradingName"
                                     required={true}
                                 />
                             </div>
                             <div className="input">
                                 <TextField
-                                    name="businessName"
+                                    name="companyName"
                                     placeholder=""
-                                    value={businessName}
-                                    onChange={(ev) => setBusinessName(ev.target.value)}
+                                    value={companyName}
+                                    onChange={(ev) => setCompanyName(ev.target.value)}
                                     label="RAZÃO SOCIAL"
-                                    id="businessName"
+                                    id="companyName"
                                     required={true}
                                 />
                             </div>
@@ -106,76 +130,30 @@ export default function SupplierFormTemplate({
                             </h2>
                             <hr className="menu__mobile__line" />
                         </header>
-                        <div className="newSupplier__form__content__inputs">
-                            <div className="input">
-                                <TextField
-                                    name="zipCode"
-                                    placeholder=""
-                                    value={zipCode}
-                                    onChange={(ev) => setzipCode(ev.target.value)}
-                                    label="CEP"
-                                    id="zipCode"
-                                    required={true}
-                                />
-                            </div>
-                            <div className="input">
-                                <TextField
-                                    name="address"
-                                    placeholder=""
-                                    value={address}
-                                    onChange={(ev) => setAddress(ev.target.value)}
-                                    label="ENDEREÇO"
-                                    id="address"
-                                    required={true}
-                                />
-                            </div>
-                            <div className="input">
-                                <TextField
-                                    name="district"
-                                    placeholder=""
-                                    value={district}
-                                    onChange={(ev) => setDistrict(ev.target.value)}
-                                    label="BAIRRO"
-                                    id="district"
-                                    required={true}
-                                />
-                            </div>
-                        </div>
-                        <div className="newSupplier__form__content__inputs">
-                            <div className="input">
-                                <TextField
-                                    name="numberAddress"
-                                    placeholder=""
-                                    value={numberAddress}
-                                    onChange={(ev) => setnumberAddress(ev.target.value)}
-                                    label="NÚMERO"
-                                    id="numberAddress"
-                                    required={true}
-                                />
-                            </div>
-                            <div className="input">
-                                <TextField
-                                    name="complement"
-                                    placeholder=""
-                                    value={complement}
-                                    onChange={(ev) => setComplement(ev.target.value)}
-                                    label="COMPLEMENTO"
-                                    id="complement"
-                                    required={true}
-                                />
-                            </div>
-                            <div className="input">
-                                <TextField
-                                    name="city"
-                                    placeholder=""
-                                    value={city}
-                                    onChange={(ev) => setCity(ev.target.value)}
-                                    label="CIDADE"
-                                    id="city"
-                                    required={true}
-                                />
-                            </div>
-                        </div>
+                        <Address
+                            zipCode={zipCode}
+                            setZipCode={setZipCode}
+                            acronym={acronym}
+                            setAcronym={setAcronym}
+                            stateName={stateName}
+                            setStateName={setStateName}
+                            isFederalDistrict={isFederalDistrict}
+                            setIsFederalDistrict={setIsFederalDistrict}
+                            publicPlaceName={publicPlaceName}
+                            setPublicPlaceName={setPublicPlaceName}
+                            publicPlaceType={publicPlaceType}
+                            setPublicPlaceType={setPublicPlaceType}
+                            district={district}
+                            setDistrict={setDistrict}
+                            number={number}
+                            setNumber={setNumber}
+                            complement={complement}
+                            setComplement={setComplement}
+                            reference={reference}
+                            setReference={setReference}
+                            city={city}
+                            setCity={setCity}
+                        />
                     </div>
                     <div className="newSupplier__form__buttons">
                         <div>

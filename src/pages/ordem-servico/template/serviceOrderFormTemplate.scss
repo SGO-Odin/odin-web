@@ -1,4 +1,5 @@
 @import "@/style/sass/config";
+@import "@/components/table/table";
 
 .service-order-template {
     width: 100%;
@@ -98,10 +99,6 @@
             flex-direction: column;
             gap: space("m");
 
-            & div {
-                width: 100%;
-            }
-
             @media (min-width: 1200px) {
                 flex-direction: row;
                 justify-content: center;
@@ -111,5 +108,17 @@
                 }
             }
         }
+    }
+}
+
+.row.buttons button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: transparent;
+
+    &:hover {
+        color: color("red-400");
     }
 }

@@ -9,27 +9,29 @@ export default function NewSupplier() {
   const { push } = useRouter();
 
   // Cadastrar Fornecedor
+  const [tradingName, setTradingName] = useState<string>("")
   const [companyName, setCompanyName] = useState<string>("")
-  const [businessName, setBusinessName] = useState<string>("")
   const [isLaboratory, setIsLaboratory] = useState<boolean>(false)
 
   // Endereço
-  const [zipCode, setzipCode] = useState<string>("")
-  const [address, setAddress] = useState<string>("")
+  const [zipCode, setZipCode] = useState<string>("")
+  const [acronym, setAcronym] = useState<string>("")
+  const [stateName, setStateName] = useState<string>("")
+  const [isFederalDistrict, setIsFederalDistrict] = useState<boolean>(false)
+  const [publicPlaceName, setPublicPlaceName] = useState<string>("")
+  const [publicPlaceType, setPublicPlaceType] = useState<string>("STREET")
   const [district, setDistrict] = useState<string>("")
-  const [numberAddress, setnumberAddress] = useState<string>("")
+  const [number, setNumber] = useState<string>("")
   const [complement, setComplement] = useState<string>("")
+  const [reference, setReference] = useState<string>("")
   const [city, setCity] = useState<string>("")
 
   const handleNewSupplier = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const data = { companyName, businessName, isLaboratory, zipCode, address, district, numberAddress, complement, city }
-    await axios.post('/api/supplier', data)
+    const data = { companyName, tradingName, isLaboratory, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city }
 
-    // reset
-    // setSupplier("")
-    // setIsActive(false)
+    await axios.post('/api/supplier', data)
 
     goBack()
   }
@@ -42,22 +44,34 @@ export default function NewSupplier() {
     <SupplierFormTemplate
       companyName={companyName}
       setCompanyName={setCompanyName}
-      businessName={businessName}
-      setBusinessName={setBusinessName}
+      tradingName={tradingName}
+      setTradingName={setTradingName}
       isLaboratory={isLaboratory}
       setIsLaboratory={setIsLaboratory}
+
       zipCode={zipCode}
-      setzipCode={setzipCode}
-      address={address}
-      setAddress={setAddress}
+      setZipCode={setZipCode}
+      acronym={acronym}
+      setAcronym={setAcronym}
+      stateName={stateName}
+      setStateName={setStateName}
+      isFederalDistrict={isFederalDistrict}
+      setIsFederalDistrict={setIsFederalDistrict}
+      publicPlaceName={publicPlaceName}
+      setPublicPlaceName={setPublicPlaceName}
+      publicPlaceType={publicPlaceType}
+      setPublicPlaceType={setPublicPlaceType}
       district={district}
       setDistrict={setDistrict}
-      numberAddress={numberAddress}
-      setnumberAddress={setnumberAddress}
+      number={number}
+      setNumber={setNumber}
       complement={complement}
       setComplement={setComplement}
+      reference={reference}
+      setReference={setReference}
       city={city}
       setCity={setCity}
+
       handleSupplier={handleNewSupplier}
       goBack={goBack}
       title="Cadastrar Fornecedor"

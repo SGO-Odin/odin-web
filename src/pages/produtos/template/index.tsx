@@ -4,7 +4,7 @@ import LayoutDefault from '@/src/components/layoutDefault';
 import { MdCancel } from 'react-icons/md';
 import { ButtonsPrimary } from "@/src/components/buttons/primary";
 import { TextField } from "@/src/components/textField";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Select } from "@/src/components/select";
 import { Toggle } from "@/src/components/toggle";
 import './productFormTemplate.scss'
@@ -13,6 +13,9 @@ import { BsEyeglasses } from "react-icons/bs";
 import { IBrands, ISupplier } from '@/src/interface/datas';
 import axios from 'axios';
 import { numberValidation } from '@/src/hook/validation-number';
+import { handleFormatNumber } from '@/src/hook/format-number';
+import { IItemSelect } from '@/src/interface/utils';
+import typeUnit from '@/src/data/typeUnit.json'
 
 
 interface IProductFormTemplate {
@@ -88,44 +91,46 @@ export default function ProductFormTemplate({
     title,
     paragraph
 }: IProductFormTemplate) {
-
-    const [listBrands, setListBrands] = useState<IBrands[]>([])
-    const [listSupplier, setListSupplier] = useState<ISupplier[]>([])
+    const [optionsBrands, setOptionsBrands] = useState<IItemSelect[]>([])
+    const [optionsSupplier, setOptionsSupplier] = useState<IItemSelect[]>([])
+    const [optionsUnit, setOptionsUnit] = useState<IItemSelect[]>(typeUnit || [])
 
     useEffect(() => {
         axios.get('/api/brands').then(response => {
-            setListBrands(response.data)
+            const listSelectBrands = response.data.map(function (item) {
+                const data: IItemSelect = {
+                    _id: item._id,
+                    name: item.brands
+                }
+                return data
+            })
+            setOptionsBrands(listSelectBrands)
         })
 
         axios.get('/api/supplier').then(response => {
-            setListSupplier(response.data)
+            const listSelectSupplier = response.data.map(function (item) {
+                const data: IItemSelect = {
+                    _id: item._id,
+                    name: item.companyName
+                }
+                return data
+            })
+            setOptionsSupplier(listSelectSupplier)
         })
     }, [])
 
-    const valueBrand = listBrands.map((item) => item._id === brands ? item.brands : null)
-    const valueSupplier = listSupplier.map((item) => item._id === supplier ? item.companyName : null)
-
-    const handleBrands = (value: string) => {
-        setBrands(listBrands.map((item) => item.brands === value ? item._id : null)[0])
-    }
-    const handleSupplier = (value: string) => {
-        setSupplier(listSupplier.map((item) => item.companyName === value ? item._id : null)[0])
-    }
-
     useEffect(() => {
         if (selling && cost) {
-            const profit = Number(selling) - Number(cost)
+            const valueSelling = selling.replace(/\D/g, ''); // Retira qualquer caracter não numerico
+            const valueCost = cost.replace(/\D/g, ''); // Retira qualquer caracter não numerico
+
+            const profit = Number(valueSelling) - Number(valueCost)
             setProfit(profit.toString())
 
-            const percent = ((Number(selling) - Number(cost)) / Number(cost)) * 100
-            setPercentProfit(percent.toPrecision(4).toString())
+            const percent = ((Number(valueSelling) - Number(valueCost)) / Number(valueCost)) * 100
+            setPercentProfit(percent.toFixed(2).toString())
         }
     }, [selling, cost])
-
-
-    const optionsBrands: string[] = listBrands.map((objeto) => objeto.brands);
-    const optionsSupplier: string[] = listSupplier.map((objeto) => objeto.companyName);
-    const optionsUnit: string[] = ["Frasco", "Kit", "Par", "Peça", "Unidade"]
 
     return (
         <LayoutDefault>
@@ -163,38 +168,29 @@ export default function ProductFormTemplate({
                             </div>
                             <div className="input">
                                 <Select
-                                    placeholder='Escolha uma unidade'
-                                    name="unit"
-                                    value={unit}
-                                    onChange={(ev) => setUnit(ev.target.value)}
+                                    placeholder='Escolha uma unidade:'
                                     label="UNIDADE"
-                                    id="unit"
                                     options={optionsUnit}
-                                    required={true} />
+                                    item={unit}
+                                    setItem={setUnit} />
                             </div>
                         </div>
                         <div className="products__form__content__inputs">
                             <div className="input">
                                 <Select
-                                    name="brands"
-                                    placeholder='Selecione uma Marca'
-                                    value={valueBrand[0]}
-                                    onChange={(ev) => handleBrands(ev.target.value)}
+                                    placeholder='Selecione uma Marca:'
                                     label="GRIFES"
-                                    id="brands"
                                     options={optionsBrands}
-                                    required={true} />
+                                    item={brands}
+                                    setItem={setBrands} />
                             </div>
                             <div className="input">
                                 <Select
-                                    name="supplier"
-                                    placeholder='Selecione um Fornecedor'
-                                    value={valueSupplier[0]}
-                                    onChange={(ev) => handleSupplier(ev.target.value)}
+                                    placeholder='Selecione um Fornecedor:'
                                     label="FORNECEDOR"
-                                    id="supplier"
                                     options={optionsSupplier}
-                                    required={true} />
+                                    item={supplier}
+                                    setItem={setSupplier} />
                             </div>
                             <div className="input-toggle">
                                 <div>
@@ -232,8 +228,8 @@ export default function ProductFormTemplate({
                                 <TextField
                                     name="cost"
                                     placeholder="ex: 3000"
-                                    value={cost}
-                                    onChange={(ev) => setCost(numberValidation(ev.target.value, cost))}
+                                    value={handleFormatNumber(cost)}
+                                    onChange={(ev) => setCost(ev.target.value)}
                                     label="CUSTO (R$)"
                                     id="cost"
                                     required={isStockControl ? true : false}
@@ -242,9 +238,7 @@ export default function ProductFormTemplate({
                             <div className="input">
                                 <TextField
                                     name="percentProfit"
-                                    placeholder="ex (%): 50"
                                     value={percentProfit}
-                                    onChange={(ev) => setPercentProfit(numberValidation(ev.target.value, percentProfit))}
                                     label="LUCRO (%)"
                                     id="percentProfit"
                                     required={isStockControl ? true : false}
@@ -254,9 +248,7 @@ export default function ProductFormTemplate({
                             <div className="input">
                                 <TextField
                                     name="profit"
-                                    placeholder="ex: 150"
-                                    value={profit}
-                                    onChange={(ev) => setProfit(numberValidation(ev.target.value, profit))}
+                                    value={handleFormatNumber(profit)}
                                     label="LUCRO (R$)"
                                     id="profit"
                                     required={isStockControl ? true : false}
@@ -267,8 +259,8 @@ export default function ProductFormTemplate({
                                 <TextField
                                     name="selling"
                                     placeholder="ex: 450"
-                                    value={selling}
-                                    onChange={(ev) => setSelling(numberValidation(ev.target.value, selling))}
+                                    value={handleFormatNumber(selling)}
+                                    onChange={(ev) => setSelling(ev.target.value)}
                                     label="VENDA (R$)"
                                     id="selling"
                                     required={isStockControl ? true : false}
@@ -315,7 +307,7 @@ export default function ProductFormTemplate({
                     </div>
                     <div className="products__form__buttons">
                         <div>
-                            <ButtonsTertiary onClick={() => goBack()}>
+                            <ButtonsTertiary onClick={goBack}>
                                 <MdCancel size={24} />
                                 Cancelar
                             </ButtonsTertiary>

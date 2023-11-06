@@ -60,7 +60,7 @@ export function SupplierTemplete() {
             <tbody className="body">
               {suppiler.map((item) => (
                 <tr key={item._id} className='body__row'>
-                  <RowItem label={item.businessName} isActive={null} />
+                  <RowItem label={item.tradingName} isActive={null} />
                   <RowItem label={item.companyName} isActive={null} />
                   <RowItem label={item.isLaboratory ? 'Sim' : 'Não'} isActive={item.isLaboratory} />
                   <td className={'row buttons'}>

@@ -1,14 +1,16 @@
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from 'react';
-import { GetServerSideProps } from 'next';
-import { parseCookies } from 'nookies';
-import { parse, format } from 'date-fns';
-import ServiceOrderFormTemplate from "./template"
-import { IOrderService, IPayment, IPrescription, IRowsProductTable, IServiceOrderProducts, IVisionProblem } from "@/src/interface/datas";
 import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { IOrderService, IPayment, IPrescription, IRowsProductTable, IServiceOrderProducts, IVisionProblem } from "@/src/interface/datas";
+import ServiceOrderFormTemplate from "../template";
+import { IPaymentFormTemplate } from "@/src/interface/utils";
+import typeCard from '@/src/data/typeCard.json'
+import { v4 as uuid } from "uuid";
 
-export default function NewServiceOrder() {
-    const { push } = useRouter();
+export default function EditServiceOrderPage() {
+    const router = useRouter()
+    const { id } = router.query
+
     const [isButton, setIsButton] = useState<string>('')
 
     const [numberOS, setNumberOS] = useState<string>("")
@@ -66,8 +68,84 @@ export default function NewServiceOrder() {
     const [heightNearOE, setHeightNearOE] = useState<string>("")
 
     const [addition, setAddition] = useState<string>("")
-    const [prescription, setPrescription] = useState<IPrescription[]>([])
     const [datePrescription, setDatePrescription] = useState<string>("")
+
+    const [prescription, setPrescription] = useState<IPrescription[]>([])
+
+    useEffect(() => {
+        if (!id) { return }
+        axios.get('/api/service-order?id=' + id)
+            .then(response => {
+                setNumberOS(response.data.number)
+                setDateRegister(response.data.dateRegister)
+                setHourRegister(response.data.hourRegister)
+                setIdClient(response.data.client)
+
+                setServiceOrderProducts(response.data.products)
+
+                setDiscount(response.data.dicountValue)
+                setAdditional(response.data.additionalValue)
+
+                setPayment(response.data.payment)
+
+                setPrescription(response.data.prescription)
+                setIsButton(response.data.prescription[response.data.prescription.length - 1].expirationDate)
+
+                // Define Rows Product
+                axios.get('/api/product').then(product => {
+                    const jokerList = []
+                    response.data.products.forEach((item) => {
+
+                        const jokerDataProduct = product.data.find((product) => product._id === item.idProduct ? product : null)
+
+                        if (jokerDataProduct) {
+                            const response = dataProduct.find((response) => response._id === jokerDataProduct._id ? response : null)
+
+                            if (!response) {
+                                const data: IRowsProductTable = {
+                                    _id: jokerDataProduct._id,
+                                    ref: jokerDataProduct.reference,
+                                    unidade: jokerDataProduct.unit,
+                                    produto: jokerDataProduct.nameProduct,
+                                    quantidade: item.quantity,
+                                    valueUnit: jokerDataProduct.selling,
+                                    valueTot: item.salesPrice,
+                                }
+
+                                jokerList.push(data)
+                            }
+
+                        }
+                    })
+                    setDataProduct(jokerList)
+                })
+
+                // Define Rows Payment
+                if (response.data.payment.length > 0) {
+                    setDataPayment([])
+
+                    const jokerPaymentList = []
+                    response.data.payment.forEach((item) => {
+                        const jokerDataTypeCard = typeCard.find((response) => response.value === item.type ? response : null)
+
+                        for (let i = 0; i < Number(item.installments); i++) {
+                            const data: IPaymentFormTemplate = {
+                                _id: uuid(),
+                                type: jokerDataTypeCard.name,
+                                value: (Number(item.amount) / Number(item.installments)).toString(),
+                                date: item.date
+                            }
+                            jokerPaymentList.push(data)
+                        }
+                    })
+                    setDataPayment(jokerPaymentList)
+
+                }
+            })
+
+
+
+    }, [id])
 
     const handleAddPrescription = () => {
         const dataVisionProblem: IVisionProblem[] = [
@@ -110,7 +188,7 @@ export default function NewServiceOrder() {
         ]
 
         const dataPrescription: IPrescription = {
-            expirationDate: dateRegister,
+            expirationDate: datePrescription,
             additional: addition,
             problems: dataVisionProblem
         }
@@ -122,32 +200,119 @@ export default function NewServiceOrder() {
         return data.replace(/\D/g, '')
     }
 
-    const handleNewServiceOrder = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleUpdateServiceOrder = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const data: IOrderService = {
-            number: numberOS,
-            client: idClient,
-            dicountValue: sanitizeData(discount),
-            additionalValue: sanitizeData(additional),
-            prescription: [...prescription, handleAddPrescription()],
-            products: serviceOrderProducts,
-            dateRegister: dateRegister,
-            hourRegister: hourRegister,
-            payment: payment
+        let data: IOrderService;
+        if (isButton === '') {
+            data = {
+                number: numberOS,
+                client: idClient,
+                dicountValue: sanitizeData(discount),
+                additionalValue: sanitizeData(additional),
+                prescription: [...prescription, handleAddPrescription()],
+                products: serviceOrderProducts,
+                dateRegister: dateRegister,
+                hourRegister: hourRegister,
+                payment: payment
+            }
+        } else {
+            data = {
+                number: numberOS,
+                client: idClient,
+                dicountValue: sanitizeData(discount),
+                additionalValue: sanitizeData(additional),
+                prescription: prescription,
+                products: serviceOrderProducts,
+                dateRegister: dateRegister,
+                hourRegister: hourRegister,
+                payment: payment
+            }
         }
 
-        console.log(data)
+        // // update
+        await axios.put('/api/service-order', { ...data, id })
 
-        // create
-        await axios.post('/api/service-order', data)
-
-        // reset
         goBack()
     }
 
+    useEffect(() => {
+        if (isButton === '') {
+            // Dados da Receita Longe OD
+            setSkewerFarOD(" ")
+            setCylindricalFarOD(" ")
+            setAxisFarOD(" ")
+            setDNPFarOD(" ")
+            setHeightFarOD(" ")
+
+            // Dados da Receita Longe OE
+            setSkewerFarOE(" ")
+            setCylindricalFarOE(" ")
+            setAxisFarOE(" ")
+            setDNPFarOE(" ")
+            setHeightFarOE(" ")
+
+            // Dados da Receita Perto OD
+            setSkewerNearOD(" ")
+            setCylindricalNearOD(" ")
+            setAxisNearOD(" ")
+            setDNPNearOD(" ")
+            setHeightNearOD(" ")
+
+            // Dados da Receita Perto OE
+            setSkewerNearOE(" ")
+            setCylindricalNearOE(" ")
+            setAxisNearOE(" ")
+            setDNPNearOE(" ")
+            setHeightNearOE(" ")
+
+            setAddition(" ")
+            setDatePrescription(" ")
+        } else {
+            const currentPrescription = prescription.find((item) => item.expirationDate == isButton ? item : null)
+
+            if (currentPrescription) {
+                setAddition(currentPrescription.additional)
+                setDatePrescription(currentPrescription.expirationDate)
+
+                currentPrescription.problems.map((item) => {
+                    if (item.type == 'FAR' && item.positionOfEyes == 'RIGHT') {
+                        // Dados da Receita Longe OD
+                        setSkewerFarOD(item.spherical)
+                        setCylindricalFarOD(item.cylinder)
+                        setAxisFarOD(item.axis)
+                        setDNPFarOD(item.npd)
+                        setHeightFarOD(item.height)
+                    } else if (item.type == 'FAR' && item.positionOfEyes == 'LEFT') {
+                        // Dados da Receita Longe OD
+                        setSkewerFarOE(item.spherical)
+                        setCylindricalFarOE(item.cylinder)
+                        setAxisFarOE(item.axis)
+                        setDNPFarOE(item.npd)
+                        setHeightFarOE(item.height)
+                    } else if (item.type == 'NEAR' && item.positionOfEyes == 'RIGHT') {
+                        // Dados da Receita Longe OD
+                        setSkewerNearOD(item.spherical)
+                        setCylindricalNearOD(item.cylinder)
+                        setAxisNearOD(item.axis)
+                        setDNPNearOD(item.npd)
+                        setHeightNearOD(item.height)
+                    } else if (item.type == 'NEAR' && item.positionOfEyes == 'LEFT') {
+                        // Dados da Receita Longe OD
+                        setSkewerNearOE(item.spherical)
+                        setCylindricalNearOE(item.cylinder)
+                        setAxisNearOE(item.axis)
+                        setDNPNearOE(item.npd)
+                        setHeightNearOE(item.height)
+                    }
+                })
+            }
+        }
+
+    }, [isButton])
+
     const goBack = () => {
-        push('/ordem-servico')
+        router.push('/ordem-servico')
     }
 
     return (
@@ -254,32 +419,13 @@ export default function NewServiceOrder() {
             datePrescription={datePrescription}
             setDatePrescription={setDatePrescription}
 
-            handleServiceOrder={handleNewServiceOrder}
+            handleServiceOrder={handleUpdateServiceOrder}
             goBack={goBack}
-            title={"Cadastrar O.S."}
-            paragraph={"Registre e acompanhe os pedidos dos clientes de forma organizada e eficiente."}
+            title={`Editar O.S. ${numberOS}`}
+            paragraph={"Editar."}
 
             prescription={prescription}
             setPrescription={setPrescription}
         />
     );
-}
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const { "odinauth.token": token } = parseCookies(ctx);
-
-
-    if (!token) {
-        return {
-            redirect: {
-                destination: "/login",
-                permanent: false,
-            },
-        };
-    }
-
-    return {
-        props: {
-        }
-    }
 }

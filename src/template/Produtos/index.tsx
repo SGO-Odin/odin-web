@@ -14,6 +14,7 @@ import { ButtonsEdit } from "@/src/components/buttons/edit";
 import { ButtonsDelete } from "@/src/components/buttons/delete";
 import { IBrands, IProduct } from "@/src/interface/datas";
 import axios from "axios";
+import { handleFormatNumber } from "@/src/hook/format-number";
 
 const data = [
   { Id: 1, Nome: "Laboratorio X", Marca: "João", Referencia: "Laboratorio X", Valor: "João", Qtd: "João" },
@@ -39,7 +40,7 @@ export default function ProductTemplate() {
   }, [])
 
   const handlePushNameBrand = (id: number) => {
-    return listBrands.map((item) => item._id === id ? item.brands : null)
+    return (listBrands.filter((item) => item._id === id ? item.brands : null))[0]['brands']
   }
 
   const handlePushNewProduct = () => {
@@ -75,9 +76,9 @@ export default function ProductTemplate() {
               {product.map((item) => (
                 <tr key={item._id} className='body__row'>
                   <RowItem label={item.nameProduct} isActive={null} />
-                  <RowItem label={handlePushNameBrand(item.brands)[0]} isActive={null} />
+                  <RowItem label={handlePushNameBrand(item.brands)} isActive={null} />
                   <RowItem label={item.reference} isActive={null} />
-                  <RowItem label={`R$ ${Number(item.selling).toPrecision(4)}`} isActive={null} />
+                  <RowItem label={`R$ ${handleFormatNumber(item.selling)}`} isActive={null} />
                   <RowItem label={item.isActive ? 'Ativo' : 'Inativo'} isActive={item.isActive} />
                   <td className={'row buttons'}>
                     <div>

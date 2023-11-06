@@ -14,7 +14,7 @@ import { ButtonsSecundary } from '@/src/components/buttons/secundary';
 import { TablesCustom } from '@/src/components/tablesCustom';
 import CardTotal from '@/src/components/commons/card-total';
 import TablePayment from '@/src/components/commons/table-payment';
-import Revenue from '@/src/components/commons/revenue';
+import Revenue from '@/src/components/commons/prescription';
 import { ButtonsTertiary } from '@/src/components/buttons/tertiary';
 import { MdAttachMoney, MdBuild, MdCancel } from 'react-icons/md';
 import { ButtonsPrimary } from '@/src/components/buttons/primary';

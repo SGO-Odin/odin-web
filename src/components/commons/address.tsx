@@ -60,9 +60,12 @@ export default function Address({
 
     const formatCEP = (value: string): string => {
         if (!value) return null
+
         const formatingZipCode = value.replace(/\D/g, '');
+        if (!formatingZipCode) return null
 
         return formatingZipCode.replace(/(\d{5})(\d{3})/, '$1-$2');
+
     }
 
     useEffect(() => {

@@ -10,6 +10,7 @@ export const handleFormatNumber = (value: string): string => {
     const lastNumber = number.pop()
     const penultimateNumber = number.pop()
 
+    if (!number) return null
     const bodyNumber = number.join('').replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 
     if (number.length >= 1) {

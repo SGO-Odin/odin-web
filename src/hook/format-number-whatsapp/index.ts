@@ -1,4 +1,5 @@
 export const formatNumberWhatsapp = (numero: string): string => {
+    if (!numero) return null
     numero = numero.replace(/\D/g, '');
 
     if (numero.startsWith("55")) {

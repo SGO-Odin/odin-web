@@ -119,6 +119,7 @@ export default function NewServiceOrder() {
     }
 
     const sanitizeData = (data: string): string => {
+        if (!data) return null
         return data.replace(/\D/g, '')
     }
 

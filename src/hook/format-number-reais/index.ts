@@ -1,4 +1,5 @@
 export const formatNumberReais = (value: string): string => {
+    if (!value) return null
     const money = Number(value.replace(/\D/g, ''));
     if (!money) return value
     // Verifica se o money é um número

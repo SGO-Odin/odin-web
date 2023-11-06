@@ -366,6 +366,7 @@ export default function ServiceOrderFormTemplate({
         let dataCurrentPayment;
         dataCurrentPayment = typeCard.find((item) => item.value === type ? item : null)
 
+        if (!paymentDown) return null
         const paymont = paymentDown.replace(/\D/g, '');
 
         if (dataCurrentPayment && Number(paymont) <= handleVerifyDebit()) {
@@ -421,12 +422,15 @@ export default function ServiceOrderFormTemplate({
      */
     const handleVerifyDebit = (list: IRowsProductTable[] = null): number => {
         const totalPayment = payment.reduce((acumulador, objeto) => {
+            if (!objeto.amount) return null
             const value = objeto.amount.replace(/\D/g, '');
 
             return acumulador + Number(value)
         }, 0)
 
         if (list) {
+            if (!additional || !discount) return null
+
             const jokerAdditional = additional.replace(/\D/g, '');
             const jokerDiscount = discount.replace(/\D/g, '');
 
@@ -435,6 +439,7 @@ export default function ServiceOrderFormTemplate({
              * Não é permitido excluir um item se o valor final ficar negativo
              */
             const totalDebit = list.reduce((acumulador, objeto) => {
+                if (!objeto.valueUnit) return null
                 const value = objeto.valueUnit.replace(/\D/g, ''); // Retira qualquer caracter não numerico
 
                 return acumulador + (Number(objeto.quantidade) * Number(value))
@@ -489,6 +494,7 @@ export default function ServiceOrderFormTemplate({
         if (Number(quantity) >= 1) {
             const dataCurrentProduct: IProduct = listProduct.find((item) => item._id === idProduct ? item : null)
             if (dataCurrentProduct.selling) {
+                if (!dataCurrentProduct.selling) return null
                 const value = dataCurrentProduct.selling.replace(/\D/g, ''); // Retira qualquer caracter não numerico
 
                 const total = Number(value) * Number(quantity)
@@ -503,6 +509,7 @@ export default function ServiceOrderFormTemplate({
     useEffect(() => {
         if (dataProduct.length > 0) {
             const total = dataProduct.reduce((acumulador, objeto) => {
+                if (!objeto.valueUnit) return null
                 const value = objeto.valueUnit.replace(/\D/g, ''); // Retira qualquer caracter não numerico
 
                 return acumulador + (Number(objeto.quantidade) * Number(value))

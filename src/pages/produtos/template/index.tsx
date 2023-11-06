@@ -121,6 +121,7 @@ export default function ProductFormTemplate({
 
     useEffect(() => {
         if (selling && cost) {
+            if (!selling || !cost) return null
             const valueSelling = selling.replace(/\D/g, ''); // Retira qualquer caracter não numerico
             const valueCost = cost.replace(/\D/g, ''); // Retira qualquer caracter não numerico
 

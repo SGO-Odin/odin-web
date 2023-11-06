@@ -138,6 +138,8 @@ export default function ClientFormTemplate({
     }
 
     const validateRG = (rg: string): boolean => {
+        if (!rg) return null
+
         rg = rg.replace(/\D/g, '');
 
         if (rg.length < 7) {
@@ -154,8 +156,11 @@ export default function ClientFormTemplate({
     }
 
     const formatRg = (value: string): string => {
+        if (!value) return null
+
         rg = value.replace(/\D/g, '');
 
+        if (!rg) return null
         return rg.replace(/(\d{2})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
     }
 

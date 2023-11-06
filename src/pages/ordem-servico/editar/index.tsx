@@ -119,28 +119,6 @@ export default function EditServiceOrderPage() {
                     })
                     setDataProduct(jokerList)
                 })
-
-                // Define Rows Payment
-                if (response.data.payment.length > 0) {
-                    setDataPayment([])
-
-                    const jokerPaymentList = []
-                    response.data.payment.forEach((item) => {
-                        const jokerDataTypeCard = typeCard.find((response) => response.value === item.type ? response : null)
-
-                        for (let i = 0; i < Number(item.installments); i++) {
-                            const data: IPaymentFormTemplate = {
-                                _id: uuid(),
-                                type: jokerDataTypeCard.name,
-                                value: (Number(item.amount) / Number(item.installments)).toString(),
-                                date: item.date
-                            }
-                            jokerPaymentList.push(data)
-                        }
-                    })
-                    setDataPayment(jokerPaymentList)
-
-                }
             })
 
 
@@ -422,7 +400,7 @@ export default function EditServiceOrderPage() {
             handleServiceOrder={handleUpdateServiceOrder}
             goBack={goBack}
             title={`Editar O.S. ${numberOS}`}
-            paragraph={"Editar."}
+            paragraph={"Atualize detalhes, como data, produtos e notas, para manter registros precisos e eficientes."}
 
             prescription={prescription}
             setPrescription={setPrescription}

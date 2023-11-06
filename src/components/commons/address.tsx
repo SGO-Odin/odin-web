@@ -59,13 +59,14 @@ export default function Address({
     const [errorZipCode, setErrorZipCode] = useState<string>("")
 
     const formatCEP = (value: string): string => {
+        if (!value) return null
         const formatingZipCode = value.replace(/\D/g, '');
 
         return formatingZipCode.replace(/(\d{5})(\d{3})/, '$1-$2');
     }
 
     useEffect(() => {
-        if (zipCode.length >= 8) {
+        if (zipCode && zipCode.length >= 8) {
             axios.get(`https://viacep.com.br/ws/${zipCode}/json/`)
                 .then(res => {
                     if (res.data.erro) {

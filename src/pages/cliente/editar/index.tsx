@@ -7,18 +7,25 @@ export default function EditClientPage() {
 
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
 
-    const [name, setName] = useState<string>("")
+    const [firsName, setFirsName] = useState<string>("")
     const [lastName, setLastName] = useState<string>("")
     const [cpf, setCpf] = useState<string>("")
     const [rg, setRg] = useState<string>("")
     const [email, setEmail] = useState<string>("")
     const [whatsapp, setWhatsapp] = useState<string>("")
-    const [street, setStreet] = useState<string>("")
+
+    // Endereço
+    const [zipCode, setZipCode] = useState<string>("")
+    const [acronym, setAcronym] = useState<string>("")
+    const [stateName, setStateName] = useState<string>("")
+    const [isFederalDistrict, setIsFederalDistrict] = useState<boolean>(false)
+    const [publicPlaceName, setPublicPlaceName] = useState<string>("")
+    const [publicPlaceType, setPublicPlaceType] = useState<string>("STREET")
     const [district, setDistrict] = useState<string>("")
-    const [city, setCity] = useState<string>("")
-    const [uf, setUf] = useState<string>("")
     const [number, setNumber] = useState<string>("")
-    const [cep, setCep] = useState<string>("")
+    const [complement, setComplement] = useState<string>("")
+    const [reference, setReference] = useState<string>("")
+    const [city, setCity] = useState<string>("")
 
     const router = useRouter()
     const { id } = router.query
@@ -27,25 +34,31 @@ export default function EditClientPage() {
         if (!id) { return }
         axios.get('/api/client?id=' + id)
             .then(response => {
-                setName(response.data.name)
+                setFirsName(response.data.firsName)
                 setLastName(response.data.lastName)
                 setCpf(response.data.cpf)
                 setRg(response.data.rg)
                 setEmail(response.data.email)
                 setWhatsapp(response.data.whatsapp)
-                setStreet(response.data.street)
+
+                setAcronym(response.data.uf)
+                setStateName(response.data.stateName)
+                setIsFederalDistrict(response.data.isFederalDistrict)
+                setPublicPlaceName(response.data.street)
+                setPublicPlaceType(response.data.publicPlaceType)
+                setComplement(response.data.complement)
+                setReference(response.data.reference)
                 setDistrict(response.data.district)
                 setCity(response.data.city)
-                setUf(response.data.uf)
                 setNumber(response.data.number)
-                setCep(response.data.cep)
+                setZipCode(response.data.cep)
             })
     }, [id])
 
     const handleUpdateClient = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const data = { name, lastName, cpf, rg, email, whatsapp, street, district, city, uf, number, cep }
+        const data = { firsName, lastName, cpf, rg, email, whatsapp, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city }
         // update
         await axios.put('/api/client', { ...data, id })
 
@@ -58,8 +71,8 @@ export default function EditClientPage() {
 
     return (
         <ClientFormTemplate
-            name={name}
-            setName={setName}
+            firsName={firsName}
+            setFirsName={setFirsName}
             lastName={lastName}
             setLastName={setLastName}
             cpf={cpf}
@@ -70,18 +83,30 @@ export default function EditClientPage() {
             setEmail={setEmail}
             whatsapp={whatsapp}
             setWhatsapp={setWhatsapp}
-            street={street}
-            setStreet={setStreet}
+
+            zipCode={zipCode}
+            setZipCode={setZipCode}
+            acronym={acronym}
+            setAcronym={setAcronym}
+            stateName={stateName}
+            setStateName={setStateName}
+            isFederalDistrict={isFederalDistrict}
+            setIsFederalDistrict={setIsFederalDistrict}
+            publicPlaceName={publicPlaceName}
+            setPublicPlaceName={setPublicPlaceName}
+            publicPlaceType={publicPlaceType}
+            setPublicPlaceType={setPublicPlaceType}
             district={district}
             setDistrict={setDistrict}
-            city={city}
-            setCity={setCity}
-            uf={uf}
-            setUf={setUf}
             number={number}
             setNumber={setNumber}
-            cep={cep}
-            setCep={setCep}
+            complement={complement}
+            setComplement={setComplement}
+            reference={reference}
+            setReference={setReference}
+            city={city}
+            setCity={setCity}
+
             handleClient={handleUpdateClient}
             goBack={goBack}
             title={`Editar dados de ${name} ${lastName}`}

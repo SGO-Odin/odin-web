@@ -454,7 +454,7 @@ export default function ServiceOrderFormTemplate({
 
     useEffect(() => {
         axios.get('/api/client').then(response => {
-            const listSelectClient = response.data.map(function (item) {
+            const listSelectClient = response.data.filter(function (item) {
                 const data: IItemSelect = {
                     _id: item._id,
                     name: `${item.firsName} ${item.lastName}`
@@ -466,7 +466,7 @@ export default function ServiceOrderFormTemplate({
         })
 
         axios.get('/api/product').then(response => {
-            const listSelectProduct = response.data.map(function (item) {
+            const listSelectProduct = response.data.filter(function (item) {
                 const data: IItemSelect = {
                     _id: item._id,
                     name: item.nameProduct

@@ -109,7 +109,7 @@ export default function EditClientPage() {
 
             handleClient={handleUpdateClient}
             goBack={goBack}
-            title={`Editar dados de ${name} ${lastName}`}
+            title={`Editar dados de ${firsName} ${lastName}`}
             paragraph={"Atualize detalhes de contato, preferências e mais para melhorar o atendimento."} />
     );
 }

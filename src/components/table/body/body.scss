@@ -1,0 +1,24 @@
+@import "@/style/sass/config";
+
+.body {
+    &__row {
+        --delay: 0.1s;
+        transition: 0.5s ease-in-out var(--delay), background-color 0s;
+
+        &:nth-child(even) {
+            background: color("indigo-50");
+        }
+
+        &:hover {
+            background-color: color("blue-50");
+        }
+
+        &__item {
+            &.buttons {
+                display: flex;
+                padding: space("p") space("m");
+                gap: space("p");
+            }
+        }
+    }
+}

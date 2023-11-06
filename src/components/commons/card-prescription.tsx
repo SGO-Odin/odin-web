@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction } from "react";
 import { TextField } from "../textField";
-import './card-revenue.scss'
+import './card-prescription.scss'
+import { handleFormatNumber } from "@/src/hook/format-number";
 
-interface ICardRevenue {
+interface ICardPrescription {
     title: string
     skewerOD: string
     setSkewerOD: Dispatch<SetStateAction<string>>
@@ -26,7 +27,7 @@ interface ICardRevenue {
     setHeightOE: Dispatch<SetStateAction<string>>
 }
 
-export default function CardRevenue({
+export default function CardPrescription({
     title,
     skewerOD,
     setSkewerOD,
@@ -48,16 +49,16 @@ export default function CardRevenue({
     setDNPOE,
     heightOE,
     setHeightOE,
-}: ICardRevenue) {
+}: ICardPrescription) {
     return (
-        <div className="card-revenue">
-            <span className="card-revenue__label">{title}</span>
-            <div className="card-revenue__input">
-                <span className="card-revenue__input__text">OD:</span>
+        <div className="card-prescription">
+            <span className="card-prescription__label">{title}</span>
+            <div className="card-prescription__input">
+                <span className="card-prescription__input__text">OD:</span>
                 <TextField
                     name={skewerOD}
                     placeholder="0.25"
-                    value={skewerOD}
+                    value={handleFormatNumber(skewerOD)}
                     onChange={(ev) => setSkewerOD(ev.target.value)}
                     label="ESFÉRICO"
                     id={skewerOD}
@@ -65,7 +66,7 @@ export default function CardRevenue({
                 <TextField
                     name={cylindricalOD}
                     placeholder="0.25"
-                    value={cylindricalOD}
+                    value={handleFormatNumber(cylindricalOD)}
                     onChange={(ev) => setCylindricalOD(ev.target.value)}
                     label="CILÍNDRICO"
                     id={cylindricalOD}
@@ -73,7 +74,7 @@ export default function CardRevenue({
                 <TextField
                     name={axisOD}
                     placeholder="0.25"
-                    value={axisOD}
+                    value={handleFormatNumber(axisOD)}
                     onChange={(ev) => setAxisOD(ev.target.value)}
                     label="EIXO"
                     id={axisOD}
@@ -81,7 +82,7 @@ export default function CardRevenue({
                 <TextField
                     name={DNPOD}
                     placeholder="0.25"
-                    value={DNPOD}
+                    value={handleFormatNumber(DNPOD)}
                     onChange={(ev) => setDNPOD(ev.target.value)}
                     label="DNP"
                     id={DNPOD}
@@ -89,18 +90,18 @@ export default function CardRevenue({
                 <TextField
                     name={heightOD}
                     placeholder="0.25"
-                    value={heightOD}
+                    value={handleFormatNumber(heightOD)}
                     onChange={(ev) => setHeightOD(ev.target.value)}
                     label="ALTURA"
                     id={heightOD}
                 />
             </div>
-            <div className="card-revenue__input">
-                <span className="card-revenue__input__text">OE:</span>
+            <div className="card-prescription__input">
+                <span className="card-prescription__input__text">OE:</span>
                 <TextField
                     name={skewerOE}
                     placeholder="0.25"
-                    value={skewerOE}
+                    value={handleFormatNumber(skewerOE)}
                     onChange={(ev) => setSkewerOE(ev.target.value)}
                     label="ESFÉRICO"
                     id={skewerOE}
@@ -108,7 +109,7 @@ export default function CardRevenue({
                 <TextField
                     name={cylindricalOE}
                     placeholder="0.25"
-                    value={cylindricalOE}
+                    value={handleFormatNumber(cylindricalOE)}
                     onChange={(ev) => setCylindricalOE(ev.target.value)}
                     label="CILÍNDRICO"
                     id={cylindricalOE}
@@ -116,7 +117,7 @@ export default function CardRevenue({
                 <TextField
                     name={axisOE}
                     placeholder="0.25"
-                    value={axisOE}
+                    value={handleFormatNumber(axisOE)}
                     onChange={(ev) => setAxisOE(ev.target.value)}
                     label="EIXO"
                     id={axisOE}
@@ -124,7 +125,7 @@ export default function CardRevenue({
                 <TextField
                     name={DNPOE}
                     placeholder="0.25"
-                    value={DNPOE}
+                    value={handleFormatNumber(DNPOE)}
                     onChange={(ev) => setDNPOE(ev.target.value)}
                     label="DNP"
                     id={DNPOE}
@@ -132,7 +133,7 @@ export default function CardRevenue({
                 <TextField
                     name={heightOE}
                     placeholder="0.25"
-                    value={heightOE}
+                    value={handleFormatNumber(heightOE)}
                     onChange={(ev) => setHeightOE(ev.target.value)}
                     label="ALTURA"
                     id={heightOE}

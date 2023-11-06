@@ -9,7 +9,6 @@
   padding: space("p") space("m");
 
   border: none;
-  outline: none;
   border-radius: space("p");
   background: color("yellow-300");
   cursor: pointer;
@@ -20,8 +19,14 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
-  line-height: 24px; /* 171.429% */
+  line-height: 24px;
+  /* 171.429% */
+  text-decoration: none;
   transition: all ease-out 300ms;
+
+  &:visited {
+    color: color("black-0");
+  }
 
   &:hover {
     background: color("yellow-400");

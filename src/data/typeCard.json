@@ -1,0 +1,22 @@
+[
+    {
+        "_id": 1,
+        "name": "Cartão de Crédito",
+        "value": "CREDIT_CARD"
+    },
+    {
+        "_id": 2,
+        "name": "Cartão de Débito",
+        "value": "DEBIT_CARD"
+    },
+    {
+        "_id": 3,
+        "name": "Dinheiro",
+        "value": "MONEY"
+    },
+    {
+        "_id": 4,
+        "name": "Pix",
+        "value": "PIX"
+    }
+]

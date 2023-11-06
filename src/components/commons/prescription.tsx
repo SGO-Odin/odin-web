@@ -1,10 +1,13 @@
-import { MdBuild, MdOutlineCalendarMonth } from "react-icons/md";
+import { MdBuild } from "react-icons/md";
 import { TextField } from "../textField";
-import './revenue.scss'
+import './prescription.scss'
 import { Dispatch, SetStateAction } from "react";
-import CardRevenue from "./card-revenue";
+import { handleFormatNumber } from "@/src/hook/format-number";
+import CardPrescription from "./card-prescription";
+import { IPrescription } from "@/src/interface/datas";
+import ButtonPrescription from "./button-prescription";
 
-interface IRevenue {
+interface IPrescriptionComponents {
     skewerFarOD: string
     setSkewerFarOD: Dispatch<SetStateAction<string>>
     cylindricalFarOD: string
@@ -47,17 +50,18 @@ interface IRevenue {
     heightNearOE: string
     setHeightNearOE: Dispatch<SetStateAction<string>>
 
-    dateRegister: string
-    setDateRegister: Dispatch<SetStateAction<string>>
+    datePrescription: string
+    setDatePrescription: Dispatch<SetStateAction<string>>
     addition: string
     setAddition: Dispatch<SetStateAction<string>>
-    isButton: "1" | "2" | "3"
-    setIsButton: Dispatch<SetStateAction<"1" | "2" | "3">>
+    isButton: string
+    setIsButton: Dispatch<SetStateAction<string>>
 
-    formatarSequenciaNumericaParaData(value: string): string
+    prescription: IPrescription[]
+    setPrescription: Dispatch<SetStateAction<IPrescription[]>>
 }
 
-export default function Revenue({
+export default function Prescription({
     skewerFarOD,
     setSkewerFarOD,
     cylindricalFarOD,
@@ -100,48 +104,37 @@ export default function Revenue({
     heightNearOE,
     setHeightNearOE,
 
-    dateRegister,
-    setDateRegister,
+    datePrescription,
+    setDatePrescription,
     addition,
     setAddition,
     isButton,
-    setIsButton
-}: IRevenue) {
+    setIsButton,
+
+    prescription,
+    setPrescription,
+}: IPrescriptionComponents) {
     return (
-        <div className="container-revenue">
-            <aside className="container-revenue__aside">
-                <button type="button" onClick={() => setIsButton("1")} className={`container-revenue__aside__button ${isButton === '1' ? 'active' : ''}`}>
-                    <span className="icon">
-                        <MdBuild size={24} />
-                    </span>
-                    Nova Receita
-                </button>
-                <button type="button" onClick={() => setIsButton("2")} className={`container-revenue__aside__button ${isButton === '2' ? 'active' : ''}`}>
-                    <span className="icon">
-                        <MdOutlineCalendarMonth size={24} />
-                    </span>
-                    25 / 11 / 2018
-                </button>
-                <button type="button" onClick={() => setIsButton("3")} className={`container-revenue__aside__button ${isButton === '3' ? 'active' : ''}`}>
-                    <span className="icon">
-                        <MdOutlineCalendarMonth size={24} />
-                    </span>
-                    25 / 11 / 2017
-                </button>
+        <div className="container-prescription">
+            <aside className="container-prescription__aside">
+                <ButtonPrescription isButton={isButton} setIsButton={setIsButton} />
+                {!!prescription && prescription.map((item) => (
+                    <ButtonPrescription key={item.expirationDate} isButton={isButton} setIsButton={setIsButton} expirationDate={item.expirationDate} />
+                ))}
             </aside>
-            <section className="container-revenue__revenue">
-                <div className="container-revenue__revenue__inputs">
+            <section className="container-prescription__revenue">
+                <div className="container-prescription__revenue__inputs">
                     <TextField
                         name="dateRegister"
-                        value={dateRegister}
+                        value={datePrescription}
                         type="date"
-                        onChange={(ev) => setDateRegister(ev.target.value)}
+                        onChange={(ev) => setDatePrescription(ev.target.value)}
                         label="DATA DE REGISTRO:"
                         id="dateRegister"
 
                     />
                 </div>
-                <CardRevenue
+                <CardPrescription
                     title="Longe"
                     skewerOD={skewerFarOD}
                     setSkewerOD={setSkewerFarOD}
@@ -164,7 +157,7 @@ export default function Revenue({
                     heightOE={heightFarOE}
                     setHeightOE={setHeightFarOE}
                 />
-                <CardRevenue
+                <CardPrescription
                     title="Perto"
                     skewerOD={skewerNearOD}
                     setSkewerOD={setSkewerNearOD}
@@ -187,11 +180,11 @@ export default function Revenue({
                     heightOE={heightNearOE}
                     setHeightOE={setHeightNearOE}
                 />
-                <div className="container-revenue__revenue__inputs">
+                <div className="container-prescription__revenue__inputs">
                     <TextField
                         name="addition"
                         placeholder="0.3"
-                        value={addition}
+                        value={handleFormatNumber(addition)}
                         onChange={(ev) => setAddition(ev.target.value)}
                         label="ADIÇÃO"
                         id="addition"

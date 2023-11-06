@@ -1,25 +1,32 @@
 import LayoutDefault from "@/src/components/layoutDefault";
 import "./supplierTemplete.scss";
-import { ButtonsPrimary } from "@/src/components/buttons/primary";
-import { BsEmojiSunglassesFill } from "react-icons/bs";
 import { Search } from "@/src/components/search";
 import { ButtonsEdit } from "@/src/components/buttons/edit";
 import { MdDelete, MdLocalShipping, MdOutlineEdit, MdSearch } from "react-icons/md";
 import { ButtonsDelete } from "@/src/components/buttons/delete";
 import { useRouter } from "next/navigation";
-import { TablesCustom } from "@/src/components/tablesCustom";
 import { Hero } from "@/src/components/hero";
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
+import RowItem from "@/src/components/table/body/rowItem";
+import Head from "@/src/components/table/head";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { ISupplier } from "@/src/interface/datas";
 
-const data = [
-  { Id: 1, Fornecedor: "Laboratorio X", Nome: "João" },
-  { Id: 2, Fornecedor: "Laboratorio W", Nome: "Maria" },
-];
 
-const columns = ["Fornecedor", "Nome"];
+const columns = ["Fornecedor", "Razão Social", "Laboratório"];
 
 export function SupplierTemplete() {
   const { push } = useRouter();
+
+  const [suppiler, setSuppiler] = useState<ISupplier[]>([])
+
+  useEffect(() => {
+    axios.get('/api/supplier').then(response => {
+      console.log("Supplier: ")
+      setSuppiler(response.data)
+    })
+  }, [])
 
   const handlePushNewSupplier = () => {
     push("/fornecedor/cadastrar");
@@ -46,8 +53,33 @@ export function SupplierTemplete() {
           </div>
         </div>
       </Hero>
-      <div className="supplier">
-        <TablesCustom data={data} columns={columns} isButton={true} typeButton={"two"} />
+      <div className="container-table">
+        <div className="container-table__content">
+          <table className="table">
+            <Head columns={columns} isButton={true} />
+            <tbody className="body">
+              {!!suppiler && suppiler.map((item) => (
+                <tr key={item._id} className='body__row'>
+                  <RowItem label={item.tradingName} isActive={null} />
+                  <RowItem label={item.companyName} isActive={null} />
+                  <RowItem label={item.isLaboratory ? 'Sim' : 'Não'} isActive={item.isLaboratory} />
+                  <td className={'row buttons'}>
+                    <div>
+                      <ButtonsEdit href={`/fornecedor/editar?id=${item._id}`}>
+                        <MdOutlineEdit size={24} />
+                      </ButtonsEdit>
+                    </div>
+                    <div>
+                      <ButtonsDelete href={`/fornecedor/deletar?id=${item._id}`}>
+                        <MdDelete size={24} />
+                      </ButtonsDelete>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </LayoutDefault>
   );

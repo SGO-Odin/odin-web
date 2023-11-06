@@ -11,18 +11,17 @@ export function TextField({
   value,
   label,
   id,
-  erro = false,
   type = "text",
   onChange,
   messageErro = ""
 }: ITextField) {
   return (
     <div className="textfield">
-      {erro ? (
+      {messageErro ? (
         <span className="textfield__message">{messageErro}</span>
       ) : null}
       <input
-        className={"textfield__input" + (erro ? "--erro" : '')}
+        className={"textfield__input" + (messageErro ? "--erro" : '')}
         type={type}
         id={id}
         disabled={disabled}

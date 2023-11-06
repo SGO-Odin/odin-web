@@ -3,6 +3,7 @@ import { BrandsTemplate } from "../template/Grifes";
 import { parseCookies } from "nookies";
 
 export default function Brands() {
+
   return <BrandsTemplate />;
 }
 

@@ -1,0 +1,214 @@
+[
+  {
+    "_id": 1,
+    "number": "001",
+    "client": 1,
+    "dicountValue": "10000",
+    "additionalValue": "",
+    "prescription": [
+      {
+        "expirationDate": "2023-11-05",
+        "additional": "0,045",
+        "problems": [
+          {
+            "type": "FAR",
+            "positionOfEyes": "RIGHT",
+            "spherical": "0,056",
+            "cylinder": "0,065",
+            "axis": "",
+            "npd": "",
+            "height": ""
+          },
+          {
+            "type": "FAR",
+            "positionOfEyes": "LEFT",
+            "spherical": "",
+            "cylinder": "",
+            "axis": "",
+            "npd": "",
+            "height": ""
+          },
+          {
+            "type": "NEAR",
+            "positionOfEyes": "RIGHT",
+            "spherical": "",
+            "cylinder": "",
+            "axis": "",
+            "npd": "",
+            "height": ""
+          },
+          {
+            "type": "NEAR",
+            "positionOfEyes": "LEFT",
+            "spherical": "",
+            "cylinder": "",
+            "axis": "",
+            "npd": "",
+            "height": ""
+          }
+        ]
+      }
+    ],
+    "products": [
+      {
+        "idProduct": 4,
+        "quantity": "1",
+        "salesPrice": "95000"
+      },
+      {
+        "idProduct": 3,
+        "quantity": "1",
+        "salesPrice": "78500"
+      }
+    ],
+    "dateRegister": "2023-11-05",
+    "hourRegister": "21:08",
+    "payment": [
+      {
+        "_id": "9e1c5727-6cfe-404f-b356-87269c57a78a",
+        "type": "PIX",
+        "amount": "35000",
+        "date": "2023-11-06",
+        "installments": "1"
+      }
+    ]
+  },
+  {
+    "_id": 2,
+    "number": "002",
+    "client": 2,
+    "dicountValue": "",
+    "additionalValue": "5000",
+    "prescription": [
+      {
+        "expirationDate": "2023-11-06",
+        "additional": "0,054",
+        "problems": [
+          {
+            "type": "FAR",
+            "positionOfEyes": "RIGHT",
+            "spherical": "0,056",
+            "cylinder": "0,087",
+            "axis": "",
+            "npd": "",
+            "height": ""
+          },
+          {
+            "type": "FAR",
+            "positionOfEyes": "LEFT",
+            "spherical": "0,068",
+            "cylinder": "0,065",
+            "axis": "",
+            "npd": "",
+            "height": ""
+          },
+          {
+            "type": "NEAR",
+            "positionOfEyes": "RIGHT",
+            "spherical": "",
+            "cylinder": "",
+            "axis": "",
+            "npd": "",
+            "height": ""
+          },
+          {
+            "type": "NEAR",
+            "positionOfEyes": "LEFT",
+            "spherical": "",
+            "cylinder": "",
+            "axis": "",
+            "npd": "",
+            "height": ""
+          }
+        ]
+      }
+    ],
+    "products": [
+      {
+        "idProduct": 3,
+        "quantity": "1",
+        "salesPrice": "78500"
+      },
+      {
+        "idProduct": 5,
+        "quantity": "1",
+        "salesPrice": "25590"
+      }
+    ],
+    "dateRegister": "2023-11-06",
+    "hourRegister": "14:13",
+    "payment": [
+      {
+        "_id": "7c1e6cfe-b65a-4e46-b10c-6e13ef4e4424",
+        "type": "CREDIT_CARD",
+        "amount": "22500",
+        "date": "2023-11-06",
+        "installments": "1/2"
+      },
+      {
+        "_id": "b95c568d-6b07-4b03-8457-09aca3fe80d4",
+        "type": "CREDIT_CARD",
+        "amount": "22500",
+        "date": "2023-12-06",
+        "installments": "2/2"
+      }
+    ],
+    "status": "OPENED"
+  },
+  {
+    "_id": 3,
+    "number": "",
+    "client": null,
+    "dicountValue": "",
+    "additionalValue": "",
+    "prescription": [
+      {
+        "expirationDate": "",
+        "additional": "",
+        "problems": [
+          {
+            "type": "FAR",
+            "positionOfEyes": "RIGHT",
+            "spherical": "",
+            "cylinder": "",
+            "axis": "",
+            "npd": "",
+            "height": ""
+          },
+          {
+            "type": "FAR",
+            "positionOfEyes": "LEFT",
+            "spherical": "",
+            "cylinder": "",
+            "axis": "",
+            "npd": "",
+            "height": ""
+          },
+          {
+            "type": "NEAR",
+            "positionOfEyes": "RIGHT",
+            "spherical": "",
+            "cylinder": "",
+            "axis": "",
+            "npd": "",
+            "height": ""
+          },
+          {
+            "type": "NEAR",
+            "positionOfEyes": "LEFT",
+            "spherical": "",
+            "cylinder": "",
+            "axis": "",
+            "npd": "",
+            "height": ""
+          }
+        ]
+      }
+    ],
+    "products": [],
+    "dateRegister": "",
+    "hourRegister": "",
+    "payment": [],
+    "status": "OPENED"
+  }
+]

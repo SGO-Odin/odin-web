@@ -16,6 +16,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     overflow-y: auto;
+    background-color: color("indigo-50");
 
     &::-webkit-scrollbar {
       width: 0.25rem;
@@ -40,7 +41,6 @@
       justify-content: flex-start;
       padding: 64px space("m");
       gap: space("xg");
-      background-color: color("indigo-50");
 
       @media (min-width: 1200px) {
         padding: 64px space("xg");

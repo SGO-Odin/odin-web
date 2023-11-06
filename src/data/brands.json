@@ -1,0 +1,17 @@
+[
+  {
+    "_id": 4,
+    "brands": "Prada",
+    "isActive": true
+  },
+  {
+    "_id": 2,
+    "brands": "Dolce & Gabbana",
+    "isActive": true
+  },
+  {
+    "_id": 3,
+    "brands": "Versace",
+    "isActive": true
+  }
+]

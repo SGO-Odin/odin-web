@@ -1,7 +1,19 @@
-export const useFormatNumberReais = (value: number): string => {
-    const numberFormated = value.toFixed(2);
+export const formatNumberReais = (value: string): string => {
+    if (!value) return null
+    const money = Number(value.replace(/\D/g, ''));
+    if (!money) return value
+    // Verifica se o money é um número
+    if (typeof money !== 'number') {
+        throw new Error('O money deve ser um número.');
+    }
 
-    const valueInReal = `R$ ${numberFormated}`;
+    // Formata o money com o símbolo da moeda, separador de milhares e casas decimais
+    const moneyFormated = money.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
 
-    return valueInReal;
+    return moneyFormated;
 }

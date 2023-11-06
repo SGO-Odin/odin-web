@@ -33,7 +33,7 @@ export const MenuItem = ({ router, isOpen }: IMenu) => {
             </div>
             {isSubMenuOpen && subItem && isOpen && (
                 <ul className="sub-menu">
-                    {subItem.map((subItem, index) => (
+                    {!!subItem && subItem.map((subItem, index) => (
                         <li className={`sub-menu-item ${pathname === subItem.route ? 'active' : ' '}`} key={index}>
                             <Link href={subItem.route}>{subItem.name}</Link>
                         </li>

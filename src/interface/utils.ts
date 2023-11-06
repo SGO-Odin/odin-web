@@ -13,6 +13,12 @@ export interface IButton {
   onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
+export interface ILink {
+  name?: string
+  children?: React.ReactNode | string
+  href?: string
+}
+
 export interface ITextField {
   autocomplete?: string
   autofocus?: boolean
@@ -48,16 +54,18 @@ export interface IToggle {
 }
 
 export interface ISelect {
-  disabled?: boolean
-  form?: string
-  multiple?: boolean
-  name?: string
-  required?: boolean
+  placeholder?: string;
+  label?: string;
+  messageErro?: string;
+  item: number | string;
+  setItem: React.Dispatch<React.SetStateAction<number | string>>
+  options: IItemSelect[]
+}
+
+export interface IItemSelect {
+  _id: number
+  name: string,
   value?: string
-  label?: string
-  id?: string
-  erro?: boolean
-  onChange?: (value: string) => void
 }
 
 export interface ISignInData {
@@ -90,4 +98,11 @@ export interface IRouter {
     route?: string
   }[]
   | null
+}
+
+export interface IPaymentFormTemplate {
+  _id: number
+  type: string
+  value: string
+  date: string
 }

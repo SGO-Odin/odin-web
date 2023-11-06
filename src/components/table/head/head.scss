@@ -1,0 +1,33 @@
+@import "@/style/sass/config";
+
+.head {
+    border-radius: 3px;
+
+    &__col {
+        &__item {
+            padding: space("p") space("m");
+            position: sticky;
+            top: 0;
+            left: 0;
+            background-color: color("indigo-500");
+            color: color("black-0");
+            cursor: pointer;
+
+            /* font/corpo/paragrafo/2 */
+            font-family: $fontbody;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 24px;
+            /* 171.429% */
+
+            @media (min-width: 1200px) {
+                font-size: 16px;
+                line-height: 32px;
+                /* 200% */
+            }
+        }
+    }
+}

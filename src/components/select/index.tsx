@@ -1,94 +1,49 @@
-import React, { useState } from "react";
-import "./select.scss";
-import { ISelect } from "@/src/interface/utils";
+import './select.scss';
+import { MdKeyboardArrowUp, MdKeyboardArrowDown } from 'react-icons/md';
+import React, { useState } from 'react';
+import { ISelect } from '@/src/interface/utils';
 
-const selection = [
-  {
-    item: "Opção 1",
-    value: "opcao1",
-  },
-  {
-    item: "Opção 2",
-    value: "opcao2",
-  },
-  {
-    item: "Opção 3",
-    value: "opcao3",
-  },
-];
+export function Select({ item, setItem, options, label, messageErro, placeholder }: ISelect) {
 
-export function Select({
-  disabled = false,
-  multiple = false,
-  name,
-  required = false,
-  value,
-  label,
-  id,
-  erro = false,
-  onChange,
-}: ISelect) {
-  const [select, setSelect] = useState<string>(value ?? "");
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const handleButton = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleSelected = (item: string) => {
-    onChange(item)
-    setSelect(item);
-    setIsOpen(!isOpen);
-  };
+  const [open, setOpen] = useState(false);
+  const nameOrder = item && options.find(option => option._id === item)?.name;
 
   return (
     <div className="selects">
-      <label className="selects__label" htmlFor={id}>
+      <label className="selects__label" onClick={() => setOpen(!open)}>
         {label}
       </label>
-      <div
-        className={
-          disabled
-            ? "selects__select--disabled"
-            : erro
-              ? "selects__select--erro"
-              : "selects__select"
-        }
-      >
-        <select
-          name={name}
-          id={id}
-          required={required}
-          multiple={multiple}
-          value={select}
-          className="select-selected"
-          onClick={handleButton}
-        >
-          <option className="select-selected__item">Selecione uma opção</option>
-          {selection.map((item, index) => (
-            <option key={index} className="select-selected__item" value={item.value}>
-              {item.item}
-            </option>
+      <button
+        type='button'
+        className={'btn-select'}
+        onClick={() => setOpen(!open)}
+        onBlur={() => setOpen(false)} >
+        <span className={`btn-select__text${item !== null ? '--active' : ''}`}>
+          {nameOrder || placeholder || 'Selecione uma opção:'}
+          {open ?
+            <MdKeyboardArrowUp
+              size={24}
+              color="#101010"
+            />
+            :
+            <MdKeyboardArrowDown
+              size={24}
+              color="#101010"
+            />}
+        </span>
+        <div className={`btn-select__options${open ? '--active' : ''}`}>
+          {!!options && options.map(option => (
+            <div
+              className={'btn-select__options__option'}
+              key={option._id}
+              onClick={() => setItem(option._id)}>
+              {option.name}
+            </div>
           ))}
-        </select>
-        {isOpen && (
-          <div className="select-items">
-            <ul className="select-items__list">
-              {selection.map((item, index) => (
-                <li
-                  key={index}
-                  onClick={() => handleSelected(item.value)}
-                  className="select-items__list__item"
-                >
-                  {item.item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-      {erro ? (
-        <span className="selects__message">Mensagem de erro!</span>
+        </div>
+      </button>
+      {messageErro ? (
+        <span className="selects__message">{messageErro}</span>
       ) : null}
     </div>
   );

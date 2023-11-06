@@ -29,7 +29,7 @@ export const Item = ({ router, setIsOpenSubItem, isOpenSubItem }: IItem) => {
                         {isOpenSubItem && <MdExpandLess size={24} />}
                     </button>
                     <ul className="list">
-                        {isOpenSubItem &&
+                        {isOpenSubItem && !!subItem &&
                             subItem.map((subItem, index) => (
                                 <li
                                     key={index}

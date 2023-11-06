@@ -118,7 +118,7 @@ export default function Prescription({
         <div className="container-prescription">
             <aside className="container-prescription__aside">
                 <ButtonPrescription isButton={isButton} setIsButton={setIsButton} />
-                {prescription.map((item) => (
+                {!!prescription && prescription.map((item) => (
                     <ButtonPrescription key={item.expirationDate} isButton={isButton} setIsButton={setIsButton} expirationDate={item.expirationDate} />
                 ))}
             </aside>

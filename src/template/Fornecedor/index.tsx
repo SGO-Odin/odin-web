@@ -58,7 +58,7 @@ export function SupplierTemplete() {
           <table className="table">
             <Head columns={columns} isButton={true} />
             <tbody className="body">
-              {suppiler.map((item) => (
+              {!!suppiler && suppiler.map((item) => (
                 <tr key={item._id} className='body__row'>
                   <RowItem label={item.tradingName} isActive={null} />
                   <RowItem label={item.companyName} isActive={null} />

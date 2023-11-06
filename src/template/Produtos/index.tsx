@@ -73,7 +73,7 @@ export default function ProductTemplate() {
           <table className="table">
             <Head columns={columns} isButton={true} />
             <tbody className="body">
-              {product.map((item) => (
+              {!!product && product.map((item) => (
                 <tr key={item._id} className='body__row'>
                   <RowItem label={item.nameProduct} isActive={null} />
                   <RowItem label={handlePushNameBrand(item.brands)} isActive={null} />

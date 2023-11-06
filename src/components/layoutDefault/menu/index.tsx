@@ -84,7 +84,7 @@ export const Menu = ({ isOpenMenuPrimary, setIsOpenMenuPrimary }: IMenu) => {
         {isOpenMenu && (
           <nav className="nav sidebar">
             <ul className="nav__list">
-              {routes.map((item, index) => (
+              {!!routes && routes.map((item, index) => (
                 <Item key={index} router={item} setIsOpenSubItem={setIsOpenSubItem} isOpenSubItem={isOpenSubItem} />
               ))}
             </ul>
@@ -118,7 +118,7 @@ export const Menu = ({ isOpenMenuPrimary, setIsOpenMenuPrimary }: IMenu) => {
         {isOpenMenu && (
           <nav className="nav">
             <ul className="nav__list">
-              {subMenu.map((item, index) => (
+              {!!subMenu && subMenu.map((item, index) => (
                 <Item key={index} router={item} />
               ))}
             </ul>

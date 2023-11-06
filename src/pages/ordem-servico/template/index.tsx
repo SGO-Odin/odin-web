@@ -653,8 +653,8 @@ export default function ServiceOrderFormTemplate({
                             <table className="table">
                                 <Head columns={columns} isButton={true} />
                                 <tbody className="body">
-                                    {dataProduct.map((item, index) => (
-                                        <tr key={index} className='body__row'>
+                                    {!!dataProduct && dataProduct.map((item, index) => (
+                                        <tr key={item._id} className='body__row'>
                                             <RowItem label={item.ref} isActive={null} />
                                             <RowItem label={item.unidade} isActive={null} />
                                             <RowItem label={item.produto} isActive={null} />

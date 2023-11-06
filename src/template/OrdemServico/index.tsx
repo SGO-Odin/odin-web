@@ -131,7 +131,7 @@ export default function ServiceOrderTemplate() {
                     <table className="table">
                         <Head columns={columns} isButton={true} />
                         <tbody className="body">
-                            {orderService.map((item) => (
+                            {!!orderService && orderService.map((item) => (
                                 <tr key={item._id} className='body__row'>
                                     <RowItem label={item.number} isActive={null} />
                                     <RowItem label={item.dateRegister} isActive={null} />

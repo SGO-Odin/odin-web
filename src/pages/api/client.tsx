@@ -53,7 +53,7 @@ export default async function handler(
         const { firsName, lastName, cpf, rg, email, whatsapp, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city, id } = req.body
 
         const data: IClient[] = await lerArquivoJSON(fileName)
-        data.map((item) => {
+        !!data && data.map((item) => {
             if (item._id == id) {
                 item.firsName = firsName
                 item.lastName = lastName

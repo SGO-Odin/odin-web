@@ -37,7 +37,7 @@ export default function TablePayment({ rows, onClick }: ITablePayment) {
         <div className="table-payment">
             <table className="table-payment__table">
                 <tbody className="table-payment__table__body">
-                    {rows.map((row, index) => (
+                    {!!rows && rows.map((row, index) => (
                         <tr key={index} className="table-payment__table__body__row">
                             <td className="table-payment__table__body__row__item">
                                 {handleIconType(row.type)}

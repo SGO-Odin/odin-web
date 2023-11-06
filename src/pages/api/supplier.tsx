@@ -44,7 +44,7 @@ export default async function handler(
         const { companyName, tradingName, isLaboratory, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city, id } = req.body
 
         const data: ISupplier[] = await lerArquivoJSON(fileName)
-        data.map((item) => {
+        !!data && data.map((item) => {
             if (item._id == id) {
                 item.companyName = companyName
                 item.tradingName = tradingName

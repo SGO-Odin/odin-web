@@ -57,7 +57,7 @@ export const ClientTemplate = () => {
                     <table className="table">
                         <Head columns={columns} isButton={true} />
                         <tbody className="body">
-                            {client.map((item) => (
+                            {!!client && client.map((item) => (
                                 <tr key={item._id} className='body__row'>
                                     <RowItem label={item._id.toString()} isActive={null} />
                                     <RowItem label={`${item.firsName} ${item.lastName}`} isActive={null} />

@@ -97,7 +97,7 @@ export default function ProductFormTemplate({
 
     useEffect(() => {
         axios.get('/api/brands').then(response => {
-            const listSelectBrands = response.data.map(function (item) {
+            const listSelectBrands = !!response.data && response.data.map(function (item) {
                 const data: IItemSelect = {
                     _id: item._id,
                     name: item.brands
@@ -108,7 +108,7 @@ export default function ProductFormTemplate({
         })
 
         axios.get('/api/supplier').then(response => {
-            const listSelectSupplier = response.data.map(function (item) {
+            const listSelectSupplier = !!response.data && response.data.map(function (item) {
                 const data: IItemSelect = {
                     _id: item._id,
                     name: item.companyName

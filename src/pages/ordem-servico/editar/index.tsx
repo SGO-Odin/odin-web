@@ -254,7 +254,7 @@ export default function EditServiceOrderPage() {
                 setAddition(currentPrescription.additional)
                 setDatePrescription(currentPrescription.expirationDate)
 
-                currentPrescription.problems.map((item) => {
+                !!currentPrescription.problems && currentPrescription.problems.map((item) => {
                     if (item.type == 'FAR' && item.positionOfEyes == 'RIGHT') {
                         // Dados da Receita Longe OD
                         setSkewerFarOD(item.spherical)

@@ -49,7 +49,7 @@ export default async function handler(
         const { number, client, dicountValue, additionalValue, prescription, products, dateRegister, hourRegister, payment, status, id } = req.body
 
         const data: IOrderService[] = await lerArquivoJSON(fileName)
-        data.map((item) => {
+        !!data && data.map((item) => {
             if (item._id == id) {
                 item.number = number
                 item.client = client

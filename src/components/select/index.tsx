@@ -32,7 +32,7 @@ export function Select({ item, setItem, options, label, messageErro, placeholder
             />}
         </span>
         <div className={`btn-select__options${open ? '--active' : ''}`}>
-          {options.map(option => (
+          {!!options && options.map(option => (
             <div
               className={'btn-select__options__option'}
               key={option._id}

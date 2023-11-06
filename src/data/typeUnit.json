@@ -1,0 +1,22 @@
+[
+    {
+        "_id": 1,
+        "name": "Frasco"
+    },
+    {
+        "_id": 2,
+        "name": "Kit"
+    },
+    {
+        "_id": 3,
+        "name": "Par"
+    },
+    {
+        "_id": 4,
+        "name": "Peça"
+    },
+    {
+        "_id": 5,
+        "name": "Unidade"
+    }
+]

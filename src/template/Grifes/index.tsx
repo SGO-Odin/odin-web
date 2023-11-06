@@ -51,7 +51,7 @@ export function BrandsTemplate() {
           <table className="table">
             <Head columns={columns} isButton={true} />
             <tbody className="body">
-              {brands.map((item) => (
+              {!!brands && brands.map((item) => (
                 <tr key={item._id} className='body__row'>
                   <RowItem label={item.brands} isActive={null} />
                   <RowItem label={item.isActive ? 'Ativo' : 'Inativo'} isActive={item.isActive} />

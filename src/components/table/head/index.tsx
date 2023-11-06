@@ -9,7 +9,7 @@ export default function Head({ columns, isButton }: IHead) {
     return (
         <thead className="head">
             <tr className="head__col">
-                {columns.map((column, index) => (
+                {!!columns && columns.map((column, index) => (
                     <th key={index} className="head__col__item">
                         {column}
                     </th>

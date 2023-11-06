@@ -60,7 +60,7 @@ export default function EditProductPage() {
     }
 
     const goBack = () => {
-        router.back()
+        router.push('/produtos')
     }
 
     return (

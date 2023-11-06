@@ -47,7 +47,7 @@ export default async function handler(
         const { brands, isActive, id } = req.body
 
         const data: IBrands[] = await lerArquivoJSON(fileName)
-        data.map((item) => {
+        !!data && data.map((item) => {
             if (item._id == id) {
                 item.brands = brands
                 item.isActive = isActive

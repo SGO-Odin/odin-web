@@ -11,7 +11,7 @@ export function TablesCustom({ data, columns, isButton, typeButton }: ITable) {
       <table className="table">
         <thead className="table__head">
           <tr className="table__head__col">
-            {columns?.map((column, index) => (
+            {!!columns && columns?.map((column, index) => (
               <th key={index} className="table__head__col__item">
                 {column}
               </th>
@@ -21,9 +21,9 @@ export function TablesCustom({ data, columns, isButton, typeButton }: ITable) {
         </thead>
 
         <tbody className="table__body">
-          {data?.map((row, rowIndex) => (
+          {!!data && data?.map((row, rowIndex) => (
             <tr className="table__body__row" key={rowIndex}>
-              {columns.map((column, colIndex) => (
+              {!!columns && columns.map((column, colIndex) => (
                 <td className="table__body__row__item" key={colIndex}>
                   {row[column]}
                 </td>

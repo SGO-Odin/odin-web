@@ -14,9 +14,9 @@ interface IBody {
 export default function Body({ data, columns, typeButton }: IBody) {
     return (
         <tbody className="body">
-            {data.map((row, rowIndex) => (
+            {!!data && data.map((row, rowIndex) => (
                 <tr className="body__row" key={rowIndex}>
-                    {columns.map((column, colIndex) => (
+                    {!!columns && columns.map((column, colIndex) => (
                         <RowItem label={row[column]} key={colIndex} />
                     ))}
                     {typeButton == "two" && (

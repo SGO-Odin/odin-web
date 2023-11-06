@@ -31,7 +31,7 @@ export default function EditBrandPage() {
     }
 
     const goBack = () => {
-        router.back()
+        router.push('/grifes')
     }
 
     return (

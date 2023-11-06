@@ -32,7 +32,7 @@ export function Aside({ isOpenMenu }: IAside) {
         />
       )}
       <ul className="sidebar__menu">
-        {routes.map((route, index) => (
+        {!!routes && routes.map((route, index) => (
           <MenuItem key={index} router={route} isOpen={isOpenMenu} />
         ))}
       </ul>

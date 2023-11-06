@@ -14,7 +14,7 @@ import { ButtonsSecundary } from '@/src/components/buttons/secundary';
 import { TablesCustom } from '@/src/components/tablesCustom';
 import CardTotal from '@/src/components/commons/card-total';
 import TablePayment from '@/src/components/commons/table-payment';
-import Revenue from '@/src/components/commons/revenue';
+import Revenue from '@/src/components/commons/prescription';
 import { ButtonsTertiary } from '@/src/components/buttons/tertiary';
 import { MdAttachMoney, MdBuild, MdCancel } from 'react-icons/md';
 import { ButtonsPrimary } from '@/src/components/buttons/primary';
@@ -123,13 +123,13 @@ export default function NewSale() {
                                 />
                             </div>
                             <div className="input">
-                                <Select
+                                {/* <Select
                                     name="orderService"
                                     value={orderService}
                                     placeholder={"Pesquisar Ordem de Serviçoa"}
                                     onChange={(ev) => setOrderService(ev.target.value)}
                                     label="IMPORTAR O.S."
-                                    id="orderService" />
+                                    id="orderService" /> */}
                             </div>
                         </div>
                     </div>
@@ -194,23 +194,23 @@ export default function NewSale() {
                         <HeroSecundary title="Finalização" />
                         <div className="sale-template__form__content__inputs">
                             <div className="input">
-                                <Select
+                                {/* <Select
                                     name="client"
                                     value={client}
                                     onChange={(ev) => setClient(ev.target.value)}
                                     label="CLIENTE"
-                                    id="client" />
+                                    id="client" /> */}
                             </div>
                         </div>
                         <HeroSecundary title="Forma de pagamento" />
                         <div className="sale-template__form__content__inputs">
                             <div className="input">
-                                <Select
+                                {/* <Select
                                     name="methodPayment"
                                     value={methodPayment}
                                     onChange={(ev) => setMethodPayment(ev.target.value)}
                                     label="FORMA DE PAGAMENTO"
-                                    id="methodPayment" />
+                                    id="methodPayment" /> */}
                             </div>
                             <div className="input">
                                 <TextField
@@ -260,7 +260,7 @@ export default function NewSale() {
                             </div>
                         </div>
                         <HeroSecundary title="" />
-                        <TablePayment rows={["Dinheiro", "- R$100,00", "Lançamento dia 01 / 06 / 2023"]} />
+                        {/* <TablePayment rows={["Dinheiro", "- R$100,00", "Lançamento dia 01 / 06 / 2023"]} /> */}
                     </div>
                     <div className="sale-template__form__buttons">
                         <div>

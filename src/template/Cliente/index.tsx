@@ -1,21 +1,31 @@
+import { ButtonsEdit } from '@/src/components/buttons/edit';
 import './clientTemplate.scss'
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { Hero } from "@/src/components/hero";
 import LayoutDefault from "@/src/components/layoutDefault";
 import { Search } from "@/src/components/search";
-import { TablesCustom } from "@/src/components/tablesCustom";
+import RowItem from '@/src/components/table/body/rowItem';
+import Head from '@/src/components/table/head';
 import { useRouter } from "next/navigation";
-import { MdPerson, MdSearch } from "react-icons/md";
+import { MdDelete, MdOutlineEdit, MdPerson, MdSearch } from "react-icons/md";
+import { ButtonsDelete } from '@/src/components/buttons/delete';
+import { IClient } from '@/src/interface/datas';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { formatNumberWhatsapp } from '@/src/hook/format-number-whatsapp';
 
-const data = [
-    { Id: 1, Nome: "João", Telefone: "(73) 9 0000 - 0000", Whatsapp: "(73) 9 1234 - 4568" },
-    { Id: 2, Nome: "Maria", Telefone: "(73) 9 0000 - 0000", Whatsapp: "(73) 9 1234 - 4568" },
-];
 
-const columns = ["Id", "Nome", "Telefone", "Whatsapp"];
+const columns = ["Id", "Nome", "Whatsapp", "E-mail"];
 
 export const ClientTemplate = () => {
     const { push } = useRouter();
+    const [client, setClient] = useState<IClient[]>([])
+
+    useEffect(() => {
+        axios.get('/api/client').then(response => {
+            setClient(response.data)
+        })
+    }, [])
 
     const handlePushNewClient = () => {
         push("/cliente/cadastrar");
@@ -42,8 +52,34 @@ export const ClientTemplate = () => {
                     </div>
                 </div>
             </Hero>
-            <div className="client">
-                <TablesCustom data={data} columns={columns} isButton={true} typeButton={"two"} />
+            <div className="container-table">
+                <div className="container-table__content">
+                    <table className="table">
+                        <Head columns={columns} isButton={true} />
+                        <tbody className="body">
+                            {!!client && client.map((item) => (
+                                <tr key={item._id} className='body__row'>
+                                    <RowItem label={item._id.toString()} isActive={null} />
+                                    <RowItem label={`${item.firsName} ${item.lastName}`} isActive={null} />
+                                    <RowItem label={formatNumberWhatsapp(item.whatsapp)} isActive={null} />
+                                    <RowItem label={item.email} isActive={null} />
+                                    <td className={'row buttons'}>
+                                        <div>
+                                            <ButtonsEdit href={`/cliente/editar?id=${item._id}`}>
+                                                <MdOutlineEdit size={24} />
+                                            </ButtonsEdit>
+                                        </div>
+                                        <div>
+                                            <ButtonsDelete href={`/cliente/deletar?id=${item._id}`}>
+                                                <MdDelete size={24} />
+                                            </ButtonsDelete>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </LayoutDefault>
     );

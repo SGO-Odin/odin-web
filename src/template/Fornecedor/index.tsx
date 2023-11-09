@@ -23,7 +23,6 @@ export function SupplierTemplete() {
 
   useEffect(() => {
     axios.get('/api/supplier').then(response => {
-      console.log("Supplier: ")
       setSuppiler(response.data)
     })
   }, [])

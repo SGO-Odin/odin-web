@@ -14,11 +14,12 @@ export default function DeleteSupplierPage() {
     const { id } = router.query
 
     useEffect(() => {
-        if (!id) { return }
-        axios.get('/api/supplier?id=' + id)
-            .then(response => {
-                setCompanyName(response.data.companyName)
-            })
+        if (id) {
+            axios.get('/api/supplier?id=' + id)
+                .then(response => {
+                    setCompanyName(response.data.companyName)
+                })
+        }
     }, [id])
 
     const handleDeleteSupplier = async () => {

@@ -14,11 +14,12 @@ export default function DeleteBrandPage() {
     const { id } = router.query
 
     useEffect(() => {
-        if (!id) { return }
-        axios.get('/api/product?id=' + id)
-            .then(response => {
-                setNameProduct(response.data.nameProduct)
-            })
+        if (id) {
+            axios.get('/api/product?id=' + id)
+                .then(response => {
+                    setNameProduct(response.data.nameProduct)
+                })
+        }
     }, [id])
 
     const handleDeleteBrand = async () => {

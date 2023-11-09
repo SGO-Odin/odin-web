@@ -3,6 +3,7 @@ import { TextField } from "../textField";
 import { numberValidation } from "@/src/hook/validation-number";
 import axios from "axios";
 import './address.scss'
+import { getStateUf } from "@/src/hook/get-state-uf";
 
 
 interface IAddress {
@@ -90,6 +91,8 @@ export default function Address({
 
     useEffect(() => {
         if (acronym !== '') {
+            const state = getStateUf(acronym)
+            setStateName(state.nome)
             setIsFederalDistrict(acronym === 'DF' ? true : false)
         }
     }, [acronym])

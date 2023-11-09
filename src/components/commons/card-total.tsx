@@ -56,15 +56,17 @@ export default function CardTotal({
     }
 
     useEffect(() => {
-        if (!valueTotal) return null
-        const value = valueTotal.replace(/\D/g, '') // Retira qualquer caracter não numerico
 
-        if (Number(value) > 0) {
-            handleUpdateValueAmount()
-        } else {
-            setAdditional('')
-            setDiscount('')
-            handleUpdateValueAmount()
+        if (valueTotal) {
+            const value = valueTotal.replace(/\D/g, '') // Retira qualquer caracter não numerico
+
+            if (Number(value) > 0) {
+                handleUpdateValueAmount()
+            } else {
+                setAdditional('')
+                setDiscount('')
+                handleUpdateValueAmount()
+            }
         }
     }, [valueTotal])
 

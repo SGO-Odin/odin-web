@@ -26,26 +26,27 @@ export default function EditProductPage() {
     const { id } = router.query
 
     useEffect(() => {
-        if (!id) { return }
-        axios.get('/api/product?id=' + id)
-            .then(response => {
-                setCost(response.data.cost)
-                setPercentProfit(response.data.percentProfit)
-                setProfit(response.data.profit)
-                setSelling(response.data.selling)
-                setStockMin(response.data.stockMin)
-                setStockCurrent(response.data.stockCurrent)
-                setLocation(response.data.location)
-                setReference(response.data.reference)
-                setNameProduct(response.data.nameProduct)
-                setUnit(response.data.unit)
-                setBrands(response.data.brands)
-                setSupplier(response.data.supplier)
-                setIsActive(response.data.isActive)
-                setIsStockControl(response.data.isStockControl)
-                setIsService(response.data.isService)
+        if (id) {
+            axios.get('/api/product?id=' + id)
+                .then(response => {
+                    setCost(response.data.cost)
+                    setPercentProfit(response.data.percentProfit)
+                    setProfit(response.data.profit)
+                    setSelling(response.data.selling)
+                    setStockMin(response.data.stockMin)
+                    setStockCurrent(response.data.stockCurrent)
+                    setLocation(response.data.location)
+                    setReference(response.data.reference)
+                    setNameProduct(response.data.nameProduct)
+                    setUnit(response.data.unit)
+                    setBrands(response.data.brands)
+                    setSupplier(response.data.supplier)
+                    setIsActive(response.data.isActive)
+                    setIsStockControl(response.data.isStockControl)
+                    setIsService(response.data.isService)
 
-            })
+                })
+        }
     }, [id])
 
     const handleUpdateProduct = async (event: React.FormEvent<HTMLFormElement>) => {

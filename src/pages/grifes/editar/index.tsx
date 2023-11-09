@@ -5,8 +5,7 @@ import BrandsFormTemplate from "../template";
 
 export default function EditBrandPage() {
 
-    const [brands, setBrands] = useState<string>("")
-    const [isActive, setIsActive] = useState<boolean>(false)
+    const [name, setName] = useState<string>("")
     const router = useRouter()
     const { id } = router.query
 
@@ -14,18 +13,15 @@ export default function EditBrandPage() {
         if (!id) { return }
         axios.get('/api/brands?id=' + id)
             .then(response => {
-                setBrands(response.data.brands)
-                setIsActive(response.data.isActive)
+                setName(response.data.response.name)
             })
     }, [id])
 
     const handleUpdateBrand = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-
-        const data = { brands, isActive }
         // update
-        await axios.put('/api/brands', { ...data, id })
+        await axios.put('/api/brands', { name, id })
 
         goBack()
     }
@@ -37,12 +33,10 @@ export default function EditBrandPage() {
     return (
         <BrandsFormTemplate
             handleBrands={handleUpdateBrand}
-            brands={brands}
-            setBrands={setBrands}
-            isActive={isActive}
-            setIsActive={setIsActive}
+            name={name}
+            setName={setName}
             goBack={goBack}
-            title={`Editar Marca ${brands}`}
-            paragraph={`Atualize as informações da marca ${brands}, mantendo os registros precisos e atualizados.`} />
+            title={`Editar Marca ${name}`}
+            paragraph={`Atualize as informações da marca ${name}, mantendo os registros precisos e atualizados.`} />
     );
 }

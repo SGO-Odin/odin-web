@@ -36,8 +36,6 @@ interface IRowsProductTable {
     valueTot: string
 }
 
-type IListPaymentType = typeof typeCard[0]
-
 interface IServiceOrderFormTemplate {
     isButton: string
     setIsButton: Dispatch<SetStateAction<string>>
@@ -494,9 +492,11 @@ export default function ServiceOrderFormTemplate({
         if (Number(quantity) >= 1) {
             const dataCurrentProduct: IProduct = listProduct.find((item) => item._id === idProduct ? item : null)
             if (dataCurrentProduct.selling) {
-                if (!dataCurrentProduct.selling) return null
-                const value = dataCurrentProduct.selling.replace(/\D/g, ''); // Retira qualquer caracter não numerico
 
+                let value = '0'
+                if (dataCurrentProduct.selling) {
+                    value = dataCurrentProduct.selling.replace(/\D/g, ''); // Retira qualquer caracter não numerico
+                }
                 const total = Number(value) * Number(quantity)
                 setCoast(total.toString())
             }
@@ -509,9 +509,11 @@ export default function ServiceOrderFormTemplate({
     useEffect(() => {
         if (dataProduct.length > 0) {
             const total = dataProduct.reduce((acumulador, objeto) => {
-                if (!objeto.valueUnit) return null
-                const value = objeto.valueUnit.replace(/\D/g, ''); // Retira qualquer caracter não numerico
 
+                let value = '0'
+                if (objeto.valueUnit) {
+                    value = objeto.valueUnit.replace(/\D/g, ''); // Retira qualquer caracter não numerico
+                }
                 return acumulador + (Number(objeto.quantidade) * Number(value))
             }, 0)
             setValueTotal(total.toString())

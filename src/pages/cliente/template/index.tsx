@@ -7,6 +7,7 @@ import LayoutDefault from '@/src/components/layoutDefault';
 import { TextField } from '@/src/components/textField';
 import { formatCPF } from '@/src/hook/format-cpf';
 import { formatNumberWhatsapp } from '@/src/hook/format-number-whatsapp';
+import { sanitalizePhones } from '@/src/hook/sanitalize-phones';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { MdCancel, MdPerson } from 'react-icons/md';
 
@@ -21,8 +22,10 @@ interface IClientFormTemplate {
     setRg: Dispatch<SetStateAction<string>>
     email: string
     setEmail: Dispatch<SetStateAction<string>>
-    whatsapp: string
-    setWhatsapp: Dispatch<SetStateAction<string>>
+    phones: string
+    setPhones: Dispatch<SetStateAction<string>>
+    ddd: string
+    setDDD: Dispatch<SetStateAction<string>>
 
     zipCode: string
     setZipCode: Dispatch<SetStateAction<string>>
@@ -64,8 +67,10 @@ export default function ClientFormTemplate({
     setRg,
     email,
     setEmail,
-    whatsapp,
-    setWhatsapp,
+    phones,
+    setPhones,
+    ddd,
+    setDDD,
 
     zipCode,
     setZipCode,
@@ -163,6 +168,13 @@ export default function ClientFormTemplate({
         if (!rg) return null
         return rg.replace(/(\d{2})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
     }
+
+    useEffect(() => {
+        if (phones) {
+            const completedPhone = sanitalizePhones(phones)
+            setDDD(completedPhone.substring(0, 2))
+        }
+    }, [phones])
 
     useEffect(() => {
         if (cpf.length === 11) {
@@ -269,8 +281,8 @@ export default function ClientFormTemplate({
                                 <TextField
                                     name="whatsapp"
                                     placeholder="ex: 73912344567"
-                                    value={formatNumberWhatsapp(whatsapp)}
-                                    onChange={(ev) => setWhatsapp(ev.target.value)}
+                                    value={formatNumberWhatsapp(phones)}
+                                    onChange={(ev) => setPhones(ev.target.value)}
                                     label="WHATSAPP"
                                     id="whatsapp"
                                     required={true}

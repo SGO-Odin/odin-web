@@ -14,17 +14,22 @@ export default function DeleteBrandPage() {
     const { id } = router.query
 
     useEffect(() => {
-        if (!id) { return }
-        axios.get('/api/brands?id=' + id)
-            .then(response => {
-                setBrands(response.data.brands)
-            })
+        if (id) {
+            axios.get(`/api/brands?id=${id}`)
+                .then(response => {
+                    setBrands(response.data.response.name)
+                })
+                .catch((error) => {
+                    console.log(error.response.data)
+                })
+        }
     }, [id])
 
     const handleDeleteBrand = async () => {
 
         // delete
-        await axios.delete('/api/brands?id=' + id)
+        axios.delete('/api/brands?id=' + id)
+            .then((response) => console.log(response))
 
         goBack()
     }
@@ -39,7 +44,7 @@ export default function DeleteBrandPage() {
                 title={`Deseja realmente deletar a marca ${brands}?`}
                 paragraph={`Atenção! A ação de "Deletar a Marca ${brands}" é irreversível. Ao confirmar, a marca será removida permanentemente. Certifique-se da ação antes de prosseguir.`}
                 isOpenModal={isOpen}
-                setIsOpenModal={setIsOpen}>
+                setIsOpenModal={goBack}>
                 <ButtonsTertiary onClick={goBack}>Cancelar</ButtonsTertiary>
                 <ButtonsPrimary onClick={handleDeleteBrand}>Deletar {brands}</ButtonsPrimary>
             </Modal>

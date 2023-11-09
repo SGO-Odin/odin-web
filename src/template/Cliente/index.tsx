@@ -9,10 +9,10 @@ import Head from '@/src/components/table/head';
 import { useRouter } from "next/navigation";
 import { MdDelete, MdOutlineEdit, MdPerson, MdSearch } from "react-icons/md";
 import { ButtonsDelete } from '@/src/components/buttons/delete';
-import { IClient } from '@/src/interface/datas';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { formatNumberWhatsapp } from '@/src/hook/format-number-whatsapp';
+import { IClient } from '@/src/server/entities/client';
 
 
 const columns = ["Id", "Nome", "Whatsapp", "E-mail"];
@@ -23,7 +23,7 @@ export const ClientTemplate = () => {
 
     useEffect(() => {
         axios.get('/api/client').then(response => {
-            setClient(response.data)
+            setClient(response.data.response)
         })
     }, [])
 
@@ -58,19 +58,19 @@ export const ClientTemplate = () => {
                         <Head columns={columns} isButton={true} />
                         <tbody className="body">
                             {!!client && client.map((item) => (
-                                <tr key={item._id} className='body__row'>
-                                    <RowItem label={item._id.toString()} isActive={null} />
-                                    <RowItem label={`${item.firsName} ${item.lastName}`} isActive={null} />
-                                    <RowItem label={formatNumberWhatsapp(item.whatsapp)} isActive={null} />
-                                    <RowItem label={item.email} isActive={null} />
+                                <tr key={item.id} className='body__row'>
+                                    <RowItem label={item.id.toString()} isActive={null} />
+                                    <RowItem label={`${item.firstName} ${item.lastName}`} isActive={null} />
+                                    <RowItem label={formatNumberWhatsapp(`${item.phones[0]}`)} isActive={null} />
+                                    <RowItem label={item.emails[0]} isActive={null} />
                                     <td className={'row buttons'}>
                                         <div>
-                                            <ButtonsEdit href={`/cliente/editar?id=${item._id}`}>
+                                            <ButtonsEdit href={`/cliente/editar?id=${item.id}`}>
                                                 <MdOutlineEdit size={24} />
                                             </ButtonsEdit>
                                         </div>
                                         <div>
-                                            <ButtonsDelete href={`/cliente/deletar?id=${item._id}`}>
+                                            <ButtonsDelete href={`/cliente/deletar?id=${item.id}`}>
                                                 <MdDelete size={24} />
                                             </ButtonsDelete>
                                         </div>

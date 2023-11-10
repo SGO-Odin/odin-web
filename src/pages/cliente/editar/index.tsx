@@ -2,117 +2,126 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ClientFormTemplate from "../template";
+import { sanitalizePhones } from "@/src/hook/sanitalize-phones";
 
 export default function EditClientPage() {
 
-    return <h1>Manutenção</h1>
+    const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
 
-    // const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+    const [firstName, setFirstName] = useState<string>("")
+    const [lastName, setLastName] = useState<string>("")
+    const [cpf, setCpf] = useState<string>("")
+    const [rg, setRg] = useState<string>("")
+    const [email, setEmail] = useState<string>("")
+    const [phones, setPhones] = useState<string>("")
+    const [ddd, setDDD] = useState<string>("")
 
-    // const [firsName, setFirsName] = useState<string>("")
-    // const [lastName, setLastName] = useState<string>("")
-    // const [cpf, setCpf] = useState<string>("")
-    // const [rg, setRg] = useState<string>("")
-    // const [email, setEmail] = useState<string>("")
-    // const [whatsapp, setWhatsapp] = useState<string>("")
+    // Endereço
+    const [zipCode, setZipCode] = useState<string>("")
+    const [acronym, setAcronym] = useState<string>("")
+    const [stateName, setStateName] = useState<string>("")
+    const [isFederalDistrict, setIsFederalDistrict] = useState<boolean>(false)
+    const [publicPlaceName, setPublicPlaceName] = useState<string>("")
+    const [publicPlaceType, setPublicPlaceType] = useState<string>("STREET")
+    const [district, setDistrict] = useState<string>("")
+    const [number, setNumber] = useState<string>("")
+    const [complement, setComplement] = useState<string>("")
+    const [reference, setReference] = useState<string>("")
+    const [city, setCity] = useState<string>("")
 
-    // // Endereço
-    // const [zipCode, setZipCode] = useState<string>("")
-    // const [acronym, setAcronym] = useState<string>("")
-    // const [stateName, setStateName] = useState<string>("")
-    // const [isFederalDistrict, setIsFederalDistrict] = useState<boolean>(false)
-    // const [publicPlaceName, setPublicPlaceName] = useState<string>("")
-    // const [publicPlaceType, setPublicPlaceType] = useState<string>("STREET")
-    // const [district, setDistrict] = useState<string>("")
-    // const [number, setNumber] = useState<string>("")
-    // const [complement, setComplement] = useState<string>("")
-    // const [reference, setReference] = useState<string>("")
-    // const [city, setCity] = useState<string>("")
+    const router = useRouter()
+    const { id } = router.query
 
-    // const router = useRouter()
-    // const { id } = router.query
+    useEffect(() => {
+        if (id) {
+            axios.get('/api/client?id=' + id)
+                .then(response => {
+                    console.log(response.data.response.address)
+                    setFirstName(response.data.response.firstName)
+                    setLastName(response.data.response.lastName)
+                    setCpf(response.data.response.cpf)
+                    setRg(response.data.response.rg)
+                    setEmail(response.data.response.emails[0])
+                    setPhones(response.data.response.phones[0])
 
-    // useEffect(() => {
-    //     if (id) {
-    //         axios.get('/api/client?id=' + id)
-    //             .then(response => {
-    //                 setFirsName(response.data.firsName)
-    //                 setLastName(response.data.lastName)
-    //                 setCpf(response.data.cpf)
-    //                 setRg(response.data.rg)
-    //                 setEmail(response.data.email)
-    //                 setWhatsapp(response.data.whatsapp)
+                    setAcronym(response.data.response.uf)
+                    setStateName(response.data.response.stateName)
+                    setIsFederalDistrict(response.data.response.isFederalDistrict)
+                    setPublicPlaceName(response.data.response.street)
+                    setPublicPlaceType(response.data.response.publicPlaceType)
+                    setComplement(response.data.response.complement)
+                    setReference(response.data.response.reference)
+                    setDistrict(response.data.response.district)
+                    setCity(response.data.response.city)
+                    setNumber(response.data.response.number)
+                    setZipCode(response.data.response.genericZipCode)
+                })
+                .catch((error) => {
+                    console.log(error.response.data)
+                })
+        }
+    }, [id])
 
-    //                 setAcronym(response.data.uf)
-    //                 setStateName(response.data.stateName)
-    //                 setIsFederalDistrict(response.data.isFederalDistrict)
-    //                 setPublicPlaceName(response.data.street)
-    //                 setPublicPlaceType(response.data.publicPlaceType)
-    //                 setComplement(response.data.complement)
-    //                 setReference(response.data.reference)
-    //                 setDistrict(response.data.district)
-    //                 setCity(response.data.city)
-    //                 setNumber(response.data.number)
-    //                 setZipCode(response.data.cep)
-    //             })
-    //     }
-    // }, [id])
+    const handleUpdateClient = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
-    // const handleUpdateClient = async (event: React.FormEvent<HTMLFormElement>) => {
-    //     event.preventDefault();
+        const sanitalizePhone = sanitalizePhones(phones).substring(2)
 
-    //     const data = { firsName, lastName, cpf, rg, email, whatsapp, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city }
-    //     // update
-    //     await axios.put('/api/client', { ...data, id })
+        const data = { firstName, lastName, cpf, rg, email, sanitalizePhone, ddd, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city }
 
-    //     goBack()
-    // }
+        // update
+        await axios.put('/api/client', { ...data, id })
 
-    // const goBack = () => {
-    //     router.push('/cliente')
-    // }
+        goBack()
+    }
 
-    // return (
-    //     <ClientFormTemplate
-    //         firsName={firsName}
-    //         setFirsName={setFirsName}
-    //         lastName={lastName}
-    //         setLastName={setLastName}
-    //         cpf={cpf}
-    //         setCpf={setCpf}
-    //         rg={rg}
-    //         setRg={setRg}
-    //         email={email}
-    //         setEmail={setEmail}
-    //         whatsapp={whatsapp}
-    //         setWhatsapp={setWhatsapp}
+    const goBack = () => {
+        router.push('/cliente')
+    }
 
-    //         zipCode={zipCode}
-    //         setZipCode={setZipCode}
-    //         acronym={acronym}
-    //         setAcronym={setAcronym}
-    //         stateName={stateName}
-    //         setStateName={setStateName}
-    //         isFederalDistrict={isFederalDistrict}
-    //         setIsFederalDistrict={setIsFederalDistrict}
-    //         publicPlaceName={publicPlaceName}
-    //         setPublicPlaceName={setPublicPlaceName}
-    //         publicPlaceType={publicPlaceType}
-    //         setPublicPlaceType={setPublicPlaceType}
-    //         district={district}
-    //         setDistrict={setDistrict}
-    //         number={number}
-    //         setNumber={setNumber}
-    //         complement={complement}
-    //         setComplement={setComplement}
-    //         reference={reference}
-    //         setReference={setReference}
-    //         city={city}
-    //         setCity={setCity}
+    return (
+        <ClientFormTemplate
+            firstName={firstName}
+            setFirstName={setFirstName}
+            lastName={lastName}
+            setLastName={setLastName}
+            cpf={cpf}
+            setCpf={setCpf}
+            rg={rg}
+            setRg={setRg}
+            email={email}
+            setEmail={setEmail}
+            phones={phones}
+            setPhones={setPhones}
+            ddd={ddd}
+            setDDD={setDDD}
 
-    //         handleClient={handleUpdateClient}
-    //         goBack={goBack}
-    //         title={`Editar dados de ${firsName} ${lastName}`}
-    //         paragraph={"Atualize detalhes de contato, preferências e mais para melhorar o atendimento."} />
-    // );
+            zipCode={zipCode}
+            setZipCode={setZipCode}
+            acronym={acronym}
+            setAcronym={setAcronym}
+            stateName={stateName}
+            setStateName={setStateName}
+            isFederalDistrict={isFederalDistrict}
+            setIsFederalDistrict={setIsFederalDistrict}
+            publicPlaceName={publicPlaceName}
+            setPublicPlaceName={setPublicPlaceName}
+            publicPlaceType={publicPlaceType}
+            setPublicPlaceType={setPublicPlaceType}
+            district={district}
+            setDistrict={setDistrict}
+            number={number}
+            setNumber={setNumber}
+            complement={complement}
+            setComplement={setComplement}
+            reference={reference}
+            setReference={setReference}
+            city={city}
+            setCity={setCity}
+
+            handleClient={handleUpdateClient}
+            goBack={goBack}
+            title={`Editar dados de ${firstName} ${lastName}`}
+            paragraph={"Atualize detalhes de contato, preferências e mais para melhorar o atendimento."} />
+    );
 }

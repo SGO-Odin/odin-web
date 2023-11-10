@@ -13,7 +13,7 @@ export default function NewClient() {
     const { push } = useRouter();
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
 
-    const [firsName, setFirsName] = useState<string>("")
+    const [firstName, setFirstName] = useState<string>("")
     const [lastName, setLastName] = useState<string>("")
     const [cpf, setCpf] = useState<string>("")
     const [rg, setRg] = useState<string>("")
@@ -41,13 +41,16 @@ export default function NewClient() {
 
         const sanitalizePhone = sanitalizePhones(phones).substring(2)
 
-        const data = { firsName, lastName, cpf, rg, email, sanitalizePhone, ddd, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city }
+        const data = { firstName, lastName, cpf, rg, email, sanitalizePhone, ddd, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city }
 
         // // create
-        axios.post('/api/client', data).then(res => {
-            console.log(res)
-            if (res.status == 201) setIsOpenModal(!isOpenModal)
-        })
+        axios.post('/api/client', data)
+            .then(res => {
+                if (res.status == 201) setIsOpenModal(!isOpenModal)
+            })
+            .catch((error) => {
+                console.log(error.response.data)
+            })
     }
 
     const goBack = () => {
@@ -64,8 +67,8 @@ export default function NewClient() {
     }
     return (
         <ClientFormTemplate
-            firsName={firsName}
-            setFirsName={setFirsName}
+            firstName={firstName}
+            setFirstName={setFirstName}
             lastName={lastName}
             setLastName={setLastName}
             cpf={cpf}

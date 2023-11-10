@@ -1,81 +1,62 @@
-import { IProduct } from '@/src/interface/datas'
-import { gravarArquivoJSON, lerArquivoJSON } from '@/src/service/save'
+import { ICreateProductReq } from '@/src/server/entities/product'
+import { productUseCases } from '@/src/server/use-cases/product'
 import type { NextApiRequest, NextApiResponse } from 'next'
-
-const fileName = './src/data/product.json'
 
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const { method } = req
+    try {
+        const { method } = req
 
 
-    if (method === 'POST') {
-        const { cost, selling, stockMin, stockCurrent, location, reference, nameProduct, unit, brands, supplier, isActive, isStockControl, isService }: IProduct = req.body
+        if (method === 'POST') {
+            const { cost, selling, stockMin, stockCurrent, location, reference, nameProduct, unit, brands, purveyor, isActive, isStockControl, isService } = req.body
 
-        try {
-            const dados: IProduct[] = await lerArquivoJSON(fileName)
-            const _id = (dados.length + 1)
-            const data: IProduct = { _id, cost, selling, stockMin, stockCurrent, location, reference, nameProduct, unit, brands, supplier, isActive, isStockControl, isService }
-            dados.push(data)
-            await gravarArquivoJSON(dados, fileName)
-            res.json(data)
-        } catch (error) {
-            console.log("Error ao Salvar Dados")
-            const _id = 1
-            const data: IProduct = { _id, cost, selling, stockMin, stockCurrent, location, reference, nameProduct, unit, brands, supplier, isActive, isStockControl, isService }
-            await gravarArquivoJSON([data], fileName)
-            res.json(data)
-        }
-    }
-
-    if (method === 'GET') {
-
-        if (req.query?.id) {
-            const data: IProduct[] = await lerArquivoJSON(fileName)
-            const brand: IProduct = data.find((item) => item._id == Number(req.query?.id))
-            res.json(brand)
-        } else {
-            res.json(await lerArquivoJSON(fileName))
-        }
-
-    }
-
-    if (method === 'PUT') {
-        const { id, cost, selling, stockMin, stockCurrent, location, reference, nameProduct, unit, brands, supplier, isActive, isStockControl, isService } = req.body
-
-        const data: IProduct[] = await lerArquivoJSON(fileName)
-        !!data && data.map((item) => {
-            if (item._id == id) {
-                item.cost = cost
-                item.selling = selling
-                item.stockMin = stockMin
-                item.stockCurrent = stockCurrent
-                item.location = location
-                item.reference = reference
-                item.nameProduct = nameProduct
-                item.unit = unit
-                item.brands = brands
-                item.supplier = supplier
-                item.isActive = isActive
-                item.isStockControl = isStockControl
-                item.isService = isService
+            const data: ICreateProductReq = {
+                'reference': reference,
+                'name': nameProduct,
+                'unitType': unit,
+                'brand': brands,
+                'purveyor': purveyor,
+                'isActive': isActive,
+                'inventoryControl': isStockControl,
+                'purchaseCost': Number(cost.replace(/\D/g, '')),
+                'currentSalePrice': Number(selling.replace(/\D/g, '')),
+                'currentStock': Number(stockCurrent),
+                'minStock': Number(stockMin),
+                'location': location,
             }
-        })
-        await gravarArquivoJSON(data, fileName)
 
-        res.json(true)
-    }
+            console.log(data)
+            const response = await productUseCases.createProduct(data)
+            return res.status(201).json({ message: "ok", data: response })
 
-    if (method === 'DELETE') {
-        if (req.query?.id) {
-            const data: IProduct[] = await lerArquivoJSON(fileName)
-
-            const brand = data.filter(item => item._id !== Number(req.query?.id));
-
-            await gravarArquivoJSON(brand, fileName)
-            res.json(true);
         }
+
+        if (method === 'GET') {
+
+            if (req.query?.id) {
+                const id: number = Number(req.query?.id)
+
+                const response = await productUseCases.getById(id)
+                return res.status(200).json({ response })
+            } else {
+                const response = await productUseCases.getAllProducts()
+                return res.status(200).json({ response })
+            }
+
+        }
+
+        if (method === 'PUT') {
+            return res.status(503).json({ message: "Method not allowed." })
+        }
+
+        if (method === 'DELETE') {
+            return res.status(503).json({ message: "Method not allowed." })
+        }
+        return res.status(503).json({ message: "Method not allowed." })
+    } catch (e: any) {
+        return res.status(500).json({ message: "Server Error." })
     }
 }

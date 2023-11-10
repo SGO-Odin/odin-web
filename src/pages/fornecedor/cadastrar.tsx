@@ -2,10 +2,10 @@ import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import SupplierFormTemplate from "./template";
+import PurveyorFormTemplate from "./template";
 import axios from "axios";
 
-export default function NewSupplier() {
+export default function AddPurveyor() {
   const { push } = useRouter();
 
   // Cadastrar Fornecedor
@@ -26,14 +26,21 @@ export default function NewSupplier() {
   const [reference, setReference] = useState<string>("")
   const [city, setCity] = useState<string>("")
 
-  const handleNewSupplier = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleNewPurveyor = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const data = { companyName, tradingName, isLaboratory, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city }
 
-    await axios.post('/api/supplier', data)
+    axios.post('/api/purveyor', data)
+      .then((response) => {
+        // reset
 
-    goBack()
+        // GoBack()
+        if (response.status == 201) goBack()
+      })
+      .catch((error) => {
+        console.log(error.response.data)
+      })
   }
 
   const goBack = () => {
@@ -41,7 +48,7 @@ export default function NewSupplier() {
   }
 
   return (
-    <SupplierFormTemplate
+    <PurveyorFormTemplate
       companyName={companyName}
       setCompanyName={setCompanyName}
       tradingName={tradingName}
@@ -72,10 +79,10 @@ export default function NewSupplier() {
       city={city}
       setCity={setCity}
 
-      handleSupplier={handleNewSupplier}
+      handleSupplier={handleNewPurveyor}
       goBack={goBack}
       title="Cadastrar Fornecedor"
-      paragraph="Cadastre um novo fornecedor"
+      paragraph="Adicione um novo fornecedor. Preencha os dados, como nome e contato, para estabelecer parcerias e garantir o abastecimento eficiente."
     />
   );
 }

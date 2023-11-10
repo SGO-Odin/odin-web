@@ -1,5 +1,6 @@
 import { IClient } from '@/src/server/entities/client'
-import { clientUseCases } from '@/src/server/use-cases/client'
+import { ICreatePurveyorReq, IPurveyor } from '@/src/server/entities/purveyor'
+import { purveyorUseCases } from '@/src/server/use-cases/purveyor'
 import { gravarArquivoJSON, lerArquivoJSON } from '@/src/service/save'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -14,13 +15,12 @@ export default async function handler(
 
 
         if (method === 'POST') {
-            const { firstName, lastName, cpf, rg, email, sanitalizePhone, ddd, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city } = req.body
+            const { companyName, tradingName, isLaboratory, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city } = req.body
 
-            const data: IClient = {
-                "firstName": firstName,
-                "lastName": lastName,
-                "cpf": cpf,
-                "rg": rg,
+            const data: ICreatePurveyorReq = {
+                "tradingName": tradingName,
+                "companyName": companyName,
+                "isLaboratory": isLaboratory,
                 "address": {
                     "publicPlace": {
                         "name": publicPlaceName,
@@ -33,23 +33,24 @@ export default async function handler(
                         },
                         "type": publicPlaceType
                     },
-                    "number": Number(number),
+                    "number": number,
                     "genericZipCode": zipCode,
                     "reference": reference,
                     "complement": complement
                 },
-                "emails": [email],
+                "emails": [],
                 "phones": [
                     {
-                        "ddd": ddd,
-                        "number": sanitalizePhone,
+                        "ddd": "00",
+                        "number": "900000000",
                         "isMain": false
                     }
                 ]
             }
 
-            const response = await clientUseCases.createClient(data)
+            const response = await purveyorUseCases.createPurveyor(data)
             return res.status(201).json({ message: "ok", data: response })
+
         }
 
         if (method === 'GET') {
@@ -57,24 +58,22 @@ export default async function handler(
             if (req.query?.id) {
                 const id: number = Number(req.query?.id)
 
-                const response = await clientUseCases.getById(id)
+                const response = await purveyorUseCases.getById(id)
                 return res.status(200).json({ response })
             } else {
-
-                const response = await clientUseCases.getAllClients()
+                const response = await purveyorUseCases.getAllPurveyors()
                 return res.status(200).json({ response })
             }
+
         }
 
-        // if (method === 'DELETE') {
-        //     if (req.query?.id) {
-        //         const id: number = Number(req.query?.id)
+        if (method === 'PUT') {
+            return res.status(503).json({ message: "Method not allowed." })
+        }
 
-        //         const response = await clientUseCases.inactivateById(id)
-        //         return res.status(response)
-
-        //     }
-        // }
+        if (method === 'DELETE') {
+            return res.status(503).json({ message: "Method not allowed." })
+        }
         return res.status(503).json({ message: "Method not allowed." })
     } catch (e: any) {
         return res.status(500).json({ message: "Server Error." })

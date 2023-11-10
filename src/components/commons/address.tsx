@@ -89,13 +89,13 @@ export default function Address({
         }
     }, [zipCode])
 
-    useEffect(() => {
-        if (acronym !== '') {
-            const state = getStateUf(acronym)
-            setStateName(state.nome)
-            setIsFederalDistrict(acronym === 'DF' ? true : false)
-        }
-    }, [acronym])
+    // useEffect(() => {
+    //     if (acronym !== '') {
+    //         const state = getStateUf(acronym)
+    //         setStateName(state.nome)
+    //         setIsFederalDistrict(acronym === 'DF' ? true : false)
+    //     }
+    // }, [acronym])
 
     return (
         <div className="container-address">

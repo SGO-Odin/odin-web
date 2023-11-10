@@ -42,8 +42,8 @@ interface IProductFormTemplate {
     setUnit: Dispatch<SetStateAction<string>>
     brands: number
     setBrands: Dispatch<SetStateAction<number>>
-    supplier: number
-    setSupplier: Dispatch<SetStateAction<number>>
+    purveyor: number
+    setPurveyor: Dispatch<SetStateAction<number>>
     isActive: boolean
     setIsActive: Dispatch<SetStateAction<boolean>>
     isStockControl: boolean
@@ -78,8 +78,8 @@ export default function ProductFormTemplate({
     setUnit,
     brands,
     setBrands,
-    supplier,
-    setSupplier,
+    purveyor,
+    setPurveyor,
     isActive,
     setIsActive,
     isStockControl,
@@ -94,29 +94,43 @@ export default function ProductFormTemplate({
     const [optionsBrands, setOptionsBrands] = useState<IItemSelect[]>([])
     const [optionsSupplier, setOptionsSupplier] = useState<IItemSelect[]>([])
     const [optionsUnit, setOptionsUnit] = useState<IItemSelect[]>(typeUnit || [])
+    const [currentTypeUnit, setCurrentTypeUnit] = useState<number>()
 
     useEffect(() => {
-        axios.get('/api/brands').then(response => {
-            const listSelectBrands = !!response.data && response.data.map(function (item) {
-                const data: IItemSelect = {
-                    _id: item._id,
-                    name: item.brands
-                }
-                return data
-            })
-            setOptionsBrands(listSelectBrands)
-        })
+        axios.get('/api/brands')
+            .then(response => {
+                if (response.status == 200) {
+                    setBrands(response.data.response)
 
-        axios.get('/api/supplier').then(response => {
-            const listSelectSupplier = !!response.data && response.data.map(function (item) {
+                    const listSelectBrands = !!response.data.response && response.data.response.map(function (item) {
+                        const data: IItemSelect = {
+                            _id: item.id,
+                            name: item.name
+                        }
+                        return data
+                    })
+                    setOptionsBrands(listSelectBrands)
+                }
+            })
+            .catch((error) => {
+                console.log(error.response.data)
+            })
+
+        axios.get('/api/purveyor').then(response => {
+            const listSelectSupplier = !!response.data.response && response.data.response.map(function (item) {
                 const data: IItemSelect = {
-                    _id: item._id,
-                    name: item.companyName
+                    _id: item.id,
+                    name: item.tradingName
                 }
                 return data
             })
             setOptionsSupplier(listSelectSupplier)
         })
+
+        if (unit) {
+            const idTypeUnit = optionsUnit.find((item) => item.value === unit ? item : null)
+            setCurrentTypeUnit(idTypeUnit._id)
+        }
     }, [])
 
     useEffect(() => {
@@ -131,6 +145,13 @@ export default function ProductFormTemplate({
             setPercentProfit(percent.toFixed(2).toString())
         }
     }, [selling, cost])
+
+    useEffect(() => {
+        if (currentTypeUnit) {
+            const valueTypeUnit = optionsUnit.find((item) => item._id === currentTypeUnit ? item : null)
+            setUnit(valueTypeUnit.value)
+        }
+    }, [currentTypeUnit])
 
     return (
         <LayoutDefault>
@@ -158,7 +179,7 @@ export default function ProductFormTemplate({
                             <div className="input">
                                 <TextField
                                     name="nameProduct"
-                                    placeholder=""
+                                    placeholder="Digite o nome do produto"
                                     value={nameProduct}
                                     onChange={(ev) => setNameProduct(ev.target.value)}
                                     label="NOME DO PRODUTO"
@@ -171,8 +192,8 @@ export default function ProductFormTemplate({
                                     placeholder='Escolha uma unidade:'
                                     label="UNIDADE"
                                     options={optionsUnit}
-                                    item={unit}
-                                    setItem={setUnit} />
+                                    item={currentTypeUnit}
+                                    setItem={setCurrentTypeUnit} />
                             </div>
                         </div>
                         <div className="products__form__content__inputs">
@@ -189,8 +210,8 @@ export default function ProductFormTemplate({
                                     placeholder='Selecione um Fornecedor:'
                                     label="FORNECEDOR"
                                     options={optionsSupplier}
-                                    item={supplier}
-                                    setItem={setSupplier} />
+                                    item={purveyor}
+                                    setItem={setPurveyor} />
                             </div>
                             <div className="input-toggle">
                                 <div>
@@ -307,7 +328,7 @@ export default function ProductFormTemplate({
                     </div>
                     <div className="products__form__buttons">
                         <div>
-                            <ButtonsTertiary onClick={goBack}>
+                            <ButtonsTertiary type='button' onClick={goBack}>
                                 <MdCancel size={24} />
                                 Cancelar
                             </ButtonsTertiary>

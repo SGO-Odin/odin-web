@@ -12,8 +12,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { MdCancel, MdPerson } from 'react-icons/md';
 
 interface IClientFormTemplate {
-    firsName: string
-    setFirsName: Dispatch<SetStateAction<string>>
+    firstName: string
+    setFirstName: Dispatch<SetStateAction<string>>
     lastName: string
     setLastName: Dispatch<SetStateAction<string>>
     cpf: string
@@ -57,8 +57,8 @@ interface IClientFormTemplate {
 }
 
 export default function ClientFormTemplate({
-    firsName,
-    setFirsName,
+    firstName,
+    setFirstName,
     lastName,
     setLastName,
     cpf,
@@ -217,8 +217,8 @@ export default function ClientFormTemplate({
                                 <TextField
                                     name="name"
                                     placeholder="ex: João"
-                                    value={firsName}
-                                    onChange={(ev) => setFirsName(ev.target.value)}
+                                    value={firstName}
+                                    onChange={(ev) => setFirstName(ev.target.value)}
                                     label="NOME"
                                     id="name"
                                     required={true}
@@ -316,7 +316,7 @@ export default function ClientFormTemplate({
                     </Hero>
                     <div className="client-form-page__form__buttons">
                         <div>
-                            <ButtonsTertiary onClick={() => goBack()}>
+                            <ButtonsTertiary type='button' onClick={() => goBack()}>
                                 <MdCancel size={24} />
                                 Cancelar
                             </ButtonsTertiary>

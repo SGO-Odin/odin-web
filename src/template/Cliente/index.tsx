@@ -22,9 +22,13 @@ export const ClientTemplate = () => {
     const [client, setClient] = useState<IClient[]>([])
 
     useEffect(() => {
-        axios.get('/api/client').then(response => {
-            setClient(response.data.response)
-        })
+        axios.get('/api/client')
+            .then(response => {
+                setClient(response.data.response)
+            })
+            .catch((error) => {
+                console.log(error.response.data)
+            })
     }, [])
 
     const handlePushNewClient = () => {
@@ -64,13 +68,14 @@ export const ClientTemplate = () => {
                                     <RowItem label={formatNumberWhatsapp(`${item.phones[0]}`)} isActive={null} />
                                     <RowItem label={item.emails[0]} isActive={null} />
                                     <td className={'row buttons'}>
-                                        <div>
+                                        {/* <div>
                                             <ButtonsEdit href={`/cliente/editar?id=${item.id}`}>
                                                 <MdOutlineEdit size={24} />
                                             </ButtonsEdit>
-                                        </div>
+                                        </div> */}
                                         <div>
                                             <ButtonsDelete href={`/cliente/deletar?id=${item.id}`}>
+                                                Excluir
                                                 <MdDelete size={24} />
                                             </ButtonsDelete>
                                         </div>

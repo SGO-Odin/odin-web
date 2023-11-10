@@ -1,7 +1,7 @@
 import axios from "axios"
 import { IClient, ICreateClientReq } from "../entities/client"
 
-const createClient = async (request: ICreateClientReq): Promise<IClient> => {
+const createClient = async (request: ICreateClientReq): Promise<number> => {
 
     const client: IClient = {
         'firstName': request.firstName,
@@ -13,19 +13,24 @@ const createClient = async (request: ICreateClientReq): Promise<IClient> => {
         'phones': request.phones
     }
 
-    const response = await axios.post(`${process.env.DEVELOPMENT_DOMAIN}api/client`, client)
+    const response = await axios.post(`${process.env.DOMAIN_BACKEND}api/client`, client)
 
-    return response.data
+    const status: number = response.status
+    return status
 }
 
 const getAllClients = async (): Promise<IClient[]> => {
-    const response = await axios.get(`${process.env.DEVELOPMENT_DOMAIN}api/client`)
-    const brands: IClient[] = response.data
+    const response = await axios.get(`${process.env.DOMAIN_BACKEND}api/client`)
+    const client: IClient[] = response.data
 
-    return brands
+    return client
 }
 
-const getById = () => { }
+const getById = async (id: number): Promise<IClient> => {
+    const response = await axios.get(`${process.env.DOMAIN_BACKEND}api/client/${id}`)
+    const client: IClient = response.data
+    return client
+}
 
 const removeById = () => { }
 

@@ -1,11 +1,13 @@
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import { parse, format } from 'date-fns';
 import ServiceOrderFormTemplate from "./template"
-import { IOrderService, IPayment, IPrescription, IRowsProductTable, IServiceOrderProducts, IVisionProblem } from "@/src/interface/datas";
+import { IRowsProductTable, IPayment } from "@/src/interface/datas";
 import axios from "axios";
+import { ICreateServiceOrderReq, ICreateServiceOrderRes, IPrescription, IVisionProblems } from "@/src/server/entities/service-order";
+import { IProductCommon } from "@/src/server/entities/commons";
+import { IPaymentSale } from "@/src/server/entities/sale";
 
 export default function NewServiceOrder() {
     const { push } = useRouter();
@@ -21,7 +23,7 @@ export default function NewServiceOrder() {
     const [coast, setCoast] = useState<string>("")
 
     const [dataProduct, setDataProduct] = useState<IRowsProductTable[]>([])
-    const [serviceOrderProducts, setServiceOrderProducts] = useState<IServiceOrderProducts[]>([])
+    const [serviceOrderProducts, setServiceOrderProducts] = useState<IProductCommon[]>([])
 
     const [percentDiscount, setPercentDiscount] = useState<string>("")
     const [discount, setDiscount] = useState<string>("")
@@ -30,7 +32,7 @@ export default function NewServiceOrder() {
     const [valueTotal, setValueTotal] = useState<string>("")
     const [valueAmount, setValueAmount] = useState<string>("")
 
-    const [type, setType] = useState<'CREDIT_CARD' | 'DEBIT_CARD' | 'MONEY' | 'PIX' | null>(null)
+    const [type, setType] = useState<'CREDIT_CARD' | 'DEBIT_CARD' | 'MONEY' | 'PIX' | ''>('')
     const [dateRelease, setDateRelease] = useState<string>("")
     const [parcelNumber, setParcelNumber] = useState<string>("")
     const [paymentDown, setPaymentDown] = useState<string>("")
@@ -66,53 +68,57 @@ export default function NewServiceOrder() {
     const [heightNearOE, setHeightNearOE] = useState<string>("")
 
     const [addition, setAddition] = useState<string>("")
-    const [prescription, setPrescription] = useState<IPrescription[]>([])
+    const [prescription, setPrescription] = useState<IPrescription>(null)
     const [datePrescription, setDatePrescription] = useState<string>("")
 
-    const handleAddPrescription = () => {
-        const dataVisionProblem: IVisionProblem[] = [
+    const [orderServiceClient, setOrderServiceClient] = useState<ICreateServiceOrderRes[]>([])
+
+    const [serviceOrderPayment, setServiceOrderPayment] = useState<IPaymentSale[]>([])
+
+    const handleAddPrescription = (): IPrescription => {
+        const dataVisionProblem: IVisionProblems[] = [
             {
                 type: 'FAR',
                 positionOfEyes: 'RIGHT',
-                spherical: skewerFarOD,
-                cylinder: cylindricalFarOD,
-                axis: axisFarOD,
-                npd: DNPFarOD,
-                height: heightFarOD,
+                spherical: Number(sanitizeData(skewerFarOD)),
+                cylinder: Number(sanitizeData(cylindricalFarOD)),
+                axis: Number(sanitizeData(axisFarOD)),
+                npd: Number(sanitizeData(DNPFarOD)),
+                height: Number(sanitizeData(heightFarOD)),
             },
             {
                 type: 'FAR',
                 positionOfEyes: 'LEFT',
-                spherical: skewerFarOE,
-                cylinder: cylindricalFarOE,
-                axis: axisFarOE,
-                npd: DNPFarOE,
-                height: heightFarOE,
+                spherical: Number(sanitizeData(skewerFarOE)),
+                cylinder: Number(sanitizeData(cylindricalFarOE)),
+                axis: Number(sanitizeData(axisFarOE)),
+                npd: Number(sanitizeData(DNPFarOE)),
+                height: Number(sanitizeData(heightFarOE)),
             },
             {
                 type: 'NEAR',
                 positionOfEyes: 'RIGHT',
-                spherical: skewerNearOD,
-                cylinder: cylindricalNearOD,
-                axis: axisNearOD,
-                npd: DNPNearOD,
-                height: heightNearOD,
+                spherical: Number(sanitizeData(skewerNearOD)),
+                cylinder: Number(sanitizeData(cylindricalNearOD)),
+                axis: Number(sanitizeData(axisNearOD)),
+                npd: Number(sanitizeData(DNPNearOD)),
+                height: Number(sanitizeData(heightNearOD)),
             },
             {
                 type: 'NEAR',
                 positionOfEyes: 'LEFT',
-                spherical: skewerNearOE,
-                cylinder: cylindricalNearOE,
-                axis: axisNearOE,
-                npd: DNPNearOE,
-                height: heightNearOE,
+                spherical: Number(sanitizeData(skewerNearOE)),
+                cylinder: Number(sanitizeData(cylindricalNearOE)),
+                axis: Number(sanitizeData(axisNearOE)),
+                npd: Number(sanitizeData(DNPNearOE)),
+                height: Number(sanitizeData(heightNearOE)),
             },
         ]
 
         const dataPrescription: IPrescription = {
             expirationDate: dateRegister,
-            additional: addition,
-            problems: dataVisionProblem
+            additional: Number(sanitizeData(addition)),
+            visionProblems: dataVisionProblem
         }
 
         return dataPrescription
@@ -126,25 +132,39 @@ export default function NewServiceOrder() {
     const handleNewServiceOrder = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const data: IOrderService = {
-            number: numberOS,
+
+        const data: ICreateServiceOrderReq = {
+            number: Number(numberOS),
             client: idClient,
-            dicountValue: sanitizeData(discount),
-            additionalValue: sanitizeData(additional),
-            prescription: [...prescription, handleAddPrescription()],
+            discountValue: Number(sanitizeData(discount)),
+            additionalValue: Number(sanitizeData(additional)),
+            prescription: handleAddPrescription(),
             products: serviceOrderProducts,
-            dateRegister: dateRegister,
-            hourRegister: hourRegister,
-            payment: payment
+            payments: serviceOrderPayment
         }
 
-        console.log(data)
+        // const data: ICreateServiceOrderReq = {
+        //     number: Number(numberOS),
+        //     client: idClient,
+        //     discountValue: Number(sanitizeData(discount)),
+        //     additionalValue: Number(sanitizeData(additional)),
+        //     prescription: handleAddPrescription(),
+        //     products: serviceOrderProducts,
+        //     dateRegister: dateRegister,
+        //     hourRegister: hourRegister,
+        //     payment: payment
+        // }
 
         // create
-        await axios.post('/api/service-order', data)
+        axios.post('/api/service-order', data)
+            .then((response) => {
 
-        // reset
-        goBack()
+                // GoBack()
+                if (response.status == 201) goBack()
+            })
+            .catch((error) => {
+                console.log(error.response.data)
+            })
     }
 
     const goBack = () => {
@@ -262,6 +282,11 @@ export default function NewServiceOrder() {
 
             prescription={prescription}
             setPrescription={setPrescription}
+
+            orderServiceClient={orderServiceClient}
+            setOrderServiceClient={setOrderServiceClient}
+            serviceOrderPayment={serviceOrderPayment}
+            setServiceOrderPayment={setServiceOrderPayment}
         />
     );
 }

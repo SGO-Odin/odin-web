@@ -4,7 +4,7 @@
     "number": "001",
     "client": 1,
     "dicountValue": "10000",
-    "additionalValue": "",
+    "additionalValue": null,
     "prescription": [
       {
         "expirationDate": "2023-11-05",
@@ -153,62 +153,6 @@
         "installments": "2/2"
       }
     ],
-    "status": "OPENED"
-  },
-  {
-    "_id": 3,
-    "number": "",
-    "client": null,
-    "dicountValue": "",
-    "additionalValue": "",
-    "prescription": [
-      {
-        "expirationDate": "",
-        "additional": "",
-        "problems": [
-          {
-            "type": "FAR",
-            "positionOfEyes": "RIGHT",
-            "spherical": "",
-            "cylinder": "",
-            "axis": "",
-            "npd": "",
-            "height": ""
-          },
-          {
-            "type": "FAR",
-            "positionOfEyes": "LEFT",
-            "spherical": "",
-            "cylinder": "",
-            "axis": "",
-            "npd": "",
-            "height": ""
-          },
-          {
-            "type": "NEAR",
-            "positionOfEyes": "RIGHT",
-            "spherical": "",
-            "cylinder": "",
-            "axis": "",
-            "npd": "",
-            "height": ""
-          },
-          {
-            "type": "NEAR",
-            "positionOfEyes": "LEFT",
-            "spherical": "",
-            "cylinder": "",
-            "axis": "",
-            "npd": "",
-            "height": ""
-          }
-        ]
-      }
-    ],
-    "products": [],
-    "dateRegister": "",
-    "hourRegister": "",
-    "payment": [],
     "status": "OPENED"
   }
 ]

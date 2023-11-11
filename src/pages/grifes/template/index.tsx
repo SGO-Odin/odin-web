@@ -3,59 +3,46 @@ import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { Hero } from "@/src/components/hero";
 import LayoutDefault from "@/src/components/layoutDefault";
 import { TextField } from "@/src/components/textField";
-import { Toggle } from "@/src/components/toggle";
 import { Dispatch, SetStateAction } from "react";
 import { BsEmojiSunglassesFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
-import "../newBrands.scss";
+import "./brands-form-template.scss";
 
 interface IBrandsFormTemplate {
     handleBrands: (event: React.FormEvent<HTMLFormElement>) => Promise<void>
-    brands: string
-    setBrands: Dispatch<SetStateAction<string>>
-    isActive: boolean
-    setIsActive: Dispatch<SetStateAction<boolean>>
+    name: string
+    setName: Dispatch<SetStateAction<string>>
     goBack: () => void
     title: string
     paragraph: string
 }
 
-export default function BrandsFormTemplate({ handleBrands, brands, setBrands, isActive, setIsActive, goBack, title, paragraph }: IBrandsFormTemplate) {
+export default function BrandsFormTemplate({ handleBrands, name, setName, goBack, title, paragraph }: IBrandsFormTemplate) {
 
     return (
         <LayoutDefault>
-            <div className="newBrands">
-                <form onSubmit={handleBrands} className="newBrands__form">
+            <div className="brands-form-template">
+                <form onSubmit={handleBrands} className="brands-form-template__form">
                     <Hero
                         isButtonPrymary={false}
                         title={title}
                         paragraph={paragraph}>
-                        <div className="newBrands__form__inputs">
+                        <div className="brands-form-template__form__inputs">
                             <div className="input">
                                 <TextField
-                                    name="newBrands"
+                                    name="brands-form-template"
                                     placeholder="Ex: Diesel"
-                                    value={brands}
-                                    onChange={(ev) => setBrands(ev.target.value)}
+                                    value={name}
+                                    onChange={(ev) => setName(ev.target.value)}
                                     label="NOME DA GRIFE"
-                                    id="newBrands"
-                                    required={true}
+                                    id="brands-form-template"
                                 />
-                            </div>
-                            <div className="newBrands__form__inputs">
-                                <Toggle
-                                    name="toggle-brand"
-                                    isActive={isActive}
-                                    onChange={(ev) => setIsActive(ev.target.checked)}
-                                    label="ATIVO"
-                                    id="toggle-brand" />
-
                             </div>
                         </div>
                     </Hero>
-                    <div className="newBrands__form__buttons">
+                    <div className="brands-form-template__form__buttons">
                         <div>
-                            <ButtonsTertiary onClick={goBack}>
+                            <ButtonsTertiary type="button" onClick={goBack}>
                                 <MdCancel size={24} />
                                 Cancelar
                             </ButtonsTertiary>

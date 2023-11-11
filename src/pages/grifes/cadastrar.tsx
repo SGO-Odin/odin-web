@@ -1,36 +1,25 @@
-import LayoutDefault from "@/src/components/layoutDefault";
-// import "./newBrands.scss";
-import { TextField } from "@/src/components/textField";
-import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
-import { ButtonsPrimary } from "@/src/components/buttons/primary";
-import { BsEmojiSunglassesFill } from "react-icons/bs";
-import { MdCancel } from "react-icons/md";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { Hero } from "@/src/components/hero";
-import { Toggle } from "@/src/components/toggle";
 import BrandsFormTemplate from "./template";
 
-export default function NewBrands() {
+export default function AddBrands() {
   const { push } = useRouter();
-  const [brands, setBrands] = useState<string>("")
-  const [isActive, setIsActive] = useState<boolean>(false)
+  const [name, setName] = useState<string>('')
 
   const handleNewbrands = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const data = { brands, isActive }
+    const data = { name }
     // create
-    await axios.post('/api/brands', data)
+    axios.post('/api/brands', data).then(res => {
+      // reset
+      setName('')
 
-    // reset
-    setBrands("")
-    setIsActive(false)
-
-    goBack()
+      if (res.status == 201) goBack()
+    })
   }
 
   const goBack = () => {
@@ -40,10 +29,8 @@ export default function NewBrands() {
   return (
     <BrandsFormTemplate
       handleBrands={handleNewbrands}
-      brands={brands}
-      setBrands={setBrands}
-      isActive={isActive}
-      setIsActive={setIsActive}
+      name={name}
+      setName={setName}
       goBack={goBack}
       title="Cadastrar Grife"
       paragraph="Esta página de foi criada para facilitar o acesso às informações sobre grifes disponíveis. Encontre rapidamente o que você precisa aqui." />

@@ -36,9 +36,12 @@ export default function CardTotal({
     setAdditional }: ICardTotal) {
 
     const handleUpdateValueAmount = () => {
-        if (!additional || !discount) return null
-        const valueAdditional = additional.replace(/\D/g, '') // Retira qualquer caracter não numerico
-        const valueDiscount = discount.replace(/\D/g, '') // Retira qualquer caracter não numerico
+        let valueAdditional = ""
+        let valueDiscount = ""
+        if (additional || discount) {
+            valueAdditional = additional.replace(/\D/g, '') // Retira qualquer caracter não numerico
+            valueDiscount = discount.replace(/\D/g, '') // Retira qualquer caracter não numerico
+        }
 
         let calc
 
@@ -56,15 +59,16 @@ export default function CardTotal({
     }
 
     useEffect(() => {
-        if (!valueTotal) return null
-        const value = valueTotal.replace(/\D/g, '') // Retira qualquer caracter não numerico
+        if (valueTotal) {
+            const value = valueTotal.replace(/\D/g, '') // Retira qualquer caracter não numerico
 
-        if (Number(value) > 0) {
-            handleUpdateValueAmount()
-        } else {
-            setAdditional('')
-            setDiscount('')
-            handleUpdateValueAmount()
+            if (Number(value) > 0) {
+                handleUpdateValueAmount()
+            } else {
+                setAdditional('')
+                setDiscount('')
+                handleUpdateValueAmount()
+            }
         }
     }, [valueTotal])
 
@@ -86,7 +90,6 @@ export default function CardTotal({
         handleUpdateValueAmount()
     }, [discount, valueTotal])
 
-
     return (
         <div className="card-total">
             <div className="card-total__container">
@@ -94,7 +97,7 @@ export default function CardTotal({
                     VALOR TOTAL:
                 </span>
                 <span className="card-total__container__text">
-                    {`${handleFormatNumber(valueTotal)}`}
+                    {`${!!valueTotal ? handleFormatNumber(valueTotal) : ''}`}
                 </span>
             </div>
             <div className="card-total__container">
@@ -121,7 +124,7 @@ export default function CardTotal({
             </div>
             <div className="card-total__container">
                 <span className="card-total__container__text">VALOR LIQUIDO:</span>
-                <span className="card-total__container__text">{`${handleFormatNumber(`${valueAmount}`)}`}</span>
+                <span className="card-total__container__text">{`${!!valueAmount ? handleFormatNumber(valueAmount) : ' '}`}</span>
             </div>
         </div>
     )

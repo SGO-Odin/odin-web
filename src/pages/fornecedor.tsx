@@ -1,13 +1,22 @@
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
-import { SupplierTemplete } from "../template/Fornecedor";
+import { PurveyorTemplete } from "../template/Fornecedor";
+import { purveyorUseCases } from "../server/use-cases/purveyor";
+import { IPurveyor } from "../server/entities/purveyor";
 
-export default function Supplier() {
-  return <SupplierTemplete/>;
+interface IPurveyors {
+  purveyor: IPurveyor[]
+}
+
+export default function Purveyor(purveyor: IPurveyors) {
+
+  return <PurveyorTemplete {...purveyor} />;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { "odinauth.token": token } = parseCookies(context);
+
+  const purveyor = await purveyorUseCases.getAllPurveyors()
 
   if (!token) {
     return {
@@ -19,6 +28,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: {},
+    props: {
+      purveyor
+    },
   };
 };

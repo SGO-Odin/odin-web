@@ -1,71 +1,51 @@
-import { IBrands } from '@/src/interface/datas'
-import { gravarArquivoJSON, lerArquivoJSON } from '@/src/service/save'
+import { brandsUseCases } from '@/src/server/use-cases/brand'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-const fileName = './src/data/brands.json'
 
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const { method } = req
 
 
-    if (method === 'POST') {
-        const { brands, isActive } = req.body
-
-
-        try {
-            const dados: IBrands[] = await lerArquivoJSON(fileName)
-            const _id = (dados.length + 1)
-            const data = { _id, brands, isActive }
-            dados.push(data)
-            await gravarArquivoJSON(dados, fileName)
-            res.json(data)
-        } catch (error) {
-            console.log("Error ao Salvar Dados")
-            const _id = 1
-            const data: IBrands = { _id, brands, isActive }
-            await gravarArquivoJSON([data], fileName)
-            res.json(data)
-        }
-    }
-
-    if (method === 'GET') {
-
-        if (req.query?.id) {
-            const data: IBrands[] = await lerArquivoJSON(fileName)
-            const brand: IBrands = data.find((item) => item._id == Number(req.query?.id))
-            res.json(brand)
-        } else {
-            res.json(await lerArquivoJSON(fileName))
+    try {
+        const { method } = req
+        if (method === 'POST') {
+            const response = await brandsUseCases.createBrands(req.body)
+            return res.status(201).json({ message: "ok", data: response })
         }
 
-    }
+        if (method === 'GET') {
+            if (req.query?.id) {
+                const id: number = Number(req.query?.id)
 
-    if (method === 'PUT') {
-        const { brands, isActive, id } = req.body
+                const response = await brandsUseCases.getById(id)
+                return res.status(200).json({ response })
 
-        const data: IBrands[] = await lerArquivoJSON(fileName)
-        !!data && data.map((item) => {
-            if (item._id == id) {
-                item.brands = brands
-                item.isActive = isActive
+            } else {
+                const response = await brandsUseCases.getAllBrands()
+                return res.status(200).json({ response })
+
             }
-        })
-        await gravarArquivoJSON(data, fileName)
 
-        res.json(true)
-    }
-
-    if (method === 'DELETE') {
-        if (req.query?.id) {
-            const data: IBrands[] = await lerArquivoJSON(fileName)
-
-            const brand = data.filter(item => item._id !== Number(req.query?.id));
-
-            await gravarArquivoJSON(brand, fileName)
-            res.json(true);
         }
+
+        if (method === 'DELETE') {
+            if (req.query?.id) {
+                const id: number = Number(req.query?.id)
+
+                const response = await brandsUseCases.inactivateById(id)
+                return res.status(response)
+            }
+        }
+
+        if (method === 'PUT') {
+            const response = await brandsUseCases.updateBrand(req.body)
+            return res.status(200).json({ response })
+
+        }
+        return res.status(503).json({ message: "Method not allowed." })
+    } catch (e: any) {
+        return res.status(500).json({ message: "Server Error." })
     }
 }

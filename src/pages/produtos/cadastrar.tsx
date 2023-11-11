@@ -19,20 +19,23 @@ export default function NewProduct() {
     const [nameProduct, setNameProduct] = useState<string>("")
     const [unit, setUnit] = useState<string>("")
     const [brands, setBrands] = useState<number>(null)
-    const [supplier, setSupplier] = useState<number>(null)
+    const [purveyor, setPurveyor] = useState<number>(null)
     const [isActive, setIsActive] = useState<boolean>(false)
     const [isStockControl, setIsStockControl] = useState<boolean>(false)
     const [isService, setIsService] = useState<boolean>(false)
 
     const handleNewProduct = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = { cost, selling, stockMin, stockCurrent, location, reference, nameProduct, unit, brands, supplier, isActive, isStockControl, isService }
+        const data = { cost, selling, stockMin, stockCurrent, location, reference, nameProduct, unit, brands, purveyor, isActive, isStockControl, isService }
+
         // create
-        await axios.post('/api/product', data)
-
-        // reset
-
-        goBack()
+        axios.post('/api/product', data)
+            .then(res => {
+                if (res.status == 201) goBack()
+            })
+            .catch((error) => {
+                console.log(error.response.data)
+            })
     }
 
     const goBack = () => {
@@ -62,8 +65,8 @@ export default function NewProduct() {
             setUnit={setUnit}
             brands={brands}
             setBrands={setBrands}
-            supplier={supplier}
-            setSupplier={setSupplier}
+            purveyor={purveyor}
+            setPurveyor={setPurveyor}
             isActive={isActive}
             setIsActive={setIsActive}
             isStockControl={isStockControl}

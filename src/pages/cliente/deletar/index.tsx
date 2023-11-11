@@ -15,12 +15,13 @@ export default function DeleteClientPage() {
     const { id } = router.query
 
     useEffect(() => {
-        if (!id) { return }
-        axios.get('/api/client?id=' + id)
-            .then(response => {
-                setName(response.data.name)
-                setLastName(response.data.lastName)
-            })
+        if (id) {
+            axios.get('/api/client?id=' + id)
+                .then(response => {
+                    setName(response.data.name)
+                    setLastName(response.data.lastName)
+                })
+        }
     }, [id])
 
     const handleDeleteBrand = async () => {

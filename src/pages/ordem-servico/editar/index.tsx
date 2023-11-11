@@ -73,56 +73,54 @@ export default function EditServiceOrderPage() {
     const [prescription, setPrescription] = useState<IPrescription[]>([])
 
     useEffect(() => {
-        if (!id) { return }
-        axios.get('/api/service-order?id=' + id)
-            .then(response => {
-                setNumberOS(response.data.number)
-                setDateRegister(response.data.dateRegister)
-                setHourRegister(response.data.hourRegister)
-                setIdClient(response.data.client)
+        if (id) {
+            axios.get('/api/service-order?id=' + id)
+                .then(response => {
+                    setNumberOS(response.data.number)
+                    setDateRegister(response.data.dateRegister)
+                    setHourRegister(response.data.hourRegister)
+                    setIdClient(response.data.client)
 
-                setServiceOrderProducts(response.data.products)
+                    setServiceOrderProducts(response.data.products)
 
-                setDiscount(response.data.dicountValue)
-                setAdditional(response.data.additionalValue)
+                    setDiscount(response.data.dicountValue)
+                    setAdditional(response.data.additionalValue)
 
-                setPayment(response.data.payment)
+                    setPayment(response.data.payment)
 
-                setPrescription(response.data.prescription)
-                setIsButton(response.data.prescription[response.data.prescription.length - 1].expirationDate)
+                    setPrescription(response.data.prescription)
+                    setIsButton(response.data.prescription[response.data.prescription.length - 1].expirationDate)
 
-                // Define Rows Product
-                axios.get('/api/product').then(product => {
-                    const jokerList = []
-                    response.data.products.forEach((item) => {
+                    // Define Rows Product
+                    axios.get('/api/product').then(product => {
+                        const jokerList = []
+                        response.data.products.forEach((item) => {
 
-                        const jokerDataProduct = product.data.find((product) => product._id === item.idProduct ? product : null)
+                            const jokerDataProduct = product.data.find((product) => product._id === item.idProduct ? product : null)
 
-                        if (jokerDataProduct) {
-                            const response = dataProduct.find((response) => response._id === jokerDataProduct._id ? response : null)
+                            if (jokerDataProduct) {
+                                const response = dataProduct.find((response) => response._id === jokerDataProduct._id ? response : null)
 
-                            if (!response) {
-                                const data: IRowsProductTable = {
-                                    _id: jokerDataProduct._id,
-                                    ref: jokerDataProduct.reference,
-                                    unidade: jokerDataProduct.unit,
-                                    produto: jokerDataProduct.nameProduct,
-                                    quantidade: item.quantity,
-                                    valueUnit: jokerDataProduct.selling,
-                                    valueTot: item.salesPrice,
+                                if (!response) {
+                                    const data: IRowsProductTable = {
+                                        _id: jokerDataProduct._id,
+                                        ref: jokerDataProduct.reference,
+                                        unidade: jokerDataProduct.unit,
+                                        produto: jokerDataProduct.nameProduct,
+                                        quantidade: item.quantity,
+                                        valueUnit: jokerDataProduct.selling,
+                                        valueTot: item.salesPrice,
+                                    }
+
+                                    jokerList.push(data)
                                 }
 
-                                jokerList.push(data)
                             }
-
-                        }
+                        })
+                        setDataProduct(jokerList)
                     })
-                    setDataProduct(jokerList)
                 })
-            })
-
-
-
+        }
     }, [id])
 
     const handleAddPrescription = () => {

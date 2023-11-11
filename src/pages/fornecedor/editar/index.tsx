@@ -27,24 +27,25 @@ export default function EditSupplierPage() {
     const { id } = router.query
 
     useEffect(() => {
-        if (!id) { return }
-        axios.get('/api/supplier?id=' + id)
-            .then(response => {
-                setAcronym(response.data.acronym)
-                setStateName(response.data.stateName)
-                setIsFederalDistrict(response.data.isFederalDistrict)
-                setPublicPlaceType(response.data.publicPlaceType)
-                setReference(response.data.reference)
-                setCompanyName(response.data.companyName)
-                setTradingName(response.data.tradingName)
-                setIsLaboratory(response.data.isLaboratory)
-                setZipCode(response.data.zipCode)
-                setPublicPlaceName(response.data.address)
-                setDistrict(response.data.district)
-                setNumber(response.data.number)
-                setComplement(response.data.complement)
-                setCity(response.data.city)
-            })
+        if (id) {
+            axios.get('/api/supplier?id=' + id)
+                .then(response => {
+                    setAcronym(response.data.acronym)
+                    setStateName(response.data.stateName)
+                    setIsFederalDistrict(response.data.isFederalDistrict)
+                    setPublicPlaceType(response.data.publicPlaceType)
+                    setReference(response.data.reference)
+                    setCompanyName(response.data.companyName)
+                    setTradingName(response.data.tradingName)
+                    setIsLaboratory(response.data.isLaboratory)
+                    setZipCode(response.data.zipCode)
+                    setPublicPlaceName(response.data.address)
+                    setDistrict(response.data.district)
+                    setNumber(response.data.number)
+                    setComplement(response.data.complement)
+                    setCity(response.data.city)
+                })
+        }
     }, [id])
 
     const handleUpdateBrand = async (event: React.FormEvent<HTMLFormElement>) => {

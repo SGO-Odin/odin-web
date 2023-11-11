@@ -5,7 +5,7 @@ import { IPayment } from "@/src/interface/datas";
 
 interface ITablePayment {
     rows: IPayment[]
-    onClick: (_id: number) => void
+    onClick?: (_id: number) => void
 }
 
 export default function TablePayment({ rows, onClick }: ITablePayment) {
@@ -33,6 +33,9 @@ export default function TablePayment({ rows, onClick }: ITablePayment) {
         }
     }
 
+    console.log("ROWS:")
+    console.log(rows)
+
     return (
         <div className="table-payment">
             <table className="table-payment__table">
@@ -45,11 +48,11 @@ export default function TablePayment({ rows, onClick }: ITablePayment) {
                             <td className="table-payment__table__body__row__item">{handleNameType(row.type)}</td>
                             <td className="table-payment__table__body__row__item">{`- R$ ${handleFormatNumber(row.amount)}`}</td>
                             <td className="table-payment__table__body__row__item">{`Data de lançamento ${row.date}`}</td>
-                            <td className="table-payment__table__body__row__item">
+                            {!!onClick && (<td className="table-payment__table__body__row__item">
                                 <button onClick={() => onClick(row._id)} type="button">
                                     <MdDelete size={24} />
                                 </button>
-                            </td>
+                            </td>)}
                         </tr>
                     ))}
                 </tbody>

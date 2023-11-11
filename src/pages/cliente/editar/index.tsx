@@ -2,17 +2,19 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ClientFormTemplate from "../template";
+import { sanitalizePhones } from "@/src/hook/sanitalize-phones";
 
 export default function EditClientPage() {
 
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
 
-    const [firsName, setFirsName] = useState<string>("")
+    const [firstName, setFirstName] = useState<string>("")
     const [lastName, setLastName] = useState<string>("")
     const [cpf, setCpf] = useState<string>("")
     const [rg, setRg] = useState<string>("")
     const [email, setEmail] = useState<string>("")
-    const [whatsapp, setWhatsapp] = useState<string>("")
+    const [phones, setPhones] = useState<string>("")
+    const [ddd, setDDD] = useState<string>("")
 
     // Endereço
     const [zipCode, setZipCode] = useState<string>("")
@@ -31,34 +33,42 @@ export default function EditClientPage() {
     const { id } = router.query
 
     useEffect(() => {
-        if (!id) { return }
-        axios.get('/api/client?id=' + id)
-            .then(response => {
-                setFirsName(response.data.firsName)
-                setLastName(response.data.lastName)
-                setCpf(response.data.cpf)
-                setRg(response.data.rg)
-                setEmail(response.data.email)
-                setWhatsapp(response.data.whatsapp)
+        if (id) {
+            axios.get('/api/client?id=' + id)
+                .then(response => {
+                    console.log(response.data.response.address)
+                    setFirstName(response.data.response.firstName)
+                    setLastName(response.data.response.lastName)
+                    setCpf(response.data.response.cpf)
+                    setRg(response.data.response.rg)
+                    setEmail(response.data.response.emails[0])
+                    setPhones(response.data.response.phones[0])
 
-                setAcronym(response.data.uf)
-                setStateName(response.data.stateName)
-                setIsFederalDistrict(response.data.isFederalDistrict)
-                setPublicPlaceName(response.data.street)
-                setPublicPlaceType(response.data.publicPlaceType)
-                setComplement(response.data.complement)
-                setReference(response.data.reference)
-                setDistrict(response.data.district)
-                setCity(response.data.city)
-                setNumber(response.data.number)
-                setZipCode(response.data.cep)
-            })
+                    setAcronym(response.data.response.uf)
+                    setStateName(response.data.response.stateName)
+                    setIsFederalDistrict(response.data.response.isFederalDistrict)
+                    setPublicPlaceName(response.data.response.street)
+                    setPublicPlaceType(response.data.response.publicPlaceType)
+                    setComplement(response.data.response.complement)
+                    setReference(response.data.response.reference)
+                    setDistrict(response.data.response.district)
+                    setCity(response.data.response.city)
+                    setNumber(response.data.response.number)
+                    setZipCode(response.data.response.genericZipCode)
+                })
+                .catch((error) => {
+                    console.log(error.response.data)
+                })
+        }
     }, [id])
 
     const handleUpdateClient = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const data = { firsName, lastName, cpf, rg, email, whatsapp, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city }
+        const sanitalizePhone = sanitalizePhones(phones).substring(2)
+
+        const data = { firstName, lastName, cpf, rg, email, sanitalizePhone, ddd, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city }
+
         // update
         await axios.put('/api/client', { ...data, id })
 
@@ -71,8 +81,8 @@ export default function EditClientPage() {
 
     return (
         <ClientFormTemplate
-            firsName={firsName}
-            setFirsName={setFirsName}
+            firstName={firstName}
+            setFirstName={setFirstName}
             lastName={lastName}
             setLastName={setLastName}
             cpf={cpf}
@@ -81,8 +91,10 @@ export default function EditClientPage() {
             setRg={setRg}
             email={email}
             setEmail={setEmail}
-            whatsapp={whatsapp}
-            setWhatsapp={setWhatsapp}
+            phones={phones}
+            setPhones={setPhones}
+            ddd={ddd}
+            setDDD={setDDD}
 
             zipCode={zipCode}
             setZipCode={setZipCode}
@@ -109,7 +121,7 @@ export default function EditClientPage() {
 
             handleClient={handleUpdateClient}
             goBack={goBack}
-            title={`Editar dados de ${firsName} ${lastName}`}
+            title={`Editar dados de ${firstName} ${lastName}`}
             paragraph={"Atualize detalhes de contato, preferências e mais para melhorar o atendimento."} />
     );
 }

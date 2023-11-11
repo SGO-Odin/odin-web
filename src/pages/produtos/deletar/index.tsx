@@ -14,19 +14,29 @@ export default function DeleteBrandPage() {
     const { id } = router.query
 
     useEffect(() => {
-        if (!id) { return }
-        axios.get('/api/product?id=' + id)
-            .then(response => {
-                setNameProduct(response.data.nameProduct)
-            })
+        if (id) {
+            axios.get('/api/product?id=' + id)
+                .then(response => {
+                    setNameProduct(response.data.response.name)
+                })
+                .catch((error) => {
+                    console.log(error.response.data)
+                })
+        }
     }, [id])
 
     const handleDeleteBrand = async () => {
 
         // delete
         await axios.delete('/api/product?id=' + id)
+            .then(response => {
 
-        goBack()
+                // GoBack()
+                goBack()
+            })
+            .catch((error) => {
+                console.log(error.response.data)
+            })
     }
 
     const goBack = () => {

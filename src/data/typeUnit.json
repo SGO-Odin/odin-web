@@ -1,22 +1,22 @@
 [
     {
         "_id": 1,
-        "name": "Frasco"
+        "name": "Frasco",
+        "value": "BOTTLE"
     },
     {
         "_id": 2,
-        "name": "Kit"
+        "name": "Kit",
+        "value": "KIT"
     },
     {
         "_id": 3,
-        "name": "Par"
+        "name": "Par",
+        "value": "PAIR"
     },
     {
         "_id": 4,
-        "name": "Peça"
-    },
-    {
-        "_id": 5,
-        "name": "Unidade"
+        "name": "Peça",
+        "value": "PIECE"
     }
 ]

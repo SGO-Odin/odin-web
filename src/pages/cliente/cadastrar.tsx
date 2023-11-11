@@ -7,17 +7,19 @@ import axios from 'axios';
 import { Modal } from '@/src/components/modal';
 import { ButtonsTertiary } from '@/src/components/buttons/tertiary';
 import { ButtonsPrimary } from '@/src/components/buttons/primary';
+import { sanitalizePhones } from '@/src/hook/sanitalize-phones';
 
 export default function NewClient() {
     const { push } = useRouter();
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
 
-    const [firsName, setFirsName] = useState<string>("")
+    const [firstName, setFirstName] = useState<string>("")
     const [lastName, setLastName] = useState<string>("")
     const [cpf, setCpf] = useState<string>("")
     const [rg, setRg] = useState<string>("")
     const [email, setEmail] = useState<string>("")
-    const [whatsapp, setWhatsapp] = useState<string>("")
+    const [phones, setPhones] = useState<string>("")
+    const [ddd, setDDD] = useState<string>("")
 
     // Endereço
     const [zipCode, setZipCode] = useState<string>("")
@@ -32,17 +34,23 @@ export default function NewClient() {
     const [reference, setReference] = useState<string>("")
     const [city, setCity] = useState<string>("")
 
+
+
     const handleNewClient = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const data = { firsName, lastName, cpf, rg, email, whatsapp, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city }
+        const sanitalizePhone = sanitalizePhones(phones).substring(2)
 
-        // create
-        await axios.post('/api/client', data)
+        const data = { firstName, lastName, cpf, rg, email, sanitalizePhone, ddd, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city }
 
-        setIsOpenModal(!isOpenModal)
-
-        setIsOpenModal(!isOpenModal)
+        // // create
+        axios.post('/api/client', data)
+            .then(res => {
+                if (res.status == 201) setIsOpenModal(!isOpenModal)
+            })
+            .catch((error) => {
+                console.log(error.response.data)
+            })
     }
 
     const goBack = () => {
@@ -59,8 +67,8 @@ export default function NewClient() {
     }
     return (
         <ClientFormTemplate
-            firsName={firsName}
-            setFirsName={setFirsName}
+            firstName={firstName}
+            setFirstName={setFirstName}
             lastName={lastName}
             setLastName={setLastName}
             cpf={cpf}
@@ -69,8 +77,10 @@ export default function NewClient() {
             setRg={setRg}
             email={email}
             setEmail={setEmail}
-            whatsapp={whatsapp}
-            setWhatsapp={setWhatsapp}
+            phones={phones}
+            setPhones={setPhones}
+            ddd={ddd}
+            setDDD={setDDD}
 
             zipCode={zipCode}
             setZipCode={setZipCode}
@@ -115,8 +125,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
 
     return {
-        props: {
-
-        }
+        props: {}
     }
 }

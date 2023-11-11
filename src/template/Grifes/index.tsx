@@ -6,29 +6,36 @@ import { useRouter } from "next/navigation"
 import { Hero } from "@/src/components/hero"
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary"
 import { MdDelete, MdOutlineEdit, MdSearch } from "react-icons/md"
-import { IBrands } from "@/src/interface/datas"
 import Head from "@/src/components/table/head"
 import RowItem from "@/src/components/table/body/rowItem"
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { ButtonsEdit } from "@/src/components/buttons/edit"
 import { ButtonsDelete } from "@/src/components/buttons/delete"
+import { IBrands } from "@/src/server/entities/brand"
+import { Toggle } from "@/src/components/toggle"
+import { ButtonsEdit } from "@/src/components/buttons/edit"
 
-const columns = ["Nome", "Status"]
+const columns = ["Nome", "Ativo"]
 
 export function BrandsTemplate() {
-  const { push } = useRouter()
+  const router = useRouter()
 
   const [brands, setBrands] = useState<IBrands[]>([])
 
   useEffect(() => {
-    axios.get('/api/brands').then(response => {
-      setBrands(response.data)
-    })
+    axios.get('/api/brands')
+      .then(response => {
+        if (response.status == 200) {
+          setBrands(response.data.response)
+        }
+      })
+      .catch((error) => {
+        console.log(error.response.data)
+      })
   }, [])
 
   const handlePushNewBrands = () => {
-    push("/grifes/cadastrar");
+    router.push("/grifes/cadastrar");
   };
 
   return (
@@ -46,29 +53,32 @@ export function BrandsTemplate() {
           </div>
         </div>
       </Hero>
+
       <div className="container-table">
         <div className="container-table__content">
           <table className="table">
             <Head columns={columns} isButton={true} />
             <tbody className="body">
-              {!!brands && brands.map((item) => (
-                <tr key={item._id} className='body__row'>
-                  <RowItem label={item.brands} isActive={null} />
-                  <RowItem label={item.isActive ? 'Ativo' : 'Inativo'} isActive={item.isActive} />
+              {!!brands && brands.map((item) => item.isActive !== false ? (
+                <tr key={item.id} className='body__row'>
+                  <RowItem label={item.name} isActive={null} />
+                  <RowItem label={`${item.isActive ? 'ATIVO' : 'INATIVO'}`} isActive={item.isActive} />
                   <td className={'row buttons'}>
                     <div>
-                      <ButtonsEdit href={`/grifes/editar?id=${item._id}`}>
+                      <ButtonsEdit href={`/grifes/editar?id=${item.id}`}>
+                        Editar
                         <MdOutlineEdit size={24} />
                       </ButtonsEdit>
                     </div>
                     <div>
-                      <ButtonsDelete href={`/grifes/deletar?id=${item._id}`}>
+                      <ButtonsDelete href={`/grifes/deletar?id=${item.id}`}>
+                        Excluir
                         <MdDelete size={24} />
                       </ButtonsDelete>
                     </div>
                   </td>
                 </tr>
-              ))}
+              ) : null)}
             </tbody>
           </table>
         </div>

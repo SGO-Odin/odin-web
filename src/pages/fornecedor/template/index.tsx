@@ -1,5 +1,5 @@
 import LayoutDefault from "@/src/components/layoutDefault";
-import "../newSupplier.scss";
+import "./add-purveyor.scss";
 import { TextField } from "@/src/components/textField";
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { ButtonsPrimary } from "@/src/components/buttons/primary";
@@ -9,7 +9,7 @@ import { Hero } from "@/src/components/hero";
 import { Toggle } from "@/src/components/toggle";
 import Address from "@/src/components/commons/address";
 
-interface ISupplierFormTemplate {
+interface IPurveyorFormTemplate {
     companyName: string
     setCompanyName: Dispatch<SetStateAction<string>>
     tradingName: string
@@ -46,7 +46,7 @@ interface ISupplierFormTemplate {
     paragraph: string
 }
 
-export default function SupplierFormTemplate({
+export default function PurveyorFormTemplate({
     companyName,
     setCompanyName,
     tradingName,
@@ -81,20 +81,20 @@ export default function SupplierFormTemplate({
     goBack,
     title,
     paragraph
-}: ISupplierFormTemplate) {
+}: IPurveyorFormTemplate) {
     return (
         <LayoutDefault>
-            <div className="newSupplier">
-                <form onSubmit={handleSupplier} className="newSupplier__form">
+            <div className="add-purveyor">
+                <form onSubmit={handleSupplier} className="add-purveyor__form">
                     <Hero
                         isButtonPrymary={false}
                         title={title}
                         paragraph={paragraph}>
-                        <div className="newSupplier__form__content__inputs">
+                        <div className="add-purveyor__form__content__inputs">
                             <div className="input">
                                 <TextField
                                     name="tradingName"
-                                    placeholder=""
+                                    placeholder="Digite o nome fantasia"
                                     value={tradingName}
                                     onChange={(ev) => setTradingName(ev.target.value)}
                                     label="NOME FANTASIA"
@@ -105,7 +105,7 @@ export default function SupplierFormTemplate({
                             <div className="input">
                                 <TextField
                                     name="companyName"
-                                    placeholder=""
+                                    placeholder="Digite a razão social"
                                     value={companyName}
                                     onChange={(ev) => setCompanyName(ev.target.value)}
                                     label="RAZÃO SOCIAL"
@@ -113,7 +113,7 @@ export default function SupplierFormTemplate({
                                     required={true}
                                 />
                             </div>
-                            <div className="newSupplier__form__content__inputs">
+                            <div className="add-purveyor__form__content__inputs">
                                 <Toggle
                                     label="LABORATÓRIO"
                                     name="toggle-supplier"
@@ -123,9 +123,9 @@ export default function SupplierFormTemplate({
                             </div>
                         </div>
                     </Hero>
-                    <div className="newSupplier__form__content">
-                        <header className="newSupplier__form__content__header">
-                            <h2 className="newSupplier__form__content__header__title">
+                    <div className="add-purveyor__form__content">
+                        <header className="add-purveyor__form__content__header">
+                            <h2 className="add-purveyor__form__content__header__title">
                                 Endereço
                             </h2>
                             <hr className="menu__mobile__line" />
@@ -155,9 +155,9 @@ export default function SupplierFormTemplate({
                             setCity={setCity}
                         />
                     </div>
-                    <div className="newSupplier__form__buttons">
+                    <div className="add-purveyor__form__buttons">
                         <div>
-                            <ButtonsTertiary onClick={() => goBack()}>
+                            <ButtonsTertiary type="button" onClick={() => goBack()}>
                                 <MdCancel size={24} />
                                 Cancelar
                             </ButtonsTertiary>

@@ -4,8 +4,8 @@ import './prescription.scss'
 import { Dispatch, SetStateAction } from "react";
 import { handleFormatNumber } from "@/src/hook/format-number";
 import CardPrescription from "./card-prescription";
-import { IPrescription } from "@/src/interface/datas";
 import ButtonPrescription from "./button-prescription";
+import { ICreateServiceOrderRes, IPrescription } from "@/src/server/entities/service-order";
 
 interface IPrescriptionComponents {
     skewerFarOD: string
@@ -57,8 +57,10 @@ interface IPrescriptionComponents {
     isButton: string
     setIsButton: Dispatch<SetStateAction<string>>
 
-    prescription: IPrescription[]
-    setPrescription: Dispatch<SetStateAction<IPrescription[]>>
+    prescription: IPrescription
+    setPrescription: Dispatch<SetStateAction<IPrescription>>
+    orderServiceClient: ICreateServiceOrderRes[]
+    setOrderServiceClient: Dispatch<SetStateAction<ICreateServiceOrderRes[]>>
 }
 
 export default function Prescription({
@@ -113,13 +115,18 @@ export default function Prescription({
 
     prescription,
     setPrescription,
+    orderServiceClient,
+    setOrderServiceClient,
 }: IPrescriptionComponents) {
+
+
+
     return (
         <div className="container-prescription">
             <aside className="container-prescription__aside">
                 <ButtonPrescription isButton={isButton} setIsButton={setIsButton} />
-                {!!prescription && prescription.map((item) => (
-                    <ButtonPrescription key={item.expirationDate} isButton={isButton} setIsButton={setIsButton} expirationDate={item.expirationDate} />
+                {!!orderServiceClient && orderServiceClient.map((item) => (
+                    <ButtonPrescription key={item.id} isButton={isButton} setIsButton={setIsButton} expirationDate={item.prescription.expirationDate} />
                 ))}
             </aside>
             <section className="container-prescription__revenue">

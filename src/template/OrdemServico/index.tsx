@@ -8,12 +8,13 @@ import { TextField } from '@/src/components/textField';
 import { useEffect, useState } from 'react';
 import Card from '@/src/components/commons/card';
 import axios from 'axios';
-import { IClient, IOrderService } from '@/src/interface/datas';
 import { handleFormatNumber } from '@/src/hook/format-number';
 import Head from '@/src/components/table/head';
 import RowItem from '@/src/components/table/body/rowItem';
 import { ButtonsEdit } from '@/src/components/buttons/edit';
 import { ButtonsDelete } from '@/src/components/buttons/delete';
+import { ICreateServiceOrderRes, IServiceOrder } from '@/src/server/entities/service-order';
+import { IClient } from '@/src/server/entities/client';
 
 const columns = ["N° OS", "Data", "Hora", "Nome"];
 
@@ -26,41 +27,76 @@ export default function ServiceOrderTemplate() {
     const [openServiceOrder, setOpenServiceOrder] = useState<number>(0)
     const [quantityServiceOrder, setQuantityServiceOrder] = useState<number>(0)
     const [totalServiceOrder, setTotalServiceOrder] = useState<number>(0)
-    const [orderService, setOrderService] = useState<IOrderService[]>([])
+    const [orderService, setOrderService] = useState<ICreateServiceOrderRes[]>([])
 
     const [client, setClient] = useState<IClient[]>([])
 
     useEffect(() => {
-        axios.get('/api/service-order').then(response => {
+        axios.get('/api/service-order')
+            .then(response => {
 
-            const jokerCounter = response.data.reduce((counter, objeto) => {
-                if (objeto.status === 'OPENED') {
-                    return counter + 1
-                }
-                return counter
-            }, 0)
-
-            const jokerTotalSale = response.data.reduce((totalSale, objeto) => {
-
-                return totalSale + objeto.products.reduce((counter, item) => {
-                    return (Number(item.salesPrice) * Number(item.quantity)) + counter
+                console.log(response.data.response)
+                const jokerCounter = response.data.response.reduce((counter, objeto) => {
+                    if (objeto.status === 'OPENED') {
+                        return counter + 1
+                    }
+                    return counter
                 }, 0)
-            }, 0)
 
-            setOrderService(response.data)
-            setQuantityServiceOrder(response.data.length)
-            setOpenServiceOrder(jokerCounter)
-            setTotalServiceOrder(jokerTotalSale)
-        })
+                const jokerTotalSale = response.data.response.reduce((totalSale, objeto) => {
 
-        axios.get('/api/client').then(response => {
-            setClient(response.data)
-        })
+                    return totalSale + objeto.amountTotal
+                }, 0)
+
+                setOrderService(response.data.response)
+                setQuantityServiceOrder(response.data.response.length)
+                setOpenServiceOrder(jokerCounter)
+                setTotalServiceOrder(jokerTotalSale)
+            })
+            .catch((error) => {
+                console.log(error.response.data)
+            })
+
+        axios.get('/api/client')
+            .then(response => {
+                setClient(response.data.response)
+            })
+            .catch((error) => {
+                console.log(error.response.data)
+            })
     }, [])
 
     const handlePushClient = (id: number): string => {
-        const name: IClient = client.find((item) => item._id === id ? item : null)
-        return name ? `${name.firsName} ${name.lastName}` : null
+        const name: IClient = client.find((item) => item.id === id ? item : null)
+        return name ? `${name.firstName} ${name.lastName}` : null
+    }
+
+    const handleFormatDateBR = (dateIso: string, type: 'DATE' | 'HOUR'): string => {
+        const date = new Date(dateIso);
+
+        // Verifica se a data é válida
+        if (isNaN(date.getTime())) {
+            throw new Error('Formato de data inválido.');
+        }
+
+        if (type === 'DATE') {
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear().toString().padStart(4, '0');
+
+            const formatedDate = `${day}/${month}/${year}`;
+
+            return formatedDate;
+        }
+
+        const horas = date.getHours().toString().padStart(2, '0');
+        const minutos = date.getMinutes().toString().padStart(2, '0');
+        const segundos = date.getSeconds().toString().padStart(2, '0');
+
+        // Formata a data no formato brasileiro
+        const formatedHour = `${horas}:${minutos}:${segundos}`;
+
+        return formatedHour;
     }
 
     const handlePushNewServiceOrder = () => {
@@ -132,19 +168,20 @@ export default function ServiceOrderTemplate() {
                         <Head columns={columns} isButton={true} />
                         <tbody className="body">
                             {!!orderService && orderService.map((item) => (
-                                <tr key={item._id} className='body__row'>
-                                    <RowItem label={item.number} isActive={null} />
-                                    <RowItem label={item.dateRegister} isActive={null} />
-                                    <RowItem label={item.hourRegister} isActive={null} />
-                                    <RowItem label={handlePushClient(item._id)} isActive={null} />
+                                <tr key={item.id} className='body__row'>
+                                    <RowItem label={(item.id).toString()} isActive={null} />
+                                    <RowItem label={handleFormatDateBR(item.createdOn, 'DATE')} isActive={null} />
+                                    <RowItem label={handleFormatDateBR(item.createdOn, 'HOUR')} isActive={null} />
+                                    <RowItem label={handlePushClient(item.client)} isActive={null} />
                                     <td className={'row buttons'}>
-                                        <div>
-                                            <ButtonsEdit href={`/ordem-servico/editar?id=${item._id}`}>
+                                        {/* <div>
+                                            <ButtonsEdit href={`/ordem-servico/editar?id=${item.id}`}>
                                                 <MdOutlineEdit size={24} />
                                             </ButtonsEdit>
-                                        </div>
+                                        </div> */}
                                         <div>
-                                            <ButtonsDelete href={`/ordem-servico/deletar?id=${item._id}`}>
+                                            <ButtonsDelete href={`/ordem-servico/deletar?id=${item.id}`}>
+                                                Excluir
                                                 <MdDelete size={24} />
                                             </ButtonsDelete>
                                         </div>

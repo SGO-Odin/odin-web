@@ -6,13 +6,13 @@ import { HeroSecundary } from '@/src/components/commons/hero-secundary';
 import { TextField } from '@/src/components/textField';
 import { Select } from '@/src/components/select';
 import { ButtonsTertiary } from '@/src/components/buttons/tertiary';
-import { MdBuild, MdCancel, MdDelete, MdOutlineEdit, MdPayments } from 'react-icons/md';
+import { MdBuild, MdCancel, MdDelete } from 'react-icons/md';
 import { ButtonsPrimary } from '@/src/components/buttons/primary';
 import { ButtonsSecundary } from "@/src/components/buttons/secundary";
 import CardTotal from "@/src/components/commons/card-total";
 import TablePayment from "@/src/components/commons/table-payment";
 import Prescription from "@/src/components/commons/prescription";
-import { IClient, IPayment, IPrescription, IProduct, IServiceOrderProducts } from '@/src/interface/datas';
+import { IPayment } from '@/src/interface/datas';
 import axios from 'axios';
 import { formatNumberWhatsapp } from '@/src/hook/format-number-whatsapp';
 import { formatCPF } from '@/src/hook/format-cpf';
@@ -22,8 +22,11 @@ import RowItem from '@/src/components/table/body/rowItem';
 import { handleFormatNumber } from '@/src/hook/format-number';
 import { v4 as uuid } from "uuid";
 import { handlePercent } from '@/src/hook/percent';
-import { IItemSelect, IPaymentFormTemplate } from '@/src/interface/utils';
+import { IItemSelect } from '@/src/interface/utils';
 import typeCard from '@/src/data/typeCard.json'
+import { ICreateServiceOrderRes, IPrescription, IProductServiceOrder } from '@/src/server/entities/service-order';
+import { IClient } from '@/src/server/entities/client';
+import { IProduct } from '@/src/server/entities/product';
 
 
 interface IRowsProductTable {
@@ -58,8 +61,8 @@ interface IServiceOrderFormTemplate {
 
     dataProduct: IRowsProductTable[]
     setDataProduct: Dispatch<SetStateAction<IRowsProductTable[]>>
-    serviceOrderProducts: IServiceOrderProducts[]
-    setServiceOrderProducts: Dispatch<SetStateAction<IServiceOrderProducts[]>>
+    serviceOrderProducts: IProductServiceOrder[]
+    setServiceOrderProducts: Dispatch<SetStateAction<IProductServiceOrder[]>>
 
     percentDiscount: string
     setPercentDiscount: Dispatch<SetStateAction<string>>
@@ -74,8 +77,8 @@ interface IServiceOrderFormTemplate {
     valueAmount: string
     setValueAmount: Dispatch<SetStateAction<string>>
 
-    type: 'CREDIT_CARD' | 'DEBIT_CARD' | 'MONEY' | 'PIX'
-    setType: Dispatch<SetStateAction<'CREDIT_CARD' | 'DEBIT_CARD' | 'MONEY' | 'PIX'>>
+    type: 'CREDIT_CARD' | 'DEBIT_CARD' | 'MONEY' | 'PIX' | ''
+    setType: Dispatch<SetStateAction<'CREDIT_CARD' | 'DEBIT_CARD' | 'MONEY' | 'PIX' | ''>>
     dateRelease: string
     setDateRelease: Dispatch<SetStateAction<string>>
     parcelNumber: string
@@ -139,8 +142,11 @@ interface IServiceOrderFormTemplate {
     datePrescription: string
     setDatePrescription: Dispatch<SetStateAction<string>>
 
-    prescription: IPrescription[]
-    setPrescription: Dispatch<SetStateAction<IPrescription[]>>
+    prescription: IPrescription
+    setPrescription: Dispatch<SetStateAction<IPrescription>>
+
+    orderServiceClient: ICreateServiceOrderRes[]
+    setOrderServiceClient: Dispatch<SetStateAction<ICreateServiceOrderRes[]>>
 
     handleServiceOrder: (event: React.FormEvent<HTMLFormElement>) => Promise<void>
     goBack: () => void
@@ -255,6 +261,9 @@ export default function ServiceOrderFormTemplate({
     prescription,
     setPrescription,
 
+    orderServiceClient,
+    setOrderServiceClient,
+
     handleServiceOrder,
     goBack,
     title,
@@ -300,18 +309,18 @@ export default function ServiceOrderFormTemplate({
     }
 
     const handleDataProduct = (): void => {
-        const dataCurrentProduct: IProduct = listProduct.find((item) => item._id === idProduct ? item : null)
+        const dataCurrentProduct: IProduct = listProduct.find((item) => item.id === idProduct ? item : null)
         const data: IRowsProductTable = {
-            _id: dataCurrentProduct._id,
+            _id: dataCurrentProduct.id,
             ref: dataCurrentProduct.reference,
             unidade: dataCurrentProduct.unit,
-            produto: dataCurrentProduct.nameProduct,
+            produto: dataCurrentProduct.name,
             quantidade: quantity,
-            valueUnit: dataCurrentProduct.selling,
+            valueUnit: `${dataCurrentProduct.currentSalePrice}`,
             valueTot: coast,
         }
         setDataProduct([...dataProduct, data])
-        setServiceOrderProducts([...serviceOrderProducts, { idProduct: idProduct, quantity: quantity, salesPrice: coast }])
+        setServiceOrderProducts([...serviceOrderProducts, { productId: idProduct, quantity: Number(quantity) }])
 
         setQuantity("")
         setCoast("")
@@ -320,7 +329,7 @@ export default function ServiceOrderFormTemplate({
 
     const handleDeleteRowProduct = (_id: number): void => {
         const clearList = dataProduct.filter(item => item._id !== _id)
-        const clearListServiceOrder = serviceOrderProducts.filter(item => item.idProduct !== _id)
+        const clearListServiceOrder = serviceOrderProducts.filter(item => item.productId !== _id)
 
         if (handleVerifyDebit(clearList) >= 0) {
             setServiceOrderProducts(clearListServiceOrder)
@@ -451,51 +460,67 @@ export default function ServiceOrderFormTemplate({
 
 
     useEffect(() => {
-        axios.get('/api/client').then(response => {
-            const listSelectClient = response.data.filter(function (item) {
-                const data: IItemSelect = {
-                    _id: item._id,
-                    name: `${item.firsName} ${item.lastName}`
+
+        axios.get('/api/client')
+            .then(response => {
+                if (response.status == 200) {
+                    const listSelectClient = response.data.response.reduce(function (data: IItemSelect[], item: IClient) {
+                        data.push({
+                            _id: item.id,
+                            name: item.firstName
+                        })
+                        return data
+                    }, [])
+
+                    setOptionsClient(listSelectClient)
+                    setListClient(response.data.response)
                 }
-                return data
             })
-            setOptionsClient(listSelectClient)
-            setListClient(response.data)
-        })
+            .catch((error) => {
+                console.log(error.response.data)
+            })
 
         axios.get('/api/product').then(response => {
-            const listSelectProduct = response.data.filter(function (item) {
-                const data: IItemSelect = {
-                    _id: item._id,
-                    name: item.nameProduct
-                }
+            const listSelectProduct = response.data.response.reduce(function (data: IItemSelect[], item: IProduct) {
+                data.push({
+                    _id: item.id,
+                    name: item.name
+                })
                 return data
-            })
+            }, [])
 
             setOptionsProduct(listSelectProduct)
-            setListProduct(response.data)
+            setListProduct(response.data.response)
         })
     }, [])
 
     useEffect(() => {
         if (client) {
-            const currentClient: IClient = listClient.find((item) => item._id === client ? item : null)
 
+            const currentClient: IClient = listClient.find((item) => item.id === client ? item : null)
             if (currentClient) {
                 setCPF(currentClient.cpf)
-                setWhatsapp(currentClient.whatsapp)
+                setWhatsapp(`${currentClient.phones[0]}`)
             }
+
+            axios.get(`/api/service-order?id=${client}`)
+                .then(response => {
+                    setOrderServiceClient(response.data.response)
+                })
+                .catch((error) => {
+                    console.log(error.response.data)
+                })
         }
     }, [client])
 
     useEffect(() => {
         if (Number(quantity) >= 1) {
-            const dataCurrentProduct: IProduct = listProduct.find((item) => item._id === idProduct ? item : null)
-            if (dataCurrentProduct.selling) {
+            const dataCurrentProduct: IProduct = listProduct.find((item) => item.id === idProduct ? item : null)
+            if (dataCurrentProduct.currentSalePrice) {
 
                 let value = '0'
-                if (dataCurrentProduct.selling) {
-                    value = dataCurrentProduct.selling.replace(/\D/g, ''); // Retira qualquer caracter não numerico
+                if (dataCurrentProduct.currentSalePrice) {
+                    value = `${dataCurrentProduct.currentSalePrice}`.replace(/\D/g, ''); // Retira qualquer caracter não numerico
                 }
                 const total = Number(value) * Number(quantity)
                 setCoast(total.toString())
@@ -804,6 +829,8 @@ export default function ServiceOrderFormTemplate({
 
                             prescription={prescription}
                             setPrescription={setPrescription}
+                            orderServiceClient={orderServiceClient}
+                            setOrderServiceClient={setOrderServiceClient}
                         />
                     </div>
                     <div className="service-order-template__form__buttons">

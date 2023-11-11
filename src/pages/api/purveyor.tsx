@@ -1,10 +1,7 @@
-import { IClient } from '@/src/server/entities/client'
 import { ICreatePurveyorReq, IPurveyor } from '@/src/server/entities/purveyor'
 import { purveyorUseCases } from '@/src/server/use-cases/purveyor'
-import { gravarArquivoJSON, lerArquivoJSON } from '@/src/service/save'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-const fileName = './src/data/client.json'
 
 export default async function handler(
     req: NextApiRequest,

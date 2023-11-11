@@ -36,7 +36,8 @@ export default function CardTotal({
     setAdditional }: ICardTotal) {
 
     const handleUpdateValueAmount = () => {
-        if (!additional || !discount) return null
+        if (!!additional || !!discount) return null
+
         const valueAdditional = additional.replace(/\D/g, '') // Retira qualquer caracter não numerico
         const valueDiscount = discount.replace(/\D/g, '') // Retira qualquer caracter não numerico
 
@@ -88,7 +89,6 @@ export default function CardTotal({
         handleUpdateValueAmount()
     }, [discount, valueTotal])
 
-
     return (
         <div className="card-total">
             <div className="card-total__container">
@@ -123,7 +123,7 @@ export default function CardTotal({
             </div>
             <div className="card-total__container">
                 <span className="card-total__container__text">VALOR LIQUIDO:</span>
-                <span className="card-total__container__text">{`${handleFormatNumber(`${valueAmount}`)}`}</span>
+                <span className="card-total__container__text">{`${!!valueAmount ? handleFormatNumber(valueAmount) : ' '}`}</span>
             </div>
         </div>
     )

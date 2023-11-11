@@ -5,12 +5,16 @@ import { TablesCustom } from "@/src/components/tablesCustom";
 import { TextField } from "@/src/components/textField";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { MdAttachMoney, MdSearch } from "react-icons/md";
+import { MdAttachMoney, MdDelete, MdOutlineEdit, MdSearch } from "react-icons/md";
 import './sale.scss'
+import Head from "@/src/components/table/head";
+import RowItem from "@/src/components/table/body/rowItem";
+import { ButtonsEdit } from "@/src/components/buttons/edit";
+import { ButtonsDelete } from "@/src/components/buttons/delete";
 
 const data = [
-    { "ID": 1, Data: "01 / 11 / 2022", Hora: "11:25", Nome: "Adailton" },
-    { "ID": 2, Data: "01 / 11 / 2022", Hora: "11:25", Nome: "Adailton" },
+    { id: 1, Data: "01 / 11 / 2022", Hora: "11:25", Nome: "Adailton" },
+    { id: 2, Data: "01 / 11 / 2022", Hora: "11:25", Nome: "Adailton" },
 ];
 
 const columns = ["ID", "Data", "Hora", "Nome"];
@@ -67,13 +71,34 @@ export default function SaleTemplate() {
                     </div>
                 </div>
             </Hero>
-            <div className="sale">
-                <TablesCustom
-                    data={data}
-                    columns={columns}
-                    isButton={true}
-                    typeButton={"two"}
-                />
+            <div className="container-table">
+                <div className="container-table__content">
+                    <table className="table">
+                        <Head columns={columns} isButton={true} />
+                        <tbody className="body">
+                            {!!data && data.map((item) => (
+                                <tr key={item.id} className='body__row'>
+                                    <RowItem label={(item.id).toString()} isActive={null} />
+                                    <RowItem label={item.Data} isActive={null} />
+                                    <RowItem label={item.Hora} isActive={null} />
+                                    <RowItem label={item.Nome} isActive={null} />
+                                    <td className={'row buttons'}>
+                                        <div>
+                                            <ButtonsEdit href={`/ordem-servico/editar?id=${item.id}`}>
+                                                <MdOutlineEdit size={24} />
+                                            </ButtonsEdit>
+                                        </div>
+                                        <div>
+                                            <ButtonsDelete href={`/ordem-servico/deletar?id=${item.id}`}>
+                                                <MdDelete size={24} />
+                                            </ButtonsDelete>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </LayoutDefault>
     );

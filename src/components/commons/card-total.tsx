@@ -36,10 +36,12 @@ export default function CardTotal({
     setAdditional }: ICardTotal) {
 
     const handleUpdateValueAmount = () => {
-        if (!!additional || !!discount) return null
-
-        const valueAdditional = additional.replace(/\D/g, '') // Retira qualquer caracter não numerico
-        const valueDiscount = discount.replace(/\D/g, '') // Retira qualquer caracter não numerico
+        let valueAdditional = ""
+        let valueDiscount = ""
+        if (additional || discount) {
+            valueAdditional = additional.replace(/\D/g, '') // Retira qualquer caracter não numerico
+            valueDiscount = discount.replace(/\D/g, '') // Retira qualquer caracter não numerico
+        }
 
         let calc
 
@@ -57,7 +59,6 @@ export default function CardTotal({
     }
 
     useEffect(() => {
-
         if (valueTotal) {
             const value = valueTotal.replace(/\D/g, '') // Retira qualquer caracter não numerico
 
@@ -96,7 +97,7 @@ export default function CardTotal({
                     VALOR TOTAL:
                 </span>
                 <span className="card-total__container__text">
-                    {`${handleFormatNumber(valueTotal)}`}
+                    {`${!!valueTotal ? handleFormatNumber(valueTotal) : ''}`}
                 </span>
             </div>
             <div className="card-total__container">

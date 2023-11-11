@@ -17,7 +17,10 @@ export default function DeleteBrandPage() {
         if (id) {
             axios.get('/api/product?id=' + id)
                 .then(response => {
-                    setNameProduct(response.data.nameProduct)
+                    setNameProduct(response.data.response.name)
+                })
+                .catch((error) => {
+                    console.log(error.response.data)
                 })
         }
     }, [id])
@@ -26,8 +29,14 @@ export default function DeleteBrandPage() {
 
         // delete
         await axios.delete('/api/product?id=' + id)
+            .then(response => {
 
-        goBack()
+                // GoBack()
+                goBack()
+            })
+            .catch((error) => {
+                console.log(error.response.data)
+            })
     }
 
     const goBack = () => {

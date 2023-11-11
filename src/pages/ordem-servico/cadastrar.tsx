@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import ServiceOrderFormTemplate from "./template"
-import { IPayment, IRowsProductTable } from "@/src/interface/datas";
+import { IRowsProductTable, IPayment } from "@/src/interface/datas";
 import axios from "axios";
-import { ICreateServiceOrderReq, ICreateServiceOrderRes, IPrescription, IProductServiceOrder, IVisionProblems } from "@/src/server/entities/service-order";
+import { ICreateServiceOrderReq, ICreateServiceOrderRes, IPrescription, IVisionProblems } from "@/src/server/entities/service-order";
+import { IProductCommon } from "@/src/server/entities/commons";
+import { IPaymentSale } from "@/src/server/entities/sale";
 
 export default function NewServiceOrder() {
     const { push } = useRouter();
@@ -21,7 +23,7 @@ export default function NewServiceOrder() {
     const [coast, setCoast] = useState<string>("")
 
     const [dataProduct, setDataProduct] = useState<IRowsProductTable[]>([])
-    const [serviceOrderProducts, setServiceOrderProducts] = useState<IProductServiceOrder[]>([])
+    const [serviceOrderProducts, setServiceOrderProducts] = useState<IProductCommon[]>([])
 
     const [percentDiscount, setPercentDiscount] = useState<string>("")
     const [discount, setDiscount] = useState<string>("")
@@ -70,6 +72,8 @@ export default function NewServiceOrder() {
     const [datePrescription, setDatePrescription] = useState<string>("")
 
     const [orderServiceClient, setOrderServiceClient] = useState<ICreateServiceOrderRes[]>([])
+
+    const [serviceOrderPayment, setServiceOrderPayment] = useState<IPaymentSale[]>([])
 
     const handleAddPrescription = (): IPrescription => {
         const dataVisionProblem: IVisionProblems[] = [
@@ -135,7 +139,8 @@ export default function NewServiceOrder() {
             discountValue: Number(sanitizeData(discount)),
             additionalValue: Number(sanitizeData(additional)),
             prescription: handleAddPrescription(),
-            products: serviceOrderProducts
+            products: serviceOrderProducts,
+            payments: serviceOrderPayment
         }
 
         // const data: ICreateServiceOrderReq = {
@@ -151,7 +156,7 @@ export default function NewServiceOrder() {
         // }
 
         // create
-        await axios.post('/api/service-order', data)
+        axios.post('/api/service-order', data)
             .then((response) => {
 
                 // GoBack()
@@ -280,6 +285,8 @@ export default function NewServiceOrder() {
 
             orderServiceClient={orderServiceClient}
             setOrderServiceClient={setOrderServiceClient}
+            serviceOrderPayment={serviceOrderPayment}
+            setServiceOrderPayment={setServiceOrderPayment}
         />
     );
 }

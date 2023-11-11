@@ -7,7 +7,7 @@ import { ButtonsPrimary } from "@/src/components/buttons/primary";
 
 export default function DeleteSupplierPage() {
 
-    const [companyName, setCompanyName] = useState<string>("")
+    const [tradingName, setTradingName] = useState<string>("")
 
     const [isOpen, setIsOpen] = useState<boolean>(true)
     const router = useRouter()
@@ -15,19 +15,27 @@ export default function DeleteSupplierPage() {
 
     useEffect(() => {
         if (id) {
-            axios.get('/api/supplier?id=' + id)
+            axios.get('/api/purveyor?id=' + id)
                 .then(response => {
-                    setCompanyName(response.data.companyName)
+                    setTradingName(response.data.response.tradingName)
+                })
+                .catch((error) => {
+                    console.log(error.response.data)
                 })
         }
     }, [id])
 
     const handleDeleteSupplier = async () => {
-
+        console.log("AQUI")
         // delete
-        await axios.delete('/api/supplier?id=' + id)
-
-        goBack()
+        axios.delete('/api/purveyor?id=' + id)
+            .then(response => {
+                // GoBack()
+                if (response.status == 201) goBack()
+            })
+            .catch((error) => {
+                console.log(error.response.data)
+            })
     }
 
     const goBack = () => {
@@ -37,12 +45,12 @@ export default function DeleteSupplierPage() {
     if (isOpen) {
         return (
             <Modal
-                title={`Deseja deletar o fornecedor ${companyName}?`}
-                paragraph={`Atenção! A ação de "Deletar o Fornecedor ${companyName}" é irreversível. Ao confirmar, a marca será removida permanentemente. Certifique-se da ação antes de prosseguir.`}
+                title={`Deseja deletar o fornecedor ${tradingName}?`}
+                paragraph={`Atenção! A ação de "Deletar o Fornecedor ${tradingName}" é irreversível. Ao confirmar, a marca será removida permanentemente. Certifique-se da ação antes de prosseguir.`}
                 isOpenModal={isOpen}
                 setIsOpenModal={setIsOpen}>
                 <ButtonsTertiary onClick={goBack}>Cancelar</ButtonsTertiary>
-                <ButtonsPrimary onClick={handleDeleteSupplier}>Deletar {companyName}</ButtonsPrimary>
+                <ButtonsPrimary onClick={handleDeleteSupplier}>Deletar {tradingName}</ButtonsPrimary>
             </Modal>
         );
     } else {

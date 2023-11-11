@@ -15,7 +15,7 @@ import { formatNumberWhatsapp } from '@/src/hook/format-number-whatsapp';
 import { IClient } from '@/src/server/entities/client';
 
 
-const columns = ["Id", "Nome", "Whatsapp", "E-mail"];
+const columns = ["Id", "Nome", "Whatsapp", "E-mail", "CEP"];
 
 export const ClientTemplate = () => {
     const { push } = useRouter();
@@ -59,7 +59,7 @@ export const ClientTemplate = () => {
             <div className="container-table">
                 <div className="container-table__content">
                     <table className="table">
-                        <Head columns={columns} isButton={true} />
+                        <Head columns={columns} isButton={false} />
                         <tbody className="body">
                             {!!client && client.map((item) => (
                                 <tr key={item.id} className='body__row'>
@@ -67,19 +67,7 @@ export const ClientTemplate = () => {
                                     <RowItem label={`${item.firstName} ${item.lastName}`} isActive={null} />
                                     <RowItem label={formatNumberWhatsapp(`${item.phones[0]}`)} isActive={null} />
                                     <RowItem label={item.emails[0]} isActive={null} />
-                                    <td className={'row buttons'}>
-                                        {/* <div>
-                                            <ButtonsEdit href={`/cliente/editar?id=${item.id}`}>
-                                                <MdOutlineEdit size={24} />
-                                            </ButtonsEdit>
-                                        </div> */}
-                                        <div>
-                                            <ButtonsDelete href={`/cliente/deletar?id=${item.id}`}>
-                                                Excluir
-                                                <MdDelete size={24} />
-                                            </ButtonsDelete>
-                                        </div>
-                                    </td>
+                                    <RowItem label={item.address.genericZipCode} isActive={null} />
                                 </tr>
                             ))}
                         </tbody>

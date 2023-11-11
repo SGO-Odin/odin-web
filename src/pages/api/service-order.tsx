@@ -12,18 +12,8 @@ export default async function handler(
 
 
         if (method === 'POST') {
-            const { number, client, discountValue, additionalValue, prescription, products } = req.body
 
-            const data: ICreateServiceOrderReq = {
-                'client': client,
-                'number': number,
-                'discountValue': discountValue,
-                'additionalValue': additionalValue,
-                'products': products,
-                'prescription': prescription
-            }
-
-            const response = await serviceOrderUseCases.createServiceOrder(data)
+            const response = await serviceOrderUseCases.createServiceOrder(req.body)
             return res.status(201).json({ message: "ok", data: response })
 
         }

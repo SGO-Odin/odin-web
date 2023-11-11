@@ -33,3 +33,8 @@ export interface IPhones {
     number: string,
     isMain: boolean
 }
+
+export interface IProductCommon {
+    productId: number,
+    quantity: number
+}

@@ -34,16 +34,21 @@ const getAllProducts = async (): Promise<IProduct[]> => {
 }
 
 const getById = async (id: number): Promise<IProduct> => {
-    const response = await axios.get(`${process.env.DOMAIN_BACKEND}api/client/${id}`)
+    const response = await axios.get(`${process.env.DOMAIN_BACKEND}api/product/${id}`)
     const client: IProduct = response.data
     return client
 }
 
-const removeById = () => { }
+const inactivateById = async (id: number): Promise<number> => {
+
+    const response = await axios.patch(`${process.env.DOMAIN_BACKEND}api/product/${id}/inactivate`)
+    const status: number = response.status
+    return status
+}
 
 export const productUseCases = {
     createProduct,
     getAllProducts,
     getById,
-    removeById
+    inactivateById
 }

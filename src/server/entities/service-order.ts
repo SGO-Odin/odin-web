@@ -1,4 +1,6 @@
+import { IProductCommon } from "./commons"
 import { IProduct } from "./product"
+import { IPaymentSale } from "./sale"
 
 export interface IServiceOrder {
     id?: number
@@ -6,7 +8,7 @@ export interface IServiceOrder {
     number: number,
     discountValue: number,
     additionalValue: number,
-    products: IProductServiceOrder[],
+    products: IProductCommon[],
     prescription: IPrescription
 }
 
@@ -15,13 +17,10 @@ export interface ICreateServiceOrderReq {
     number: number,
     discountValue: number,
     additionalValue: number,
-    products: IProductServiceOrder[],
-    prescription: IPrescription
-}
-
-export interface IProductServiceOrder {
-    productId: number,
-    quantity: number
+    products: IProductCommon[],
+    prescriptionId?: number,
+    prescription?: IPrescription,
+    payments: IPaymentSale[]
 }
 
 export interface IVisionProblems {

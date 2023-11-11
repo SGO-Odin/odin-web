@@ -69,7 +69,12 @@ export default async function handler(
         }
 
         if (method === 'DELETE') {
-            return res.status(503).json({ message: "Method not allowed." })
+            if (req.query?.id) {
+                const id: number = Number(req.query?.id)
+
+                const response = await purveyorUseCases.inactivateById(id)
+                return res.status(response)
+            }
         }
         return res.status(503).json({ message: "Method not allowed." })
     } catch (e: any) {

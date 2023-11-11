@@ -36,7 +36,6 @@ export default async function handler(
 
                 const response = await brandsUseCases.inactivateById(id)
                 return res.status(response)
-
             }
         }
 

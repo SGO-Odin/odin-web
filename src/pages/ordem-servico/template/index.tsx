@@ -24,9 +24,11 @@ import { v4 as uuid } from "uuid";
 import { handlePercent } from '@/src/hook/percent';
 import { IItemSelect } from '@/src/interface/utils';
 import typeCard from '@/src/data/typeCard.json'
-import { ICreateServiceOrderRes, IPrescription, IProductServiceOrder } from '@/src/server/entities/service-order';
+import { ICreateServiceOrderRes, IPrescription } from '@/src/server/entities/service-order';
 import { IClient } from '@/src/server/entities/client';
 import { IProduct } from '@/src/server/entities/product';
+import { IProductCommon } from '@/src/server/entities/commons';
+import { IPaymentSale } from '@/src/server/entities/sale';
 
 
 interface IRowsProductTable {
@@ -61,8 +63,8 @@ interface IServiceOrderFormTemplate {
 
     dataProduct: IRowsProductTable[]
     setDataProduct: Dispatch<SetStateAction<IRowsProductTable[]>>
-    serviceOrderProducts: IProductServiceOrder[]
-    setServiceOrderProducts: Dispatch<SetStateAction<IProductServiceOrder[]>>
+    serviceOrderProducts: IProductCommon[]
+    setServiceOrderProducts: Dispatch<SetStateAction<IProductCommon[]>>
 
     percentDiscount: string
     setPercentDiscount: Dispatch<SetStateAction<string>>
@@ -147,6 +149,9 @@ interface IServiceOrderFormTemplate {
 
     orderServiceClient: ICreateServiceOrderRes[]
     setOrderServiceClient: Dispatch<SetStateAction<ICreateServiceOrderRes[]>>
+
+    serviceOrderPayment: IPaymentSale[]
+    setServiceOrderPayment: Dispatch<SetStateAction<IPaymentSale[]>>
 
     handleServiceOrder: (event: React.FormEvent<HTMLFormElement>) => Promise<void>
     goBack: () => void
@@ -263,6 +268,9 @@ export default function ServiceOrderFormTemplate({
 
     orderServiceClient,
     setOrderServiceClient,
+
+    serviceOrderPayment,
+    setServiceOrderPayment,
 
     handleServiceOrder,
     goBack,
@@ -397,6 +405,7 @@ export default function ServiceOrderFormTemplate({
                     totalData.push(data)
                 }
                 setPayment([...payment, ...totalData])
+                setServiceOrderPayment([...serviceOrderPayment, { type: typePayment, amount: Number(paymont), quantityInstallments: parcelNumber }])
 
             } else {
                 const data: IPayment = {
@@ -407,6 +416,7 @@ export default function ServiceOrderFormTemplate({
                     installments: '1'
                 }
                 setPayment([...payment, data])
+                setServiceOrderPayment([...serviceOrderPayment, { type: typePayment, amount: Number(paymont), quantityInstallments: parcelNumber }])
             }
 
             handleTypeCard(null)

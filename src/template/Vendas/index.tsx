@@ -4,13 +4,14 @@ import LayoutDefault from "@/src/components/layoutDefault";
 import { TablesCustom } from "@/src/components/tablesCustom";
 import { TextField } from "@/src/components/textField";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdAttachMoney, MdDelete, MdOutlineEdit, MdSearch } from "react-icons/md";
 import './sale.scss'
 import Head from "@/src/components/table/head";
 import RowItem from "@/src/components/table/body/rowItem";
 import { ButtonsEdit } from "@/src/components/buttons/edit";
 import { ButtonsDelete } from "@/src/components/buttons/delete";
+import axios from "axios";
 
 const data = [
     { id: 1, Data: "01 / 11 / 2022", Hora: "11:25", Nome: "Adailton" },
@@ -24,6 +25,17 @@ export default function SaleTemplate() {
 
     const [numberSale, setNumberSale] = useState<string>("")
     const [name, setName] = useState<string>("")
+
+    useEffect(() => {
+        axios.get('/api/sale')
+            .then(response => {
+
+                console.log(response.data.response)
+            })
+            .catch((error) => {
+                console.log(error.response.data)
+            })
+    }, [])
 
     const handlePushNewSale = () => {
         push("/vendas/cadastrar");

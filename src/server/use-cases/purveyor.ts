@@ -30,11 +30,16 @@ const getById = async (id: number): Promise<IPurveyor> => {
     return purveyor
 }
 
-const removeById = () => { }
+const inactivateById = async (id: number): Promise<number> => {
+
+    const response = await axios.patch(`${process.env.DOMAIN_BACKEND}api/purveyor/${id}/inactivate`)
+    const status: number = response.status
+    return status
+}
 
 export const purveyorUseCases = {
     createPurveyor,
     getAllPurveyors,
     getById,
-    removeById
+    inactivateById
 }

@@ -19,7 +19,11 @@ export default function LoginTemplate() {
   const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data: ISignInData = { login, password };
+    console.log("FRONT DATA")
+    console.log(data)
+
     await singIn(data);
+
     setLogin("");
     setPassword("");
   };
@@ -49,21 +53,13 @@ export default function LoginTemplate() {
               onChange={(ev) => setPassword(ev.target.value)}
               required={true}
             />
-            <Link href={"/"}>Esqueci minha senha</Link>
+            {/* <Link href={"/"}>Esqueci minha senha</Link> */}
           </div>
         </div>
         <ButtonsPrimary>
           <MdLogin size={24} />
           Entrar
         </ButtonsPrimary>
-        <div className="form__footer">
-          <span className="form__footer__content">
-            Ainda não tem uma conta? <br />
-            <Link href={"/cadastrar"}>
-              <strong>Crie uma conta agora</strong>
-            </Link>
-          </span>
-        </div>
       </form>
     </LayoutAuthenticated>
   );

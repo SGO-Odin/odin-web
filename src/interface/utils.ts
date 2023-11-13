@@ -74,9 +74,9 @@ export interface ISignInData {
 }
 
 export interface IUser {
-  name: string
-  sobrenome: string
-  email: string
+  name?: string
+  sobrenome?: string
+  email?: string
   photo: string
 }
 

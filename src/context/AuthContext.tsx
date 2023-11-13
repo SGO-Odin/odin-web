@@ -3,6 +3,8 @@ import { IUser, ISignInData } from "../interface/utils";
 import { recoverUserInformation, signInRequest } from "../service/auth";
 import { parseCookies, setCookie } from "nookies";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import qs from 'querystring'
 
 interface IAUthContextType {
   isAuthenticated: boolean
@@ -31,18 +33,56 @@ export default function AuthProvider({
     }
   }, [])
 
-  async function singIn({ login, password } : ISignInData) {
-    const { token, user } = await signInRequest({
-      login, password
-    })
+  async function singIn({ login, password }: ISignInData) {
+    const data = {
+      "userName": login,
+      "password": password
+    }
 
-    setCookie(undefined, 'odinauth.token', token, {
-      maxAge: 60 * 60 * 1 // 1 hour
-    })
+    console.log("DADOS:")
+    console.log(data)
 
-    setUser(user)
-    push("/")
+    const options = {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      data: qs.stringify(data),
+      url: `http://localhost:8080/authenticate`
+    };
+
+
+    console.log(`URL: http://localhost:8080/authenticate`)
+    axios(options)
+      .then((response) => {
+        console.log("DATA: ")
+        console.log(response)
+
+        if (response.status) {
+          const token = response.data
+
+          setCookie(undefined, 'odinauth.token', token, {
+            maxAge: 60 * 60 * 1 // 1 hour
+          })
+
+          if (token) {
+            const dataUser: IUser = {
+              email: login,
+              photo: `../images/${(login.charAt(0)).toLowerCase()}.jog`
+            }
+            setUser(dataUser)
+            push("/")
+          }
+          push("/login")
+
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
+
+  // const { token, user } = await signInRequest({
+  //   login, password
+  // })
 
   return (
     <AuthContext.Provider value={{ user, isAuthenticated, singIn }}>

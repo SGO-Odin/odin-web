@@ -1,5 +1,13 @@
+import Head from "next/head";
 import LoginTemplate from "../template/Login";
 
 export default function Login() {
-  return <LoginTemplate />;
+  return (
+    <>
+      <Head>
+        <title>Login | ODIN</title>
+      </Head>
+      <LoginTemplate />
+    </>
+  );
 }

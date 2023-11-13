@@ -3,6 +3,7 @@ import { parseCookies } from "nookies";
 import { PurveyorTemplete } from "../template/Fornecedor";
 import { purveyorUseCases } from "../server/use-cases/purveyor";
 import { IPurveyor } from "../server/entities/purveyor";
+import Head from "next/head";
 
 interface IPurveyors {
   purveyor: IPurveyor[]
@@ -10,7 +11,14 @@ interface IPurveyors {
 
 export default function Purveyor(purveyor: IPurveyors) {
 
-  return <PurveyorTemplete {...purveyor} />;
+  return (
+    <>
+      <Head>
+        <title>Fornecedor | ODIN</title>
+      </Head>
+      <PurveyorTemplete {...purveyor} />
+    </>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

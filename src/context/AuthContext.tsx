@@ -46,11 +46,11 @@ export default function AuthProvider({
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       data: qs.stringify(data),
-      url: `http://localhost:8080/authenticate`
+      url: `http://127.0.0.1:8080/api/authenticate`
     };
 
 
-    console.log(`URL: http://localhost:8080/authenticate`)
+    console.log(`URL: http://127.0.0.1:8080/api/authenticate`)
     axios(options)
       .then((response) => {
         console.log("DATA: ")

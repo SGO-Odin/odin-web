@@ -41,10 +41,10 @@ export const Menu = ({ isOpenMenuPrimary, setIsOpenMenuPrimary }: IMenu) => {
   }
 
   const subMenu = [
-    {
-      name: "Configuração",
-      route: "/configuracao",
-    },
+    // {
+    //   name: "Configuração",
+    //   route: "/configuracao",
+    // },
     {
       name: "Sair",
       route: "/sair",
@@ -92,7 +92,7 @@ export const Menu = ({ isOpenMenuPrimary, setIsOpenMenuPrimary }: IMenu) => {
         )}
         {isOpenMenu && <hr className="line" />}
         <div className={`avatar ${isOpenMenu ? 'open' : ''}`}>
-          <MdNotifications size={24} className="avatar__icon" />
+          {/* <MdNotifications size={24} className="avatar__icon" /> */}
           <div className="avatar__user">
             {!!user && (
               <Image

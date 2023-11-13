@@ -1,9 +1,17 @@
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 import { ClientTemplate } from "../template/Cliente";
+import Head from "next/head";
 
 export default function Clients() {
-  return <ClientTemplate />;
+  return (
+    <>
+      <Head>
+        <title>Cliente | ODIN</title>
+      </Head>
+      <ClientTemplate />
+    </>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

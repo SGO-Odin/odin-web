@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import BrandsFormTemplate from "./template";
+import Head from "next/head";
 
 export default function AddBrands() {
   const { push } = useRouter();
@@ -27,13 +28,18 @@ export default function AddBrands() {
   }
 
   return (
-    <BrandsFormTemplate
-      handleBrands={handleNewbrands}
-      name={name}
-      setName={setName}
-      goBack={goBack}
-      title="Cadastrar Grife"
-      paragraph="Esta página de foi criada para facilitar o acesso às informações sobre grifes disponíveis. Encontre rapidamente o que você precisa aqui." />
+    <>
+      <Head>
+        <title>Cadastrar Grifes | ODIN</title>
+      </Head>
+      <BrandsFormTemplate
+        handleBrands={handleNewbrands}
+        name={name}
+        setName={setName}
+        goBack={goBack}
+        title="Cadastrar Grife"
+        paragraph="Esta página de foi criada para facilitar o acesso às informações sobre grifes disponíveis. Encontre rapidamente o que você precisa aqui." />
+    </>
   );
 }
 

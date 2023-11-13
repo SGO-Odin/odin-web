@@ -1,9 +1,17 @@
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 import SaleTemplate from "../template/Vendas";
+import Head from "next/head";
 
 export default function Sales() {
-  return <SaleTemplate />;
+  return (
+    <>
+      <Head>
+        <title>Vendas | ODIN</title>
+      </Head>
+      <SaleTemplate />
+    </>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

@@ -4,6 +4,7 @@ import { parseCookies } from 'nookies';
 import { useState } from "react";
 import ProductFormTemplate from "./template";
 import axios from "axios";
+import Head from "next/head";
 
 export default function NewProduct() {
     const { push } = useRouter();
@@ -42,41 +43,46 @@ export default function NewProduct() {
         push('/produtos')
     }
     return (
-        <ProductFormTemplate
-            cost={cost}
-            setCost={setCost}
-            percentProfit={percentProfit}
-            setPercentProfit={setPercentProfit}
-            profit={profit}
-            setProfit={setProfit}
-            selling={selling}
-            setSelling={setSelling}
-            stockMin={stockMin}
-            setStockMin={setStockMin}
-            stockCurrent={stockCurrent}
-            setStockCurrent={setStockCurrent}
-            location={location}
-            setLocation={setLocation}
-            reference={reference}
-            setReference={setReference}
-            nameProduct={nameProduct}
-            setNameProduct={setNameProduct}
-            unit={unit}
-            setUnit={setUnit}
-            brands={brands}
-            setBrands={setBrands}
-            purveyor={purveyor}
-            setPurveyor={setPurveyor}
-            isActive={isActive}
-            setIsActive={setIsActive}
-            isStockControl={isStockControl}
-            setIsStockControl={setIsStockControl}
-            isService={isService}
-            setIsService={setIsService}
-            handleProduct={handleNewProduct}
-            goBack={goBack}
-            title="Cadastrar Produto"
-            paragraph={`A página de cadastro de produtos permite adicionar novos produtos ao estoque da ótica. Insira detalhes, como nome, preço e descrição, para atualizar nosso catálogo.`} />
+        <>
+            <Head>
+                <title>Cadastrar Produtos | ODIN</title>
+            </Head>
+            <ProductFormTemplate
+                cost={cost}
+                setCost={setCost}
+                percentProfit={percentProfit}
+                setPercentProfit={setPercentProfit}
+                profit={profit}
+                setProfit={setProfit}
+                selling={selling}
+                setSelling={setSelling}
+                stockMin={stockMin}
+                setStockMin={setStockMin}
+                stockCurrent={stockCurrent}
+                setStockCurrent={setStockCurrent}
+                location={location}
+                setLocation={setLocation}
+                reference={reference}
+                setReference={setReference}
+                nameProduct={nameProduct}
+                setNameProduct={setNameProduct}
+                unit={unit}
+                setUnit={setUnit}
+                brands={brands}
+                setBrands={setBrands}
+                purveyor={purveyor}
+                setPurveyor={setPurveyor}
+                isActive={isActive}
+                setIsActive={setIsActive}
+                isStockControl={isStockControl}
+                setIsStockControl={setIsStockControl}
+                isService={isService}
+                setIsService={setIsService}
+                handleProduct={handleNewProduct}
+                goBack={goBack}
+                title="Cadastrar Produto"
+                paragraph={`A página de cadastro de produtos permite adicionar novos produtos ao estoque da ótica. Insira detalhes, como nome, preço e descrição, para atualizar nosso catálogo.`} />
+        </>
     );
 }
 

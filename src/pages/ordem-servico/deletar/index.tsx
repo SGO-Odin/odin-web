@@ -5,6 +5,7 @@ import { Modal } from "@/src/components/modal";
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { ButtonsPrimary } from "@/src/components/buttons/primary";
 import { IClient, IOrderService } from "@/src/interface/datas";
+import Head from "next/head";
 
 export default function DeleteBrandPage() {
 
@@ -42,14 +43,19 @@ export default function DeleteBrandPage() {
 
     if (isOpen) {
         return (
-            <Modal
-                title={`Deseja realmente deletar essa O.S?`}
-                paragraph={`Atenção! A ação de "Deletar a O.S ${numberOS} de ${name}" é irreversível. Ao confirmar, a marca será removida permanentemente. Certifique-se da ação antes de prosseguir.`}
-                isOpenModal={isOpen}
-                setIsOpenModal={setIsOpen}>
-                <ButtonsTertiary onClick={goBack}>Cancelar</ButtonsTertiary>
-                <ButtonsPrimary onClick={handleDeleteBrand}>Deletar {brands}</ButtonsPrimary>
-            </Modal>
+            <>
+                <Head>
+                    <title>Deletar ordem de Serviço | ODIN</title>
+                </Head>
+                <Modal
+                    title={`Deseja realmente deletar essa O.S?`}
+                    paragraph={`Atenção! A ação de "Deletar a O.S ${numberOS} de ${name}" é irreversível. Ao confirmar, a marca será removida permanentemente. Certifique-se da ação antes de prosseguir.`}
+                    isOpenModal={isOpen}
+                    setIsOpenModal={setIsOpen}>
+                    <ButtonsTertiary onClick={goBack}>Cancelar</ButtonsTertiary>
+                    <ButtonsPrimary onClick={handleDeleteBrand}>Deletar {brands}</ButtonsPrimary>
+                </Modal>
+            </>
         );
     } else {
         goBack()

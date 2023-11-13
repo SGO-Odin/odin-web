@@ -45,7 +45,7 @@ export default function AuthProvider({
     const options = {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      data: qs.stringify(data),
+      data: data,
       url: `http://127.0.0.1:8080/api/authenticate`
     };
 

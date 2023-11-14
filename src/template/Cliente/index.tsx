@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { formatNumberWhatsapp } from '@/src/hook/format-number-whatsapp';
 import { IClient } from '@/src/server/entities/client';
+import { parseCookies } from 'nookies';
 
 
 const columns = ["Id", "Nome", "Whatsapp", "E-mail", "CEP"];
@@ -21,8 +22,11 @@ export const ClientTemplate = () => {
     const { push } = useRouter();
     const [client, setClient] = useState<IClient[]>([])
 
+    const { 'odinauth.token': token } = parseCookies()
+    const _header = { headers: { "Authorization": `Bearer ${token}` } }
+
     useEffect(() => {
-        axios.get('/api/client')
+        axios.get('/api/client', _header)
             .then(response => {
                 setClient(response.data.response)
             })

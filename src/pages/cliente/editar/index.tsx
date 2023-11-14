@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ClientFormTemplate from "../template";
 import { sanitalizePhones } from "@/src/hook/sanitalize-phones";
+import { parseCookies } from 'nookies';
 
 export default function EditClientPage() {
 
@@ -32,9 +33,12 @@ export default function EditClientPage() {
     const router = useRouter()
     const { id } = router.query
 
+    const { 'odinauth.token': token } = parseCookies()
+    const _header = { headers: { "Authorization": `Bearer ${token}` } }
+
     useEffect(() => {
         if (id) {
-            axios.get('/api/client?id=' + id)
+            axios.get('/api/client?id=' + id, _header)
                 .then(response => {
                     console.log(response.data.response.address)
                     setFirstName(response.data.response.firstName)
@@ -70,7 +74,7 @@ export default function EditClientPage() {
         const data = { firstName, lastName, cpf, rg, email, sanitalizePhone, ddd, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city }
 
         // update
-        await axios.put('/api/client', { ...data, id })
+        await axios.put('/api/client', { ...data, id }, _header)
 
         goBack()
     }

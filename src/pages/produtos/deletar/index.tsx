@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Modal } from "@/src/components/modal";
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { ButtonsPrimary } from "@/src/components/buttons/primary";
+import Head from "next/head";
 
 export default function DeleteBrandPage() {
 
@@ -45,14 +46,19 @@ export default function DeleteBrandPage() {
 
     if (isOpen) {
         return (
-            <Modal
-                title={`Deseja deletar o produto ${nameProduct}?`}
-                paragraph={`Atenção! A ação de "Deletar o Produto ${nameProduct}" é irreversível. Ao confirmar, a marca será removida permanentemente. Certifique-se da ação antes de prosseguir.`}
-                isOpenModal={isOpen}
-                setIsOpenModal={setIsOpen}>
-                <ButtonsTertiary onClick={goBack}>Cancelar</ButtonsTertiary>
-                <ButtonsPrimary onClick={handleDeleteBrand}>Deletar {nameProduct}</ButtonsPrimary>
-            </Modal>
+            <>
+                <Head>
+                    <title>Deletar Produtos | ODIN</title>
+                </Head>
+                <Modal
+                    title={`Deseja deletar o produto ${nameProduct}?`}
+                    paragraph={`Atenção! A ação de "Deletar o Produto ${nameProduct}" é irreversível. Ao confirmar, a marca será removida permanentemente. Certifique-se da ação antes de prosseguir.`}
+                    isOpenModal={isOpen}
+                    setIsOpenModal={setIsOpen}>
+                    <ButtonsTertiary onClick={goBack}>Cancelar</ButtonsTertiary>
+                    <ButtonsPrimary onClick={handleDeleteBrand}>Deletar {nameProduct}</ButtonsPrimary>
+                </Modal>
+            </>
         );
     } else {
         goBack()

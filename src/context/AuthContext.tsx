@@ -76,7 +76,7 @@ export default function AuthProvider({
         }
       })
       .catch((error) => {
-        console.log(error)
+        return error
       })
   }
 

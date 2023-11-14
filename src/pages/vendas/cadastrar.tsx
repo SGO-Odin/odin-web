@@ -25,6 +25,7 @@ import { v4 as uuid } from "uuid";
 import { handlePercent } from '@/src/hook/percent';
 import { IProductCommon } from '@/src/server/entities/commons';
 import { ICreateSaleReq, IPayments } from '@/src/server/entities/sale';
+import Head from 'next/head';
 
 const columns = ["Ref", "Unidade", "Produto / Serviço", "Quantidade", "Val. Unit.", "Val. Total"];
 
@@ -420,82 +421,86 @@ export default function NewSale() {
     }, [payment, valueAmount])
 
     return (
-        <LayoutDefault>
+        <>
+            <Head>
+                <title>Cadastrar Vendas | ODIN</title>
+            </Head>
+            <LayoutDefault>
 
-            <div className="sale-template">
-                <form onSubmit={handleNewServiceOrder} className="sale-template__form">
-                    <Hero
-                        isButtonPrymary={false}
-                        title="Cadastrar Venda"
-                        paragraph={`Registre novas transações de forma rápida e precisa, mantendo o controle das operações comerciais.`}>
-                    </Hero>
-                    <div className="sale-template__form__content">
-                        <HeroSecundary title="Dados Principais" />
-                        <div className="sale-template__form__content__inputs">
-                            <div className="input">
-                                <Select
-                                    item={client}
-                                    setItem={setClient}
-                                    placeholder='Selecione um cliente...'
-                                    label="CLIENTE:"
-                                    options={optionsClient} />
-                            </div>
-                            <div className="input">
-                                <TextField
-                                    name="dateRegister"
-                                    value={dateRegister}
-                                    type="date"
-                                    onChange={(ev) => setDateRegister(ev.target.value)}
-                                    label="DATA DE REGISTRO:"
-                                    id="dateRegister"
-                                />
-                            </div>
-                            <div className="input">
-                                <TextField
-                                    name="hourRegister"
-                                    type="time"
-                                    value={hourRegister}
-                                    onChange={(ev) => setHourRegister(ev.target.value)}
-                                    label="HORA DE REGISTRO:"
-                                    id="hourRegister"
-                                />
-                            </div>
-                            <div className="input">
-                                <Select
-                                    item={selectedServiceOrder}
-                                    setItem={setSelectedServiceOrder}
-                                    placeholder='Pesquisar Ordem de Serviçoa'
-                                    label="IMPORTAR O.S."
-                                    options={optionsServiceOrders} />
+                <div className="sale-template">
+                    <form onSubmit={handleNewServiceOrder} className="sale-template__form">
+                        <Hero
+                            isButtonPrymary={false}
+                            title="Cadastrar Venda"
+                            paragraph={`Registre novas transações de forma rápida e precisa, mantendo o controle das operações comerciais.`}>
+                        </Hero>
+                        <div className="sale-template__form__content">
+                            <HeroSecundary title="Dados Principais" />
+                            <div className="sale-template__form__content__inputs">
+                                <div className="input">
+                                    <Select
+                                        item={client}
+                                        setItem={setClient}
+                                        placeholder='Selecione um cliente...'
+                                        label="CLIENTE:"
+                                        options={optionsClient} />
+                                </div>
+                                <div className="input">
+                                    <TextField
+                                        name="dateRegister"
+                                        value={dateRegister}
+                                        type="date"
+                                        onChange={(ev) => setDateRegister(ev.target.value)}
+                                        label="DATA DE REGISTRO:"
+                                        id="dateRegister"
+                                    />
+                                </div>
+                                <div className="input">
+                                    <TextField
+                                        name="hourRegister"
+                                        type="time"
+                                        value={hourRegister}
+                                        onChange={(ev) => setHourRegister(ev.target.value)}
+                                        label="HORA DE REGISTRO:"
+                                        id="hourRegister"
+                                    />
+                                </div>
+                                <div className="input">
+                                    <Select
+                                        item={selectedServiceOrder}
+                                        setItem={setSelectedServiceOrder}
+                                        placeholder='Pesquisar Ordem de Serviçoa'
+                                        label="IMPORTAR O.S."
+                                        options={optionsServiceOrders} />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <ProductServiceCard
-                        idProduct={idProduct}
-                        setIdProduct={setIdProduct}
-                        optionsProduct={optionsProduct}
-                        quantity={quantity}
-                        setQuantity={setQuantity}
-                        coast={coast}
-                        setCoast={setCoast}
-                        handleDataProduct={handleDataProduct}
-                        dataProduct={dataProduct}
-                        handleDeleteRowProduct={handleDeleteRowProduct}
+                        <ProductServiceCard
+                            idProduct={idProduct}
+                            setIdProduct={setIdProduct}
+                            optionsProduct={optionsProduct}
+                            quantity={quantity}
+                            setQuantity={setQuantity}
+                            coast={coast}
+                            setCoast={setCoast}
+                            handleDataProduct={handleDataProduct}
+                            dataProduct={dataProduct}
+                            handleDeleteRowProduct={handleDeleteRowProduct}
 
-                        valueTotal={valueTotal}
-                        setValueTotal={setValueTotal}
-                        valueAmount={valueAmount}
-                        setValueAmount={setValueAmount}
-                        percentDiscount={percentDiscount}
-                        setPercentDiscount={setPercentDiscount}
-                        discount={discount}
-                        setDiscount={setDiscount}
-                        percentAdditional={percentAdditional}
-                        setPercentAdditional={setPercentAdditional}
-                        additional={additional}
-                        setAdditional={setAdditional}
-                    />
-                    {/* <div className="sale-template__form__content">
+                            valueTotal={valueTotal}
+                            setValueTotal={setValueTotal}
+                            valueAmount={valueAmount}
+                            setValueAmount={setValueAmount}
+                            percentDiscount={percentDiscount}
+                            setPercentDiscount={setPercentDiscount}
+                            discount={discount}
+                            setDiscount={setDiscount}
+                            percentAdditional={percentAdditional}
+                            setPercentAdditional={setPercentAdditional}
+                            additional={additional}
+                            setAdditional={setAdditional}
+                        />
+                        {/* <div className="sale-template__form__content">
                         <HeroSecundary title="Produtos e Serviços" />
                         <div className="sale-template__form__content__inputs">
                             <div className="input">
@@ -552,7 +557,7 @@ export default function NewSale() {
                             setAdditional={setAdditional}
                             setDiscount={setDiscount} />
                     </div> */}
-                    {/* <div className="sale-template__form__content">
+                        {/* <div className="sale-template__form__content">
                         <HeroSecundary title="Forma de pagamento" />
                         <div className="sale-template__form__content__inputs">
                             <div className="input">
@@ -606,42 +611,43 @@ export default function NewSale() {
                         </div>
                         <HeroSecundary title="" />
                     </div> */}
-                    <MethodPaymentCard
-                        currentTypeCard={currentTypeCard}
-                        handleTypeCard={handleTypeCard}
-                        optionsTypeCard={optionsTypeCard}
-                        paymentDown={paymentDown}
-                        setPaymentDown={setPaymentDown}
-                        dateRelease={dateRelease}
-                        setDateRelease={setDateRelease}
-                        parcelNumber={parcelNumber}
-                        setParcelNumber={setParcelNumber}
-                        type={type}
-                        handleDataPayment={handleDataPayment}
-                        isInforPayment={isInforPayment}
-                        totalPaid={totalPaid}
-                        percentTotalPaid={percentTotalPaid}
-                        remainingAmount={remainingAmount}
-                        percentRemainingAmount={percentRemainingAmount}
-                        payment={payment}
-                    />
-                    <div className="sale-template__form__buttons">
-                        <div>
-                            <ButtonsTertiary onClick={() => goBack()}>
-                                <MdCancel size={24} />
-                                Cancelar
-                            </ButtonsTertiary>
+                        <MethodPaymentCard
+                            currentTypeCard={currentTypeCard}
+                            handleTypeCard={handleTypeCard}
+                            optionsTypeCard={optionsTypeCard}
+                            paymentDown={paymentDown}
+                            setPaymentDown={setPaymentDown}
+                            dateRelease={dateRelease}
+                            setDateRelease={setDateRelease}
+                            parcelNumber={parcelNumber}
+                            setParcelNumber={setParcelNumber}
+                            type={type}
+                            handleDataPayment={handleDataPayment}
+                            isInforPayment={isInforPayment}
+                            totalPaid={totalPaid}
+                            percentTotalPaid={percentTotalPaid}
+                            remainingAmount={remainingAmount}
+                            percentRemainingAmount={percentRemainingAmount}
+                            payment={payment}
+                        />
+                        <div className="sale-template__form__buttons">
+                            <div>
+                                <ButtonsTertiary onClick={() => goBack()}>
+                                    <MdCancel size={24} />
+                                    Cancelar
+                                </ButtonsTertiary>
+                            </div>
+                            <div>
+                                <ButtonsPrimary>
+                                    <MdAttachMoney size={24} />
+                                    Cadastrar Venda
+                                </ButtonsPrimary>
+                            </div>
                         </div>
-                        <div>
-                            <ButtonsPrimary>
-                                <MdAttachMoney size={24} />
-                                Cadastrar Venda
-                            </ButtonsPrimary>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </LayoutDefault>
+                    </form>
+                </div>
+            </LayoutDefault>
+        </>
     );
 }
 

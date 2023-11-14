@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ProductFormTemplate from "../template";
+import Head from "next/head";
 
 export default function EditProductPage() {
 
@@ -65,40 +66,45 @@ export default function EditProductPage() {
     }
 
     return (
-        <ProductFormTemplate
-            cost={cost}
-            setCost={setCost}
-            percentProfit={percentProfit}
-            setPercentProfit={setPercentProfit}
-            profit={profit}
-            setProfit={setProfit}
-            selling={selling}
-            setSelling={setSelling}
-            stockMin={stockMin}
-            setStockMin={setStockMin}
-            stockCurrent={stockCurrent}
-            setStockCurrent={setStockCurrent}
-            location={location}
-            setLocation={setLocation}
-            reference={reference}
-            setReference={setReference}
-            nameProduct={nameProduct}
-            setNameProduct={setNameProduct}
-            unit={unit}
-            setUnit={setUnit}
-            brands={brands}
-            setBrands={setBrands}
-            supplier={supplier}
-            setSupplier={setSupplier}
-            isActive={isActive}
-            setIsActive={setIsActive}
-            isStockControl={isStockControl}
-            setIsStockControl={setIsStockControl}
-            isService={isService}
-            setIsService={setIsService}
-            handleProduct={handleUpdateProduct}
-            goBack={goBack}
-            title={`Editar o Produto ${nameProduct}`}
-            paragraph={`A página de cadastro de produtos permite adicionar novos produtos ao estoque da ótica. Insira detalhes, como nome, preço e descrição, para atualizar nosso catálogo.`} />
+        <>
+            <Head>
+                <title>Editar Produtos | ODIN</title>
+            </Head>
+            <ProductFormTemplate
+                cost={cost}
+                setCost={setCost}
+                percentProfit={percentProfit}
+                setPercentProfit={setPercentProfit}
+                profit={profit}
+                setProfit={setProfit}
+                selling={selling}
+                setSelling={setSelling}
+                stockMin={stockMin}
+                setStockMin={setStockMin}
+                stockCurrent={stockCurrent}
+                setStockCurrent={setStockCurrent}
+                location={location}
+                setLocation={setLocation}
+                reference={reference}
+                setReference={setReference}
+                nameProduct={nameProduct}
+                setNameProduct={setNameProduct}
+                unit={unit}
+                setUnit={setUnit}
+                brands={brands}
+                setBrands={setBrands}
+                supplier={supplier}
+                setSupplier={setSupplier}
+                isActive={isActive}
+                setIsActive={setIsActive}
+                isStockControl={isStockControl}
+                setIsStockControl={setIsStockControl}
+                isService={isService}
+                setIsService={setIsService}
+                handleProduct={handleUpdateProduct}
+                goBack={goBack}
+                title={`Editar o Produto ${nameProduct}`}
+                paragraph={`A página de cadastro de produtos permite adicionar novos produtos ao estoque da ótica. Insira detalhes, como nome, preço e descrição, para atualizar nosso catálogo.`} />
+        </>
     )
 }

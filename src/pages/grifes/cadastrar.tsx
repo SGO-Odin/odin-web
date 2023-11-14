@@ -4,6 +4,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import BrandsFormTemplate from "./template";
+import Head from "next/head";
+import axiosFrontend from "http"
 
 export default function AddBrands() {
   const { push } = useRouter();
@@ -13,13 +15,17 @@ export default function AddBrands() {
     event.preventDefault();
 
     const data = { name }
-    // create
-    axios.post('/api/brands', data).then(res => {
-      // reset
-      setName('')
+    const { 'odinauth.token': token } = parseCookies()
 
-      if (res.status == 201) goBack()
-    })
+    // create
+    axios.post('/api/brands', data, { headers: { "Authorization": `Bearer ${token}` } })
+      .then(res => {
+        // reset
+        setName('')
+
+        if (res.status == 201) goBack()
+      })
+      .catch((error) => console.log(error))
   }
 
   const goBack = () => {
@@ -27,13 +33,18 @@ export default function AddBrands() {
   }
 
   return (
-    <BrandsFormTemplate
-      handleBrands={handleNewbrands}
-      name={name}
-      setName={setName}
-      goBack={goBack}
-      title="Cadastrar Grife"
-      paragraph="Esta página de foi criada para facilitar o acesso às informações sobre grifes disponíveis. Encontre rapidamente o que você precisa aqui." />
+    <>
+      <Head>
+        <title>Cadastrar Grifes | ODIN</title>
+      </Head>
+      <BrandsFormTemplate
+        handleBrands={handleNewbrands}
+        name={name}
+        setName={setName}
+        goBack={goBack}
+        title="Cadastrar Grife"
+        paragraph="Esta página de foi criada para facilitar o acesso às informações sobre grifes disponíveis. Encontre rapidamente o que você precisa aqui." />
+    </>
   );
 }
 

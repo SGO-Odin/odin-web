@@ -14,6 +14,8 @@ import { ButtonsDelete } from "@/src/components/buttons/delete"
 import { IBrands } from "@/src/server/entities/brand"
 import { Toggle } from "@/src/components/toggle"
 import { ButtonsEdit } from "@/src/components/buttons/edit"
+import axiosFrontend from "http"
+import { parseCookies } from "nookies"
 
 const columns = ["Nome", "Ativo"]
 
@@ -22,8 +24,16 @@ export function BrandsTemplate() {
 
   const [brands, setBrands] = useState<IBrands[]>([])
 
+  const datateste = async () => {
+
+    // console.log(response)
+  }
+
   useEffect(() => {
-    axios.get('/api/brands')
+    datateste()
+    const { 'odinauth.token': token } = parseCookies()
+
+    axios.get('/api/brands', { headers: { "Authorization": `Bearer ${token}` } })
       .then(response => {
         if (response.status == 200) {
           setBrands(response.data.response)

@@ -1,9 +1,17 @@
 import { GetServerSideProps } from "next";
 import { DashboardTemplate } from "../template/Dashboard";
 import { parseCookies } from "nookies";
+import Head from "next/head";
 
 export default function Dashboard() {
-  return <DashboardTemplate />;
+  return (
+    <>
+      <Head>
+        <title>Home | ODIN</title>
+      </Head>
+      <DashboardTemplate />
+    </>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

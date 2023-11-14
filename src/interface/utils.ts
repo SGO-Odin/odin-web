@@ -74,10 +74,10 @@ export interface ISignInData {
 }
 
 export interface IUser {
-  name: string
-  sobrenome: string
-  email: string
-  photo: string
+  name?: string
+  sobrenome?: string
+  email?: string
+  photo?: string
 }
 
 export interface ITable {

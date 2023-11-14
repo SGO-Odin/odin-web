@@ -13,10 +13,7 @@ import { ButtonsEdit } from "@/src/components/buttons/edit";
 import { ButtonsDelete } from "@/src/components/buttons/delete";
 import axios from "axios";
 
-const data = [
-    { id: 1, Data: "01 / 11 / 2022", Hora: "11:25", Nome: "Adailton" },
-    { id: 2, Data: "01 / 11 / 2022", Hora: "11:25", Nome: "Adailton" },
-];
+const data = [];
 
 const columns = ["ID", "Data", "Hora", "Nome"];
 
@@ -94,18 +91,6 @@ export default function SaleTemplate() {
                                     <RowItem label={item.Data} isActive={null} />
                                     <RowItem label={item.Hora} isActive={null} />
                                     <RowItem label={item.Nome} isActive={null} />
-                                    <td className={'row buttons'}>
-                                        <div>
-                                            <ButtonsEdit href={`/ordem-servico/editar?id=${item.id}`}>
-                                                <MdOutlineEdit size={24} />
-                                            </ButtonsEdit>
-                                        </div>
-                                        <div>
-                                            <ButtonsDelete href={`/ordem-servico/deletar?id=${item.id}`}>
-                                                <MdDelete size={24} />
-                                            </ButtonsDelete>
-                                        </div>
-                                    </td>
                                 </tr>
                             ))}
                         </tbody>

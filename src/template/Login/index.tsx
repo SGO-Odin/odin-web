@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./login.scss";
 import { LayoutAuthenticated } from "@/src/components/layoutAuthenticated";
 import { TextField } from "@/src/components/textField";
@@ -14,15 +14,32 @@ import { HeaderForm } from "@/src/components/form/hearder";
 export default function LoginTemplate() {
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [messageErrorUsuario, setMessageErrorUsuario] = useState<string>("");
+  const [messageErrorSenha, setMessageErrorSenha] = useState<string>("");
+
   const { singIn } = useContext(AuthContext);
 
   const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data: ISignInData = { login, password };
+
     await singIn(data);
+
+    setMessageErrorUsuario("Error: Insira um nome de usuário válido!")
+    setMessageErrorSenha("Error: Insira uma senha válido!")
+
     setLogin("");
     setPassword("");
   };
+
+  useEffect(() => {
+    if (login.length > 0) {
+      setMessageErrorUsuario("")
+    } else if (password.length > 0) {
+      setMessageErrorSenha("")
+
+    }
+  }, [login, password])
 
   return (
     <LayoutAuthenticated>
@@ -31,12 +48,13 @@ export default function LoginTemplate() {
         <div className="form__inputs">
           <TextField
             name="login"
-            placeholder="Digite seu e-mail"
+            placeholder="Digite seu usuário"
             value={login}
-            label="E-mail"
+            label="Nome de Usuário"
             id="login"
             onChange={(ev) => setLogin(ev.target.value)}
             required={true}
+            messageErro={messageErrorUsuario}
           />
           <div className="form__inputs__input">
             <TextField
@@ -48,22 +66,15 @@ export default function LoginTemplate() {
               type="password"
               onChange={(ev) => setPassword(ev.target.value)}
               required={true}
+              messageErro={messageErrorSenha}
             />
-            <Link href={"/"}>Esqueci minha senha</Link>
+            {/* <Link href={"/"}>Esqueci minha senha</Link> */}
           </div>
         </div>
         <ButtonsPrimary>
           <MdLogin size={24} />
           Entrar
         </ButtonsPrimary>
-        <div className="form__footer">
-          <span className="form__footer__content">
-            Ainda não tem uma conta? <br />
-            <Link href={"/cadastrar"}>
-              <strong>Crie uma conta agora</strong>
-            </Link>
-          </span>
-        </div>
       </form>
     </LayoutAuthenticated>
   );

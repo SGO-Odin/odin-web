@@ -8,6 +8,7 @@ import axios from "axios";
 import { ICreateServiceOrderReq, ICreateServiceOrderRes, IPrescription, IVisionProblems } from "@/src/server/entities/service-order";
 import { IProductCommon } from "@/src/server/entities/commons";
 import { IPaymentSale } from "@/src/server/entities/sale";
+import Head from "next/head";
 
 export default function NewServiceOrder() {
     const { push } = useRouter();
@@ -172,122 +173,127 @@ export default function NewServiceOrder() {
     }
 
     return (
-        <ServiceOrderFormTemplate
-            isButton={isButton}
-            setIsButton={setIsButton}
+        <>
+            <Head>
+                <title>Cadastrar Ordem de Serviço | ODIN</title>
+            </Head>
+            <ServiceOrderFormTemplate
+                isButton={isButton}
+                setIsButton={setIsButton}
 
-            numberOS={numberOS}
-            setNumberOS={setNumberOS}
-            dateRegister={dateRegister}
-            setDateRegister={setDateRegister}
-            hourRegister={hourRegister}
-            setHourRegister={setHourRegister}
-            client={idClient}
-            setClient={setIdClient}
+                numberOS={numberOS}
+                setNumberOS={setNumberOS}
+                dateRegister={dateRegister}
+                setDateRegister={setDateRegister}
+                hourRegister={hourRegister}
+                setHourRegister={setHourRegister}
+                client={idClient}
+                setClient={setIdClient}
 
-            idProduct={idProduct}
-            setIdProduct={setIdProduct}
-            quantity={quantity}
-            setQuantity={setQuantity}
-            coast={coast}
-            setCoast={setCoast}
+                idProduct={idProduct}
+                setIdProduct={setIdProduct}
+                quantity={quantity}
+                setQuantity={setQuantity}
+                coast={coast}
+                setCoast={setCoast}
 
-            dataProduct={dataProduct}
-            setDataProduct={setDataProduct}
-            serviceOrderProducts={serviceOrderProducts}
-            setServiceOrderProducts={setServiceOrderProducts}
+                dataProduct={dataProduct}
+                setDataProduct={setDataProduct}
+                serviceOrderProducts={serviceOrderProducts}
+                setServiceOrderProducts={setServiceOrderProducts}
 
-            percentDiscount={percentDiscount}
-            setPercentDiscount={setPercentDiscount}
-            discount={discount}
-            setDiscount={setDiscount}
-            percentAdditional={percentAdditional}
-            setPercentAdditional={setPercentAdditional}
-            additional={additional}
-            setAdditional={setAdditional}
-            valueTotal={valueTotal}
-            setValueTotal={setValueTotal}
-            valueAmount={valueAmount}
-            setValueAmount={setValueAmount}
+                percentDiscount={percentDiscount}
+                setPercentDiscount={setPercentDiscount}
+                discount={discount}
+                setDiscount={setDiscount}
+                percentAdditional={percentAdditional}
+                setPercentAdditional={setPercentAdditional}
+                additional={additional}
+                setAdditional={setAdditional}
+                valueTotal={valueTotal}
+                setValueTotal={setValueTotal}
+                valueAmount={valueAmount}
+                setValueAmount={setValueAmount}
 
-            type={type}
-            setType={setType}
-            dateRelease={dateRelease}
-            setDateRelease={setDateRelease}
-            parcelNumber={parcelNumber}
-            setParcelNumber={setParcelNumber}
-            paymentDown={paymentDown}
-            setPaymentDown={setPaymentDown}
+                type={type}
+                setType={setType}
+                dateRelease={dateRelease}
+                setDateRelease={setDateRelease}
+                parcelNumber={parcelNumber}
+                setParcelNumber={setParcelNumber}
+                paymentDown={paymentDown}
+                setPaymentDown={setPaymentDown}
 
-            payment={payment}
-            setPayment={setPayment}
+                payment={payment}
+                setPayment={setPayment}
 
-            // Dados da Receita Longe OD
-            skewerFarOD={skewerFarOD}
-            setSkewerFarOD={setSkewerFarOD}
-            cylindricalFarOD={cylindricalFarOD}
-            setCylindricalFarOD={setCylindricalFarOD}
-            axisFarOD={axisFarOD}
-            setAxisFarOD={setAxisFarOD}
-            DNPFarOD={DNPFarOD}
-            setDNPFarOD={setDNPFarOD}
-            heightFarOD={heightFarOD}
-            setHeightFarOD={setHeightFarOD}
+                // Dados da Receita Longe OD
+                skewerFarOD={skewerFarOD}
+                setSkewerFarOD={setSkewerFarOD}
+                cylindricalFarOD={cylindricalFarOD}
+                setCylindricalFarOD={setCylindricalFarOD}
+                axisFarOD={axisFarOD}
+                setAxisFarOD={setAxisFarOD}
+                DNPFarOD={DNPFarOD}
+                setDNPFarOD={setDNPFarOD}
+                heightFarOD={heightFarOD}
+                setHeightFarOD={setHeightFarOD}
 
-            // Dados da Receita Longe OE
-            skewerFarOE={skewerFarOE}
-            setSkewerFarOE={setSkewerFarOE}
-            cylindricalFarOE={cylindricalFarOE}
-            setCylindricalFarOE={setCylindricalFarOE}
-            axisFarOE={axisFarOE}
-            setAxisFarOE={setAxisFarOE}
-            DNPFarOE={DNPFarOE}
-            setDNPFarOE={setDNPFarOE}
-            heightFarOE={heightFarOE}
-            setHeightFarOE={setHeightFarOE}
+                // Dados da Receita Longe OE
+                skewerFarOE={skewerFarOE}
+                setSkewerFarOE={setSkewerFarOE}
+                cylindricalFarOE={cylindricalFarOE}
+                setCylindricalFarOE={setCylindricalFarOE}
+                axisFarOE={axisFarOE}
+                setAxisFarOE={setAxisFarOE}
+                DNPFarOE={DNPFarOE}
+                setDNPFarOE={setDNPFarOE}
+                heightFarOE={heightFarOE}
+                setHeightFarOE={setHeightFarOE}
 
-            // Dados da Receita Perto OD
-            skewerNearOD={skewerNearOD}
-            setSkewerNearOD={setSkewerNearOD}
-            cylindricalNearOD={cylindricalNearOD}
-            setCylindricalNearOD={setCylindricalNearOD}
-            axisNearOD={axisNearOD}
-            setAxisNearOD={setAxisNearOD}
-            DNPNearOD={DNPNearOD}
-            setDNPNearOD={setDNPNearOD}
-            heightNearOD={heightNearOD}
-            setHeightNearOD={setHeightNearOD}
+                // Dados da Receita Perto OD
+                skewerNearOD={skewerNearOD}
+                setSkewerNearOD={setSkewerNearOD}
+                cylindricalNearOD={cylindricalNearOD}
+                setCylindricalNearOD={setCylindricalNearOD}
+                axisNearOD={axisNearOD}
+                setAxisNearOD={setAxisNearOD}
+                DNPNearOD={DNPNearOD}
+                setDNPNearOD={setDNPNearOD}
+                heightNearOD={heightNearOD}
+                setHeightNearOD={setHeightNearOD}
 
-            // Dados da Receita Perto OE
-            skewerNearOE={skewerNearOE}
-            setSkewerNearOE={setSkewerNearOE}
-            cylindricalNearOE={cylindricalNearOE}
-            setCylindricalNearOE={setCylindricalNearOE}
-            axisNearOE={axisNearOE}
-            setAxisNearOE={setAxisNearOE}
-            DNPNearOE={DNPNearOE}
-            setDNPNearOE={setDNPNearOE}
-            heightNearOE={heightNearOE}
-            setHeightNearOE={setHeightNearOE}
+                // Dados da Receita Perto OE
+                skewerNearOE={skewerNearOE}
+                setSkewerNearOE={setSkewerNearOE}
+                cylindricalNearOE={cylindricalNearOE}
+                setCylindricalNearOE={setCylindricalNearOE}
+                axisNearOE={axisNearOE}
+                setAxisNearOE={setAxisNearOE}
+                DNPNearOE={DNPNearOE}
+                setDNPNearOE={setDNPNearOE}
+                heightNearOE={heightNearOE}
+                setHeightNearOE={setHeightNearOE}
 
-            addition={addition}
-            setAddition={setAddition}
-            datePrescription={datePrescription}
-            setDatePrescription={setDatePrescription}
+                addition={addition}
+                setAddition={setAddition}
+                datePrescription={datePrescription}
+                setDatePrescription={setDatePrescription}
 
-            handleServiceOrder={handleNewServiceOrder}
-            goBack={goBack}
-            title={"Cadastrar O.S."}
-            paragraph={"Registre e acompanhe os pedidos dos clientes de forma organizada e eficiente."}
+                handleServiceOrder={handleNewServiceOrder}
+                goBack={goBack}
+                title={"Cadastrar O.S."}
+                paragraph={"Registre e acompanhe os pedidos dos clientes de forma organizada e eficiente."}
 
-            prescription={prescription}
-            setPrescription={setPrescription}
+                prescription={prescription}
+                setPrescription={setPrescription}
 
-            orderServiceClient={orderServiceClient}
-            setOrderServiceClient={setOrderServiceClient}
-            serviceOrderPayment={serviceOrderPayment}
-            setServiceOrderPayment={setServiceOrderPayment}
-        />
+                orderServiceClient={orderServiceClient}
+                setOrderServiceClient={setOrderServiceClient}
+                serviceOrderPayment={serviceOrderPayment}
+                setServiceOrderPayment={setServiceOrderPayment}
+            />
+        </>
     );
 }
 

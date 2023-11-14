@@ -517,7 +517,7 @@ export default function ServiceOrderFormTemplate({
                 setWhatsapp(`${currentClient.phones[0]}`)
             }
 
-            axios.get(`/api/service-order?id=${client}`, _header)
+            axios.get(`/api/service-order?id=${client}&client=${true}`, _header)
                 .then(response => {
                     setOrderServiceClient(response.data.response)
                 })

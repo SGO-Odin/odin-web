@@ -33,9 +33,6 @@ export default function TablePayment({ rows, onClick }: ITablePayment) {
         }
     }
 
-    console.log("ROWS:")
-    console.log(rows)
-
     return (
         <div className="table-payment">
             <table className="table-payment__table">

@@ -18,7 +18,6 @@ export default function ResetPasswordTemplate() {
   const handleResetIn = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (password === repeatPassword) {
-      console.log(password);
       setIsError(false);
     } else {
       setMessageErro("As senhas não são iguais.");

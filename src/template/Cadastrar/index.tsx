@@ -17,10 +17,6 @@ export function RegisterTemplate() {
 
   const handleRegisterIn = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(name);
-    console.log(lastName);
-    console.log(email);
-    console.log(password);
     setName("");
     setLastName("");
     setEmail("");

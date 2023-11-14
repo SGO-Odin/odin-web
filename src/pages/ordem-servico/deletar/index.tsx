@@ -25,7 +25,6 @@ export default function DeleteBrandPage() {
     useEffect(() => {
         axios.get('/api/service-order?id=' + id, _header)
             .then(response => {
-                console.log(response)
                 setNumberOS(response.data.response.id)
 
                 axios.get('/api/client?id=' + response.data.response.client, _header)

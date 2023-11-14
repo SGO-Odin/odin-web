@@ -26,7 +26,6 @@ export const ClientTemplate = () => {
     useEffect(() => {
         axios.get('/api/client', _header)
             .then(response => {
-                console.log(response.data.response)
                 setClient(response.data.response)
             })
             .catch((error) => {

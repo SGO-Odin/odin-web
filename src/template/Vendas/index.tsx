@@ -32,7 +32,6 @@ export default function SaleTemplate() {
     useEffect(() => {
         axios.get('/api/sale', _header)
             .then(response => {
-                console.log(response)
                 setSale(response.data.content)
             })
             .catch((error) => {

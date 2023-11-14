@@ -34,6 +34,11 @@
         background: color("black-0");
         /* 4 */
         box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 0.06);
+        transition: all ease-out 300ms;
+
+        &:hover {
+            background: color("indigo-50");
+        }
     }
 
     &__icon {

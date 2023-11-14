@@ -42,7 +42,6 @@ export default function AuthProvider({
       .then((response) => {
 
         if (response.status) {
-          console.log(response)
           const token = response.data.data
 
           setCookie(undefined, 'odinauth.token', token, {
@@ -62,9 +61,7 @@ export default function AuthProvider({
         }
       })
       .catch((error) => {
-        console.log("ERROR")
         console.log(error)
-        return
       })
   }
 

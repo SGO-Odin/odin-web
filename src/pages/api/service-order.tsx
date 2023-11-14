@@ -21,10 +21,15 @@ export default async function handler(
         if (method === 'GET') {
 
             if (req.query?.id) {
-                const id: number = Number(req.query?.id)
+                const { id, client } = req.query
 
-                const response = await serviceOrderUseCases.getById(id, req)
-                return res.status(200).json({ response })
+                if (client) {
+                    const response = await serviceOrderUseCases.getAllServiceOrder(req, Number(id))
+                    return res.status(200).json({ response })
+                } else {
+                    const response = await serviceOrderUseCases.getById(Number(id), req)
+                    return res.status(200).json({ response })
+                }
             } else {
                 const response = await serviceOrderUseCases.getAllServiceOrder(req)
                 return res.status(200).json({ response })

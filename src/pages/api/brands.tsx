@@ -35,16 +35,16 @@ export default async function handler(
             if (req.query?.id) {
                 const id: number = Number(req.query?.id)
 
-                const response = await brandsUseCases.inactivateById(id, req.headers)
+                const response = await brandsUseCases.inactivateById(req)
                 return res.status(response)
             }
         }
 
         if (method === 'PUT') {
-            const response = await brandsUseCases.updateBrand(req.body, req.headers)
+            const response = await brandsUseCases.updateBrand(req)
             return res.status(200).json({ response })
-
         }
+
         return res.status(503).json({ message: "Method not allowed." })
     } catch (e: any) {
         return res.status(500).json({ message: "Server Error." })

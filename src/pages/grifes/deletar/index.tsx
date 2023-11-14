@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Modal } from "@/src/components/modal";
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { ButtonsPrimary } from "@/src/components/buttons/primary";
+import { parseCookies } from "nookies";
 
 export default function DeleteBrandPage() {
 
@@ -12,10 +13,11 @@ export default function DeleteBrandPage() {
     const [isOpen, setIsOpen] = useState<boolean>(true)
     const router = useRouter()
     const { id } = router.query
+    const { 'odinauth.token': token } = parseCookies()
 
     useEffect(() => {
         if (id) {
-            axios.get(`/api/brands?id=${id}`)
+            axios.get('/api/brands?id=' + id, { headers: { "Authorization": `Bearer ${token}` } })
                 .then(response => {
                     setBrands(response.data.response.name)
                 })
@@ -28,7 +30,7 @@ export default function DeleteBrandPage() {
     const handleDeleteBrand = async () => {
 
         // delete
-        axios.delete('/api/brands?id=' + id)
+        axios.delete('/api/brands?id=' + id, { headers: { "Authorization": `Bearer ${token}` } })
             .then((response) => console.log(response))
 
         goBack()

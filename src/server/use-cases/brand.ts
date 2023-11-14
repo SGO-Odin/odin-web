@@ -1,15 +1,11 @@
 import axios from "axios"
-import { IBrands, IUpdateBrandsReq } from "../entities/brand"
+import { IBrands } from "../entities/brand"
 import { IncomingHttpHeaders } from "http"
 import { NextApiRequest } from "next"
 
-const createBrands = async (req: NextApiRequest): Promise<number> => {
-    const brands: IBrands = {
-        name: req.body
-    }
+const createBrands = async (req: NextApiRequest) => {
 
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/brand`, brands, { headers: req.headers })
-
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/brand`, req.body, { headers: req.headers })
     return response.status
 }
 
@@ -27,25 +23,31 @@ const getById = async (id: number, header: IncomingHttpHeaders): Promise<IBrands
     return brand
 }
 
-const activateById = async (id: number, header: IncomingHttpHeaders): Promise<number> => {
-    const response = await axios.patch(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/brand/${id}/activate`, { headers: header })
-    const status: number = response.status
-    return status
+// const activateById = async (id: number, header: IncomingHttpHeaders): Promise<number> => {
+//     const response = await axios.patch(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/brand/${id}/activate`, { headers: header })
+//     const status: number = response.status
+//     return status
+// }
+
+const inactivateById = async (req: NextApiRequest): Promise<number> => {
+
+    const { id } = req.query
+
+    const response = await axios.patch(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/brand/${id}/inactivate`, null, { headers: req.headers })
+
+    return response.status
 }
 
-const inactivateById = async (id: number, header: IncomingHttpHeaders): Promise<number> => {
+const updateBrand = async (req: NextApiRequest): Promise<number> => {
+    const { id, name } = req.body
 
-    const response = await axios.patch(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/brand/${id}/inactivate`, { headers: header })
-    const status: number = response.status
-    return status
-}
+    const brands: IBrands = {
+        name: name
+    }
 
-const updateBrand = async (request: IUpdateBrandsReq, header: IncomingHttpHeaders): Promise<number> => {
-    const { id, name } = request
+    const response = await axios.put(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/brand/${id}`, brands, { headers: req.headers })
 
-    const response = await axios.put(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/brand/${id}`, { headers: { 'Authorization': header.authorization }, data: name })
-    const status: number = response.status
-    return status
+    return response.status
 }
 
 export const brandsUseCases = {
@@ -53,6 +55,6 @@ export const brandsUseCases = {
     getAllBrands,
     getById,
     inactivateById,
-    activateById,
+    // activateById,
     updateBrand
 }

@@ -67,7 +67,16 @@ module.exports = {
           },
           {
             key: "Referrer-Policy",
-            value: "same-origin",
+            value: "origin",
+          },
+          {
+            key: "Vary",
+            value: "Origin",
+          },
+          {
+
+            key: "Access-Control-Allow-Origin",
+            value: "http://127.0.0.1:8080"
           }
         ],
       },

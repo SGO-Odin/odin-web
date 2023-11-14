@@ -67,7 +67,7 @@ module.exports = {
           },
           {
             key: "Referrer-Policy",
-            value: "origin",
+            value: "origin-when-cross-origin",
           },
           {
             key: "Vary",

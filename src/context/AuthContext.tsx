@@ -39,9 +39,6 @@ export default function AuthProvider({
       "password": password
     }
 
-    console.log("DADOS:")
-    console.log(data)
-
     const options = {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -49,12 +46,8 @@ export default function AuthProvider({
       url: `http://127.0.0.1:8080/api/authenticate`
     };
 
-
-    console.log(`URL: http://127.0.0.1:8080/api/authenticate`)
     axios(options)
       .then((response) => {
-        console.log("DATA: ")
-        console.log(response)
 
         if (response.status) {
           const token = response.data
@@ -66,7 +59,7 @@ export default function AuthProvider({
           if (token) {
             const dataUser: IUser = {
               email: login,
-              photo: `../images/${(login.charAt(0)).toLowerCase()}.jog`
+              // photo: `../images/${(login.charAt(0)).toLowerCase()}.jpg`
             }
             setUser(dataUser)
             push("/")

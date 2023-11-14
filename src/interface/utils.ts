@@ -77,7 +77,7 @@ export interface IUser {
   name?: string
   sobrenome?: string
   email?: string
-  photo: string
+  photo?: string
 }
 
 export interface ITable {

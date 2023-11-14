@@ -34,7 +34,8 @@ export default function NewClient() {
     const [reference, setReference] = useState<string>("")
     const [city, setCity] = useState<string>("")
 
-
+    const { 'odinauth.token': token } = parseCookies()
+    const _header = { headers: { "Authorization": `Bearer ${token}` } }
 
     const handleNewClient = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -42,9 +43,9 @@ export default function NewClient() {
         const sanitalizePhone = sanitalizePhones(phones).substring(2)
 
         const data = { firstName, lastName, cpf, rg, email, sanitalizePhone, ddd, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city }
-
+        
         // // create
-        axios.post('/api/client', data)
+        axios.post('/api/client', data, _header)
             .then(res => {
                 if (res.status == 201) setIsOpenModal(!isOpenModal)
             })

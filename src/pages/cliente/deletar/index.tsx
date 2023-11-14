@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Modal } from "@/src/components/modal";
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { ButtonsPrimary } from "@/src/components/buttons/primary";
+import { parseCookies } from 'nookies';
 
 export default function DeleteClientPage() {
 
@@ -14,9 +15,13 @@ export default function DeleteClientPage() {
     const router = useRouter()
     const { id } = router.query
 
+    const { 'odinauth.token': token } = parseCookies()
+    const _header = { headers: { "Authorization": `Bearer ${token}` } }
+
+
     useEffect(() => {
         if (id) {
-            axios.get('/api/client?id=' + id)
+            axios.get('/api/client?id=' + id, _header)
                 .then(response => {
                     setName(response.data.name)
                     setLastName(response.data.lastName)
@@ -27,7 +32,7 @@ export default function DeleteClientPage() {
     const handleDeleteBrand = async () => {
 
         // delete
-        await axios.delete('/api/client?id=' + id)
+        await axios.delete('/api/client?id=' + id, _header)
 
         goBack()
     }

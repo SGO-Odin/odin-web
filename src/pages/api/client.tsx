@@ -48,7 +48,7 @@ export default async function handler(
                 ]
             }
 
-            const response = await clientUseCases.createClient(data)
+            const response = await clientUseCases.createClient(data, req)
             return res.status(201).json({ message: "ok", data: response })
         }
 
@@ -57,11 +57,10 @@ export default async function handler(
             if (req.query?.id) {
                 const id: number = Number(req.query?.id)
 
-                const response = await clientUseCases.getById(id)
+                const response = await clientUseCases.getById(id, req)
                 return res.status(200).json({ response })
             } else {
-
-                const response = await clientUseCases.getAllClients()
+                const response = await clientUseCases.getAllClients(req)
                 return res.status(200).json({ response })
             }
         }
@@ -77,6 +76,7 @@ export default async function handler(
         // }
         return res.status(503).json({ message: "Method not allowed." })
     } catch (e: any) {
+        console.log(e)
         return res.status(500).json({ message: "Server Error." })
     }
 }

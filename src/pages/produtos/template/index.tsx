@@ -16,6 +16,7 @@ import { numberValidation } from '@/src/hook/validation-number';
 import { handleFormatNumber } from '@/src/hook/format-number';
 import { IItemSelect } from '@/src/interface/utils';
 import typeUnit from '@/src/data/typeUnit.json'
+import { parseCookies } from "nookies";
 
 
 interface IProductFormTemplate {
@@ -96,8 +97,10 @@ export default function ProductFormTemplate({
     const [optionsUnit, setOptionsUnit] = useState<IItemSelect[]>(typeUnit || [])
     const [currentTypeUnit, setCurrentTypeUnit] = useState<number>()
 
+    const { 'odinauth.token': token } = parseCookies()
+
     useEffect(() => {
-        axios.get('/api/brands')
+        axios.get('/api/brands',{ headers: { "Authorization": `Bearer ${token}` } })
             .then(response => {
                 if (response.status == 200) {
                     setBrands(response.data.response)
@@ -116,7 +119,7 @@ export default function ProductFormTemplate({
                 console.log(error.response.data)
             })
 
-        axios.get('/api/purveyor').then(response => {
+        axios.get('/api/purveyor',{ headers: { "Authorization": `Bearer ${token}` } }).then(response => {
             const listSelectSupplier = !!response.data.response && response.data.response.map(function (item) {
                 const data: IItemSelect = {
                     _id: item.id,

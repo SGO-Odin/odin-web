@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ProductFormTemplate from "../template";
 import Head from "next/head";
+import { parseCookies } from "nookies";
 
 export default function EditProductPage() {
 
@@ -25,10 +26,11 @@ export default function EditProductPage() {
 
     const router = useRouter()
     const { id } = router.query
+    const { 'odinauth.token': token } = parseCookies()
 
     useEffect(() => {
         if (id) {
-            axios.get('/api/product?id=' + id)
+            axios.get('/api/product?id=' + id, { headers: { "Authorization": `Bearer ${token}` } })
                 .then(response => {
                     setCost(response.data.cost)
                     setPercentProfit(response.data.percentProfit)
@@ -56,7 +58,7 @@ export default function EditProductPage() {
 
         const data = { cost, selling, stockMin, stockCurrent, location, reference, nameProduct, unit, brands, supplier, isActive, isStockControl, isService }
         // update
-        await axios.put('/api/product', { ...data, id })
+        await axios.put('/api/product', { ...data, id },{ headers: { "Authorization": `Bearer ${token}` } })
 
         goBack()
     }

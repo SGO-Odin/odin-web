@@ -25,21 +25,18 @@ export default function LoginTemplate() {
 
     await singIn(data);
 
-    setMessageErrorUsuario("Error: Insira um nome de usuário válido!")
-    setMessageErrorSenha("Error: Insira uma senha válido!")
-
     setLogin("");
     setPassword("");
   };
 
-  useEffect(() => {
-    if (login.length > 0) {
-      setMessageErrorUsuario("")
-    } else if (password.length > 0) {
-      setMessageErrorSenha("")
+  // useEffect(() => {
+  //   if (login.length > 0) {
+  //     setMessageErrorUsuario("")
+  //   } else if (password.length > 0) {
+  //     setMessageErrorSenha("")
 
-    }
-  }, [login, password])
+  //   }
+  // }, [login, password])
 
   return (
     <LayoutAuthenticated>

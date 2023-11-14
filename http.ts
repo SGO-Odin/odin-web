@@ -1,13 +1,14 @@
+import { parseCookies } from "nookies"
+
 const axios = require('axios')
 
-
+const { 'odinauth.token': token } = parseCookies()
 
 const axiosFrontend = axios.create({
     baseURL: 'http://127.0.0.1:3000/',
     headers: {
-        'constent-type': 'application/json',
+        'Authorization': `Bearer ${token}`,
     },
-    withCredentials: true,
 })
 
 export default axiosFrontend

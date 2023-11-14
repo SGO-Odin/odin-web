@@ -345,7 +345,7 @@ export default function NewSale() {
 
     useEffect(() => {
         if (client) {
-            axios.get(`/api/service-order?id=${client}`, _header)
+            axios.get(`/api/service-order?id=${client}&client=${true}`, _header)
                 .then(response => {
                     if (response.status == 200) {
                         const listServiceOrder = response.data.response.reduce(function (data: IItemSelect[], item: IServiceOrder) {

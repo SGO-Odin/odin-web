@@ -39,8 +39,6 @@ export default function AddPurveyor() {
         // reset
 
         // GoBack()
-        console.log("RESPONSE")
-        console.log(response)
         if (response.status == 201) goBack()
       })
       .catch((error) => {

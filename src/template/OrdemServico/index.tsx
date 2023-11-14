@@ -40,7 +40,6 @@ export default function ServiceOrderTemplate() {
         axios.get('/api/service-order', _header)
             .then(response => {
 
-                console.log(response.data.response)
                 const jokerCounter = response.data.response.reduce((counter, objeto) => {
                     if (objeto.status === 'OPENED') {
                         return counter + 1

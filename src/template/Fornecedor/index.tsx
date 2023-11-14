@@ -28,7 +28,6 @@ export function PurveyorTemplete() {
   useEffect(() => {
     axios.get('/api/purveyor', _header)
       .then(response => {
-        console.log(response.data.response)
         setpurveyor(response.data.response)
       })
       .catch((error) => {

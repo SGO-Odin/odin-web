@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useContext, useEffect, useState } from "react";
 import "./login.scss";
 import { LayoutAuthenticated } from "@/src/components/layoutAuthenticated";
@@ -28,15 +26,6 @@ export default function LoginTemplate() {
     setLogin("");
     setPassword("");
   };
-
-  // useEffect(() => {
-  //   if (login.length > 0) {
-  //     setMessageErrorUsuario("")
-  //   } else if (password.length > 0) {
-  //     setMessageErrorSenha("")
-
-  //   }
-  // }, [login, password])
 
   return (
     <LayoutAuthenticated>

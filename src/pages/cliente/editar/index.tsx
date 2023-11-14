@@ -40,7 +40,6 @@ export default function EditClientPage() {
         if (id) {
             axios.get('/api/client?id=' + id, _header)
                 .then(response => {
-                    console.log(response.data.response.address)
                     setFirstName(response.data.response.firstName)
                     setLastName(response.data.response.lastName)
                     setCpf(response.data.response.cpf)

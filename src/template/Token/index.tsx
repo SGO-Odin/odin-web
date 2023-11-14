@@ -13,7 +13,6 @@ export default function TokenTemplate() {
 
   const handleTokenIn = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(token);
     setToken("");
   };
   return (

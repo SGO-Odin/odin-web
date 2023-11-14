@@ -13,7 +13,6 @@ export function RecoverPasswordTemplate() {
 
   const handleRecoverIn = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(email);
     setEmail("");
   };
   return (

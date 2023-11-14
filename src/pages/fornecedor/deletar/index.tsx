@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Modal } from "@/src/components/modal";
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { ButtonsPrimary } from "@/src/components/buttons/primary";
+import { parseCookies } from "nookies";
 
 export default function DeleteSupplierPage() {
 
@@ -13,9 +14,12 @@ export default function DeleteSupplierPage() {
     const router = useRouter()
     const { id } = router.query
 
+    const { 'odinauth.token': token } = parseCookies()
+    const _header = { headers: { "Authorization": `Bearer ${token}` } }
+
     useEffect(() => {
         if (id) {
-            axios.get('/api/purveyor?id=' + id)
+            axios.get('/api/purveyor?id=' + id, _header)
                 .then(response => {
                     setTradingName(response.data.response.tradingName)
                 })
@@ -26,16 +30,12 @@ export default function DeleteSupplierPage() {
     }, [id])
 
     const handleDeleteSupplier = async () => {
-        console.log("AQUI")
         // delete
-        axios.delete('/api/purveyor?id=' + id)
-            .then(response => {
-                // GoBack()
-                if (response.status == 201) goBack()
+        axios.delete('/api/purveyor?id=' + id, _header)
+            .then((response) => {
+                if (response.status == 204) goBack()
             })
-            .catch((error) => {
-                console.log(error.response.data)
-            })
+            .catch((error) => console.log(error))
     }
 
     const goBack = () => {

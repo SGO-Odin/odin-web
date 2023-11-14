@@ -9,16 +9,33 @@ import { Hero } from "@/src/components/hero";
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import RowItem from "@/src/components/table/body/rowItem";
 import Head from "@/src/components/table/head";
+import { parseCookies } from "nookies";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { IPurveyor } from "@/src/server/entities/purveyor";
 
 
 const columns = ["Fornecedor", "Razão Social", "Laboratório"];
 
-interface IPurveyors {
-  purveyor: IPurveyor[]
-}
-export function PurveyorTemplete({ purveyor }: IPurveyors) {
+
+export function PurveyorTemplete() {
   const { push } = useRouter();
+  const [purveyor, setpurveyor] = useState<IPurveyor[]>([])
+
+  const { 'odinauth.token': token } = parseCookies()
+  const _header = { headers: { "Authorization": `Bearer ${token}` } }
+
+  useEffect(() => {
+    axios.get('/api/purveyor', _header)
+      .then(response => {
+        console.log(response.data.response)
+        setpurveyor(response.data.response)
+      })
+      .catch((error) => {
+        console.log(error.response.data)
+      })
+  }, [])
+
 
   const handlePushAddPurveyor = () => {
     push("/fornecedor/cadastrar");

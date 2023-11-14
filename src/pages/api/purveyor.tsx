@@ -45,7 +45,7 @@ export default async function handler(
                 ]
             }
 
-            const response = await purveyorUseCases.createPurveyor(data)
+            const response = await purveyorUseCases.createPurveyor(data, req)
             return res.status(201).json({ message: "ok", data: response })
 
         }
@@ -55,10 +55,10 @@ export default async function handler(
             if (req.query?.id) {
                 const id: number = Number(req.query?.id)
 
-                const response = await purveyorUseCases.getById(id)
+                const response = await purveyorUseCases.getById(id, req)
                 return res.status(200).json({ response })
             } else {
-                const response = await purveyorUseCases.getAllPurveyors()
+                const response = await purveyorUseCases.getAllPurveyors(req)
                 return res.status(200).json({ response })
             }
 
@@ -72,8 +72,8 @@ export default async function handler(
             if (req.query?.id) {
                 const id: number = Number(req.query?.id)
 
-                const response = await purveyorUseCases.inactivateById(id)
-                return res.status(response)
+                const response = await purveyorUseCases.inactivateById(id, req)
+                return res.status(204).json({ message: response })
             }
         }
         return res.status(503).json({ message: "Method not allowed." })

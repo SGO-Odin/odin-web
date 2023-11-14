@@ -3,8 +3,7 @@ import { IUser, ISignInData } from "../interface/utils";
 import { recoverUserInformation, signInRequest } from "../service/auth";
 import { parseCookies, setCookie } from "nookies";
 import { useRouter } from "next/navigation";
-import axios from "axios";
-import qs from 'querystring'
+import axiosBackend from "axios";
 
 interface IAUthContextType {
   isAuthenticated: boolean
@@ -39,18 +38,12 @@ export default function AuthProvider({
       "password": password
     }
 
-    const options = {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      data: data,
-      url: `http://127.0.0.1:8080/api/authenticate`
-    };
-
-    axios(options)
+    axiosBackend.post('/api/auth', data)
       .then((response) => {
 
         if (response.status) {
-          const token = response.data
+          console.log(response)
+          const token = response.data.data
 
           setCookie(undefined, 'odinauth.token', token, {
             maxAge: 60 * 60 * 1 // 1 hour
@@ -69,7 +62,9 @@ export default function AuthProvider({
         }
       })
       .catch((error) => {
-        return error
+        console.log("ERROR")
+        console.log(error)
+        return
       })
   }
 

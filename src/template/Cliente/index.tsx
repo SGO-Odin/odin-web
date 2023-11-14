@@ -1,4 +1,3 @@
-import { ButtonsEdit } from '@/src/components/buttons/edit';
 import './clientTemplate.scss'
 import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { Hero } from "@/src/components/hero";
@@ -7,8 +6,7 @@ import { Search } from "@/src/components/search";
 import RowItem from '@/src/components/table/body/rowItem';
 import Head from '@/src/components/table/head';
 import { useRouter } from "next/navigation";
-import { MdDelete, MdOutlineEdit, MdPerson, MdSearch } from "react-icons/md";
-import { ButtonsDelete } from '@/src/components/buttons/delete';
+import { MdPerson, MdSearch } from "react-icons/md";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { formatNumberWhatsapp } from '@/src/hook/format-number-whatsapp';
@@ -16,7 +14,7 @@ import { IClient } from '@/src/server/entities/client';
 import { parseCookies } from 'nookies';
 
 
-const columns = ["Id", "Nome", "Whatsapp", "E-mail", "CEP"];
+const columns = ["Id", "Nome", "Whatsapp", "E-mail", "CPF"];
 
 export const ClientTemplate = () => {
     const { push } = useRouter();
@@ -28,12 +26,25 @@ export const ClientTemplate = () => {
     useEffect(() => {
         axios.get('/api/client', _header)
             .then(response => {
+                console.log(response.data.response)
                 setClient(response.data.response)
             })
             .catch((error) => {
                 console.log(error.response.data)
             })
     }, [])
+
+    const maskCPF = (cpf: string): string => {
+        cpf = cpf.replace(/\D/g, '');
+
+        if (cpf.length < 7) {
+            throw new Error('CPF inválido.');
+        }
+
+        const cpfMascarado = cpf.replace(/^(\d{7})/, (_, grupo1) => '*'.repeat(grupo1.length));
+
+        return `${cpfMascarado.slice(0, 3)}.${cpfMascarado.slice(3, 6)}.${cpfMascarado.slice(6, 9)}-${cpfMascarado.slice(9)}`;
+    }
 
     const handlePushNewClient = () => {
         push("/cliente/cadastrar");
@@ -71,7 +82,7 @@ export const ClientTemplate = () => {
                                     <RowItem label={`${item.firstName} ${item.lastName}`} isActive={null} />
                                     <RowItem label={formatNumberWhatsapp(`${item.phones[0]}`)} isActive={null} />
                                     <RowItem label={item.emails[0]} isActive={null} />
-                                    <RowItem label={item.address.genericZipCode} isActive={null} />
+                                    <RowItem label={maskCPF(item.cpf)} isActive={null} />
                                 </tr>
                             ))}
                         </tbody>

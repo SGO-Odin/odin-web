@@ -3,7 +3,7 @@ import { IBrands } from "../entities/brand"
 import { IncomingHttpHeaders } from "http"
 import { NextApiRequest } from "next"
 
-const createBrands = async (req: NextApiRequest) => {
+const createBrands = async (req: NextApiRequest): Promise<number> => {
 
     const response = await axios.post(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/brand`, req.body, { headers: req.headers })
     return response.status

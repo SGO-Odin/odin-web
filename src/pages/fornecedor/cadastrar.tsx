@@ -29,13 +29,18 @@ export default function AddPurveyor() {
   const handleNewPurveyor = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const { 'odinauth.token': token } = parseCookies()
+    const _header = { headers: { "Authorization": `Bearer ${token}` } }
+
     const data = { companyName, tradingName, isLaboratory, zipCode, acronym, stateName, isFederalDistrict, publicPlaceName, publicPlaceType, district, number, complement, reference, city }
 
-    axios.post('/api/purveyor', data)
+    axios.post('/api/purveyor', data, _header)
       .then((response) => {
         // reset
 
         // GoBack()
+        console.log("RESPONSE")
+        console.log(response)
         if (response.status == 201) goBack()
       })
       .catch((error) => {

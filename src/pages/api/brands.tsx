@@ -1,6 +1,5 @@
 import { brandsUseCases } from '@/src/server/use-cases/brand'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { parseCookies } from 'nookies'
 
 
 export default async function handler(

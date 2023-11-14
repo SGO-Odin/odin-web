@@ -20,7 +20,7 @@ const createPurveyor = async (data: ICreatePurveyorReq, req: NextApiRequest): Pr
 
 const getAllPurveyors = async (req: NextApiRequest): Promise<IPurveyor[]> => {
 
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/purveyor`, { headers: req.headers })
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/purveyor`, { headers: { Authorization: req.headers.authorization } })
 
     const purveyor: IPurveyor[] = response.data
 
@@ -28,14 +28,14 @@ const getAllPurveyors = async (req: NextApiRequest): Promise<IPurveyor[]> => {
 }
 
 const getById = async (id: number, req: NextApiRequest): Promise<IPurveyor> => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/purveyor/${id}`, { headers: req.headers })
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/purveyor/${id}`, { headers: { Authorization: req.headers.authorization } })
     const purveyor: IPurveyor = response.data
     return purveyor
 }
 
 const inactivateById = async (id: number, req: NextApiRequest): Promise<number> => {
 
-    const response = await axios.patch(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/purveyor/${id}/inactivate`, null, { headers: req.headers })
+    const response = await axios.patch(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/purveyor/${id}/inactivate`, null, { headers: { Authorization: req.headers.authorization } })
     const status: number = response.status
     return status
 }

@@ -2,7 +2,7 @@ import LayoutDefault from '@/src/components/layoutDefault';
 import './serviceOrderTemplate.scss'
 import { Hero } from '@/src/components/hero';
 import { ButtonsTertiary } from '@/src/components/buttons/tertiary';
-import { MdAttachMoney, MdBuild, MdDelete, MdOutlineEdit, MdSearch } from 'react-icons/md';
+import { MdAttachMoney, MdBuild, MdCancel, MdDelete, MdOutlineEdit, MdSearch } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
 import { TextField } from '@/src/components/textField';
 import { useEffect, useState } from 'react';
@@ -16,6 +16,7 @@ import { ButtonsDelete } from '@/src/components/buttons/delete';
 import { ICreateServiceOrderRes, IServiceOrder } from '@/src/server/entities/service-order';
 import { IClient } from '@/src/server/entities/client';
 import { handleFormatDateBR } from '@/src/hook/format-date-br';
+import { parseCookies } from 'nookies';
 
 const columns = ["N° OS", "Data", "Hora", "Nome"];
 
@@ -32,8 +33,11 @@ export default function ServiceOrderTemplate() {
 
     const [client, setClient] = useState<IClient[]>([])
 
+    const { 'odinauth.token': token } = parseCookies()
+    const _header = { headers: { "Authorization": `Bearer ${token}` } }
+
     useEffect(() => {
-        axios.get('/api/service-order')
+        axios.get('/api/service-order', _header)
             .then(response => {
 
                 console.log(response.data.response)
@@ -58,7 +62,7 @@ export default function ServiceOrderTemplate() {
                 console.log(error.response.data)
             })
 
-        axios.get('/api/client')
+        axios.get('/api/client', _header)
             .then(response => {
                 setClient(response.data.response)
             })
@@ -154,8 +158,8 @@ export default function ServiceOrderTemplate() {
                                         </div> */}
                                         <div>
                                             <ButtonsDelete href={`/ordem-servico/deletar?id=${item.id}`}>
-                                                Excluir
-                                                <MdDelete size={24} />
+                                                Cancelar
+                                                <MdCancel size={24} />
                                             </ButtonsDelete>
                                         </div>
                                     </td>

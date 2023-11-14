@@ -6,6 +6,7 @@ import { ButtonsTertiary } from "@/src/components/buttons/tertiary";
 import { ButtonsPrimary } from "@/src/components/buttons/primary";
 import { IClient, IOrderService } from "@/src/interface/datas";
 import Head from "next/head";
+import { parseCookies } from "nookies";
 
 export default function DeleteBrandPage() {
 
@@ -18,21 +19,33 @@ export default function DeleteBrandPage() {
     const [numberOS, setNumberOS] = useState<string>('')
     const [name, setName] = useState<string>('')
 
-    useEffect(() => {
-        axios.get('/api/service-order?id=' + id).then(response => {
-            setNumberOS(response.data.number)
+    const { 'odinauth.token': token } = parseCookies()
+    const _header = { headers: { "Authorization": `Bearer ${token}` } }
 
-            axios.get('/api/client?id=' + response.data.client).then(response => {
-                setName(response.data.firsName)
+    useEffect(() => {
+        axios.get('/api/service-order?id=' + id, _header)
+            .then(response => {
+                console.log(response)
+                setNumberOS(response.data.response.id)
+
+                axios.get('/api/client?id=' + response.data.response.client, _header)
+                    .then(response => {
+                        setName(response.data.response.firstName)
+                    })
+                    .catch((error) => console.log(error))
             })
-        })
+            .catch((error) => console.log(error))
 
     }, [])
 
     const handleDeleteBrand = async () => {
 
         // delete
-        await axios.delete('/api/service-order?id=' + id)
+        await axios.delete('/api/service-order?id=' + id, _header)
+            .then((response) => {
+                if (response.status == 204) goBack()
+            })
+            .catch((error) => console.log(error))
 
         goBack()
     }

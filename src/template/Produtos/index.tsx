@@ -15,6 +15,7 @@ import axios from "axios";
 import { handleFormatNumber } from "@/src/hook/format-number";
 import { IBrands } from "@/src/server/entities/brand";
 import { IProduct } from "@/src/server/entities/product";
+import { parseCookies } from "nookies";
 
 const columns = ["Nome", "Marca", "Referencia", "Valor", "Qtd"];
 
@@ -24,8 +25,11 @@ export default function ProductTemplate() {
   const [product, setProduct] = useState<IProduct[]>([])
   const [listBrands, setListBrands] = useState<IBrands[]>([])
 
+  const { 'odinauth.token': token } = parseCookies()
+  const _header = { headers: { "Authorization": `Bearer ${token}` } }
+
   useEffect(() => {
-    axios.get('/api/brands')
+    axios.get('/api/brands', _header)
       .then(response => {
         if (response.status == 200) {
           setListBrands(response.data.response)
@@ -35,7 +39,7 @@ export default function ProductTemplate() {
         console.log(error.response.data)
       })
 
-    axios.get('/api/product')
+    axios.get('/api/product', _header)
       .then(response => {
         if (response.status == 200) {
           setProduct(response.data.response)

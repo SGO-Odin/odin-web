@@ -29,8 +29,11 @@ export default function NewProduct() {
         event.preventDefault();
         const data = { cost, selling, stockMin, stockCurrent, location, reference, nameProduct, unit, brands, purveyor, isActive, isStockControl, isService }
 
+        const { 'odinauth.token': token } = parseCookies()
+        const _header = { headers: { "Authorization": `Bearer ${token}` } }
+
         // create
-        axios.post('/api/product', data)
+        axios.post('/api/product', data, _header)
             .then(res => {
                 if (res.status == 201) goBack()
             })

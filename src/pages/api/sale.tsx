@@ -11,12 +11,12 @@ export default async function handler(
     try {
         const { method } = req
         if (method === 'POST') {
-            const response = await saleUseCases.createSale(req.body)
+            const response = await saleUseCases.createSale(req.body, req)
             return res.status(201).json({ message: "ok", data: response })
         }
 
         if (method === 'GET') {
-            const response = await saleUseCases.getAllSale()
+            const response = await saleUseCases.getAllSale(req)
             return res.status(200).json({ response })
         }
 

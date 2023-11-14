@@ -12,6 +12,8 @@ import RowItem from "@/src/components/table/body/rowItem";
 import { ButtonsEdit } from "@/src/components/buttons/edit";
 import { ButtonsDelete } from "@/src/components/buttons/delete";
 import axios from "axios";
+import { parseCookies } from "nookies";
+import { ISale } from "@/src/server/entities/sale";
 
 const data = [];
 
@@ -22,12 +24,16 @@ export default function SaleTemplate() {
 
     const [numberSale, setNumberSale] = useState<string>("")
     const [name, setName] = useState<string>("")
+    const [sale, setSale] = useState<ISale[]>()
+
+    const { 'odinauth.token': token } = parseCookies()
+    const _header = { headers: { "Authorization": `Bearer ${token}` } }
 
     useEffect(() => {
-        axios.get('/api/sale')
+        axios.get('/api/sale', _header)
             .then(response => {
-
-                console.log(response.data.response)
+                console.log(response)
+                setSale(response.data.content)
             })
             .catch((error) => {
                 console.log(error.response.data)
@@ -85,12 +91,12 @@ export default function SaleTemplate() {
                     <table className="table">
                         <Head columns={columns} isButton={true} />
                         <tbody className="body">
-                            {!!data && data.map((item) => (
+                            {!!sale && sale.map((item) => (
                                 <tr key={item.id} className='body__row'>
                                     <RowItem label={(item.id).toString()} isActive={null} />
-                                    <RowItem label={item.Data} isActive={null} />
+                                    {/* <RowItem label={item.Data} isActive={null} />
                                     <RowItem label={item.Hora} isActive={null} />
-                                    <RowItem label={item.Nome} isActive={null} />
+                                    <RowItem label={item.Nome} isActive={null} /> */}
                                 </tr>
                             ))}
                         </tbody>

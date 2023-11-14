@@ -29,6 +29,7 @@ import { IClient } from '@/src/server/entities/client';
 import { IProduct } from '@/src/server/entities/product';
 import { IProductCommon } from '@/src/server/entities/commons';
 import { IPaymentSale } from '@/src/server/entities/sale';
+import { parseCookies } from 'nookies';
 
 
 interface IRowsProductTable {
@@ -295,6 +296,9 @@ export default function ServiceOrderFormTemplate({
     const [listClient, setListClient] = useState<IClient[]>([])
     const [listProduct, setListProduct] = useState<IProduct[]>([])
 
+    const { 'odinauth.token': token } = parseCookies()
+    const _header = { headers: { "Authorization": `Bearer ${token}` } }
+
     const handleTypeCard = (typeCard: number): void => {
         const dataTypeCard = optionsTypeCard.filter((item) => item._id === typeCard)[0]
         /**
@@ -471,7 +475,7 @@ export default function ServiceOrderFormTemplate({
 
     useEffect(() => {
 
-        axios.get('/api/client')
+        axios.get('/api/client', _header)
             .then(response => {
                 if (response.status == 200) {
                     const listSelectClient = response.data.response.reduce(function (data: IItemSelect[], item: IClient) {
@@ -490,7 +494,7 @@ export default function ServiceOrderFormTemplate({
                 console.log(error.response.data)
             })
 
-        axios.get('/api/product').then(response => {
+        axios.get('/api/product', _header).then(response => {
             const listSelectProduct = response.data.response.reduce(function (data: IItemSelect[], item: IProduct) {
                 data.push({
                     _id: item.id,
@@ -513,7 +517,7 @@ export default function ServiceOrderFormTemplate({
                 setWhatsapp(`${currentClient.phones[0]}`)
             }
 
-            axios.get(`/api/service-order?id=${client}`)
+            axios.get(`/api/service-order?id=${client}`, _header)
                 .then(response => {
                     setOrderServiceClient(response.data.response)
                 })

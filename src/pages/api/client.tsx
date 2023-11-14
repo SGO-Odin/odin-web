@@ -65,15 +65,13 @@ export default async function handler(
             }
         }
 
-        // if (method === 'DELETE') {
-        //     if (req.query?.id) {
-        //         const id: number = Number(req.query?.id)
+        if (method === 'DELETE') {
+            return res.status(503).json({ message: "Method not allowed." })
+        }
 
-        //         const response = await clientUseCases.inactivateById(id)
-        //         return res.status(response)
-
-        //     }
-        // }
+        if (method === 'PUT') {
+            return res.status(503).json({ message: "Method not allowed." })
+        }
         return res.status(503).json({ message: "Method not allowed." })
     } catch (e: any) {
         console.log(e)

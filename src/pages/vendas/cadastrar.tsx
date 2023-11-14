@@ -79,6 +79,9 @@ export default function NewSale() {
     const [remainingAmount, setRemainingAmount] = useState<string>("")
     const [percentRemainingAmount, setPercentRemainingAmount] = useState<string>("")
 
+    const { 'odinauth.token': token } = parseCookies()
+    const _header = { headers: { "Authorization": `Bearer ${token}` } }
+
     const handleNewServiceOrder = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -89,7 +92,7 @@ export default function NewSale() {
             salePayments: serviceOrderPayment
         }
 
-        axios.post('/api/sale', data)
+        axios.post('/api/sale', data, _header)
             .then((response) => {
 
                 // GoBack()
@@ -272,7 +275,7 @@ export default function NewSale() {
     //** UseEffects */
     useEffect(() => {
 
-        axios.get('/api/client')
+        axios.get('/api/client', _header)
             .then(response => {
                 if (response.status == 200) {
                     const listSelectClient = response.data.response.reduce(function (data: IItemSelect[], item: IClient) {
@@ -291,7 +294,7 @@ export default function NewSale() {
                 console.log(error.response.data)
             })
 
-        axios.get('/api/product').then(response => {
+        axios.get('/api/product', _header).then(response => {
             const listSelectProduct = response.data.response.reduce(function (data: IItemSelect[], item: IProduct) {
                 data.push({
                     _id: item.id,
@@ -342,7 +345,7 @@ export default function NewSale() {
 
     useEffect(() => {
         if (client) {
-            axios.get(`/api/service-order?id=${client}`)
+            axios.get(`/api/service-order?id=${client}`, _header)
                 .then(response => {
                     if (response.status == 200) {
                         const listServiceOrder = response.data.response.reduce(function (data: IItemSelect[], item: IServiceOrder) {
@@ -360,7 +363,7 @@ export default function NewSale() {
 
                 })
                 .catch((error) => {
-                    console.log(error.response.data)
+                    console.log(error.response)
                 })
         }
     }, [client])

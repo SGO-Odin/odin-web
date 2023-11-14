@@ -13,7 +13,7 @@ export default async function handler(
 
         if (method === 'POST') {
 
-            const response = await serviceOrderUseCases.createServiceOrder(req.body)
+            const response = await serviceOrderUseCases.createServiceOrder(req.body, req)
             return res.status(201).json({ message: "ok", data: response })
 
         }
@@ -23,10 +23,10 @@ export default async function handler(
             if (req.query?.id) {
                 const id: number = Number(req.query?.id)
 
-                const response = await serviceOrderUseCases.getAllServiceOrder(id)
+                const response = await serviceOrderUseCases.getById(id, req)
                 return res.status(200).json({ response })
             } else {
-                const response = await serviceOrderUseCases.getAllServiceOrder()
+                const response = await serviceOrderUseCases.getAllServiceOrder(req)
                 return res.status(200).json({ response })
             }
 
@@ -37,7 +37,12 @@ export default async function handler(
         }
 
         if (method === 'DELETE') {
-            return res.status(503).json({ message: "Method not allowed." })
+            if (req.query?.id) {
+                const id: number = Number(req.query?.id)
+
+                const response = await serviceOrderUseCases.inactivateById(id, req)
+                return res.status(204).json({ message: response })
+            }
         }
         return res.status(503).json({ message: "Method not allowed." })
     } catch (e: any) {

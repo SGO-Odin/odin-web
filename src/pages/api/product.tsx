@@ -29,7 +29,7 @@ export default async function handler(
             }
 
             console.log(data)
-            const response = await productUseCases.createProduct(data)
+            const response = await productUseCases.createProduct(data, req)
             return res.status(201).json({ message: "ok", data: response })
 
         }
@@ -39,10 +39,10 @@ export default async function handler(
             if (req.query?.id) {
                 const id: number = Number(req.query?.id)
 
-                const response = await productUseCases.getById(id)
+                const response = await productUseCases.getById(id, req)
                 return res.status(200).json({ response })
             } else {
-                const response = await productUseCases.getAllProducts()
+                const response = await productUseCases.getAllProducts(req)
                 return res.status(200).json({ response })
             }
 
@@ -56,8 +56,8 @@ export default async function handler(
             if (req.query?.id) {
                 const id: number = Number(req.query?.id)
 
-                const response = await productUseCases.inactivateById(id)
-                return res.status(response)
+                const response = await productUseCases.inactivateById(id, req)
+                return res.status(204).json({ message: response })
             }
         }
         return res.status(503).json({ message: "Method not allowed." })

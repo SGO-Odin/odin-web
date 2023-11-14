@@ -17,8 +17,10 @@ const getAllClients = async (request: NextApiRequest): Promise<IClient[]> => {
 }
 
 const getById = async (id: number, request: NextApiRequest): Promise<IClient> => {
+
     const response = await axios.get(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/client/${id}`, { headers: { Authorization: request.headers.authorization } })
     const client: IClient = response.data
+
     return client
 }
 

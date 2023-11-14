@@ -75,6 +75,9 @@ export default function NewServiceOrder() {
     const [orderServiceClient, setOrderServiceClient] = useState<ICreateServiceOrderRes[]>([])
 
     const [serviceOrderPayment, setServiceOrderPayment] = useState<IPaymentSale[]>([])
+    const { 'odinauth.token': token } = parseCookies()
+    const _header = { headers: { "Authorization": `Bearer ${token}` } }
+
 
     const handleAddPrescription = (): IPrescription => {
         const dataVisionProblem: IVisionProblems[] = [
@@ -157,7 +160,7 @@ export default function NewServiceOrder() {
         // }
 
         // create
-        axios.post('/api/service-order', data)
+        axios.post('/api/service-order', data, _header)
             .then((response) => {
 
                 // GoBack()

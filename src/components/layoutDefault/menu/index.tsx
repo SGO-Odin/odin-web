@@ -9,7 +9,7 @@ import { AiFillHeart } from "react-icons/ai";
 import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import { AuthContext } from "@/src/context/AuthContext";
 import Image from "next/image";
-import avatar from "@/src/images/avatar.jpeg";
+import avatar from "@/src/images/a.jpg";
 import "./menu.scss";
 import slogan from "@/src/images/slogan-indigo.png";
 import { routes } from "../routes";
@@ -96,10 +96,10 @@ export const Menu = ({ isOpenMenuPrimary, setIsOpenMenuPrimary }: IMenu) => {
           <div className="avatar__user">
             {!!user && (
               <Image
-                src={user?.photo || avatar}
+                src={avatar}
                 width={50}
                 height={50}
-                alt={`${user?.name} Avatar Photo`}
+                alt={`${user.email} Avatar Photo`}
                 className="photo"
               />
             )}

@@ -17,7 +17,7 @@ const createSale = async (data: ICreateSaleReq, req: NextApiRequest): Promise<nu
 
 const getAllSale = async (req: NextApiRequest): Promise<ISale[]> => {
 
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/sale?page=0&size=1`, { headers: { Authorization: req.headers.authorization } })
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_DOMAIN_BACKEND}api/sale`, { headers: { Authorization: req.headers.authorization } })
     const sale: ISale[] = response.data
 
     return sale
